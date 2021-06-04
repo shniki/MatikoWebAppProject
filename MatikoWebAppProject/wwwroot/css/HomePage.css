@@ -1,0 +1,241 @@
+﻿@charset "utf-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Century Gothic';
+}
+
+header {
+    background-color: #000;
+    height: 7vh;
+}
+
+ul {
+    float: left;
+    list-style-type: none;
+    margin-top: 25px;
+    padding: 3px;
+}
+
+    ul li {
+        display: inline-block;
+    }
+
+        ul li a {
+            top: 7px;
+            float: left;
+            margin-left: auto;
+            text-decoration: none;
+            color: #fff;
+            padding: 5px 10px;
+            border: 1px solid transparent;
+            transition: 0.6s ease;
+        }
+
+            ul li a:hover {
+                background-color: #fff;
+                color: #000;
+            }
+
+.logo img {
+    float: left;
+    width: 120px;
+    height: auto;
+    padding: 5px;
+}
+
+.search-my {
+    margin: auto;
+    border: 3px #000 solid;
+}
+
+.search1 {
+    border: none;
+    background-color: none;
+    width: 400px;
+    right: 450px;
+    top: 12px;
+    position: absolute;
+}
+
+.button1 {
+    color: #fff;
+    background-color: #000;
+    right: 430px;
+    top: 12px;
+    border: none;
+    position: absolute;
+}
+
+.icons2 {
+    position: absolute;
+    top: 7px;
+    right: 60px;
+    display: inline-block;
+    padding: 3px 5px;
+}
+
+.icons {
+    position: absolute;
+    top: 7px;
+    right: 30px;
+    display: inline-block;
+    padding: 3px 5px;
+}
+
+.icons1 {
+    position: absolute;
+    top: 7px;
+    right: 1px;
+    display: inline-block;
+    padding: 3px 5px;
+}
+
+/*.sub-menu-1 {
+    display: none;
+}
+
+.icons:hover .sub-menu-1 {
+    display: block;
+    position: absolute;
+    background-color: aliceblue;
+    margin-top: 15px;
+    margin-left: -15px;
+}
+
+    .icons:hover .sub-menu-1 ul {
+        display: block;
+        margin: 10px;
+    }
+
+    .icons:hover .sub-menu-1 ul {
+        width: 150px;
+        padding: 10px;
+        border-bottom: 1px dotted #000;
+        background: transparent;
+        border-radius: 0;
+        text-align: left;
+    }
+
+        .icons:hover .sub-menu-1 ul li:last-child {
+            border-bottom: none;
+        }*/
+
+
+.main {
+    max-width: 1200px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+
+.nav1 {
+    background-color: #fbecd8;
+    margin: auto;
+    border-bottom: 1px solid #000;
+    border-bottom-width: initial;
+}
+
+.navbar {
+    right: 150px;
+    padding: 3px;
+    height: 5vh;
+}
+
+.navbar-nav li {
+    display: inline-block;
+}
+
+    .navbar-nav li a {
+        margin-left: auto;
+        font-size: 16px;
+        padding: 15px 40px 15px !important;
+        color: #000;
+        margin-left: auto;
+        text-decoration: none;
+        transition: 0.6s ease;
+    }
+
+        .navbar-nav li a:hover {
+            background-color: #fbecd8;
+        }
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fbecd8;
+}
+
+
+@media(max-width:1200px) {
+    .navbar-nav li {
+        font-size: 15px;
+    }
+}
+
+@media(max-width:992px) {
+    .navbar-toggler {
+        margin: 10px 0px 10px 30px;
+        border-color: #ff4f81;
+    }
+
+        .navbar-toggler:hover, .navbar-toggler:focus {
+            background-color: #fff;
+            border-color: #ff4f81;
+        }
+
+    .navbar-light {
+        background-color: #fff;
+    }
+
+    .navbar-nav li a {
+        text-align: center;
+        background-color: aliceblue;
+    }
+
+        .navbar-nav li a:hover {
+            background-color: #ff4f81;
+        }
+}
+
+
+
+/*.nav1 {
+    left: 10px;
+    background-color: #fff;
+    height: 7vh;
+    position: absolute;
+    margin: auto;
+}
+
+    .nav1 ul {
+        padding: 3px;
+        margin: auto;
+        list-style-type: none;
+        margin-top: 60px;
+        padding: 3px;
+    }
+    .nav1 ul li {
+        display: inline-block;
+        margin: auto;
+    }
+        .nav1 ul li a {
+            border-block-end-color: #000;
+            margin: auto;
+            text-decoration: none;
+            color: #000;
+            border: 1px solid transparent;
+            transition: 0.6s ease;
+            font-size: 25px;
+            padding: 15px 30px;
+        }
+
+           .nav1 ul li a:hover {
+                background-color: #000;
+                color: #fff;
+            }*/

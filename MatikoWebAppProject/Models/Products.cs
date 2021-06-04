@@ -44,6 +44,8 @@ namespace MatikoWebAppProject.Models
         [Display(Name = "Category")]
         public int CategoriesId { get; set; }
 
+        public Categories Category { get; set; }
+
         [Required(ErrorMessage = "You must input product's sizes")]
 
         public Gender Gender { get; set; }
@@ -56,9 +58,6 @@ namespace MatikoWebAppProject.Models
         [Required]
         public double Rate { get; set; }
 
-        //lists
-
-        //public ICollection<ProductsWishList> WishList { get; set; }
-        //public ICollection<ProductsOrders> Orders { get; set; }
+        
     }
 }

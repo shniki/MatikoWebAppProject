@@ -4,14 +4,16 @@ using MatikoWebAppProject.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MatikoWebAppProject.Migrations
 {
     [DbContext(typeof(MatikoWebAppProjectContext))]
-    partial class MatikoWebAppProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20210604075245_includingAll")]
+    partial class includingAll
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

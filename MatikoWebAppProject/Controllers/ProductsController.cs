@@ -54,7 +54,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Gender,ImageUrl,Rate")] Products products)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Category,Gender,ImageUrl,Rate")] Products products)
         {
             if (ModelState.IsValid)
             {
@@ -63,6 +63,15 @@ namespace MatikoWebAppProject.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(products);
+        }
+
+
+        public async Task<IActionResult> Search(string name)
+        {
+            var q = from a in _context.Products.Include(a => a.Category)
+                    where (a.Name.Contains(name))
+                    select a;
+            return View("Index", await q.ToListAsync());
         }
 
         // GET: Products/Edit/5
@@ -86,7 +95,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,color,CategoriesId,Gender,ImageUrl,Rate")] Products products)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,color,CategoriesId,Category,Gender,ImageUrl,Rate")] Products products)
         {
             if (id != products.Id)
             {

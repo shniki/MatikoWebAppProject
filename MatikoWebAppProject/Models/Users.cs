@@ -33,7 +33,7 @@ namespace MatikoWebAppProject.Models
         public DateTime Birthday { get; set; }
 
         [Required]
-        public UserType type { get; set; } = UserType.Regular;
+        public UserType Type { get; set; } = UserType.Regular;
 
         //address
 

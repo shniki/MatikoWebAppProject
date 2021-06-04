@@ -1,0 +1,26 @@
+﻿.card {
+    margin-bottom: 24px;
+    border-bottom: 1px solid #000;
+    border-bottom-width: initial;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    border-top: 1px solid #000;
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: initial;
+    border: 0 solid transparent;
+    border-radius: .25rem;
+}
+
+
+.card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}

@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MatikoWebAppProject.Data;
 using MatikoWebAppProject.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace MatikoWebAppProject.Controllers
 {
@@ -142,12 +146,89 @@ namespace MatikoWebAppProject.Controllers
             var users = await _context.Users.FindAsync(id);
             _context.Users.Remove(users);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), "Home");
         }
 
         private bool UsersExists(string id)
         {
             return _context.Users.Any(e => e.Email == id);
+        }
+
+        // POST: Users/Register
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("Email,Password")] Users users)
+        {
+            if (ModelState.IsValid)
+            {
+                var q = _context.Users.FirstOrDefault(u => u.Email == users.Email);
+                if (q == null)
+                {
+                    _context.Add(users);
+                    await _context.SaveChangesAsync();
+                    var u = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
+                    Signin(u);
+                    return RedirectToAction(nameof(Index), "Home");
+                }
+                else
+                {
+                    ViewData["Error"] = "A user with this email already exists.";
+                }
+            }
+            return View(users);
+        }
+        // GET: Users/Login
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        // POST: Users/Login
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login([Bind("Email,Password")] Users users)
+        {
+            if (ModelState.IsValid)
+            {
+                var q = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
+                if (q != null)
+                {
+                    HttpContext.Session.SetString("email", q.Email);
+                    return RedirectToAction(nameof(Index), "Home");
+                }
+                else
+                {
+                    ViewData["Error"] = "Login credentials are incorrect.";
+                }
+            }
+            return View(users);
+        }
+
+        private async void Signin(Users account)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, account.Email),
+                new Claim(ClaimTypes.Role, account.Type.ToString()),
+            };
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties
+            {
+                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10)
+            };
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
         }
     }
 }
