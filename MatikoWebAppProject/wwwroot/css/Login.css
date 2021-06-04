@@ -1,15 +1,16 @@
 ﻿@charset "utf-8";
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 *{
+
     margin: 0;
     padding:0;
     box-sizing:border-box;
 }
-.bg-img {
-    background: url('https://images.unsplash.com/photo-1558346648-9757f2fa4474?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1650&q=80');
-    height:100vh;
-    background-size:cover;
-    background-position:center;
+body {
+    background-image: url('https://images.unsplash.com/photo-1558346648-9757f2fa4474?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1650&q=80');
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
 }
 
 .bg-img:after{
@@ -47,15 +48,10 @@
     display:flex;
     background:rgba(255,255,255,0.94);
 }
-.bi bi-person-fill{
+ .field span{
     color:#222;
     width:40px;
     line-height:45px;
-}
-.bi bi-lock-fill {
-    color: #222;
-    width: 40px;
-    line-height: 45px;
 }
 .field input {
     height: 100%;
@@ -86,8 +82,8 @@
     text-align:left;
     margin:auto;
 }
-.password:valid~ .show{
-    display:block;
+.password:valid ~ .show {
+    display: block;
 }
     .pass a {
         color: black;
@@ -97,20 +93,13 @@
     .pass:hover a{
         text-decoration:underline;
     }
-    input [type="submit"]{
-        background:#2691d9;
-        border:1px solid #2691d9;
-        color:black;
-        font-size:18px;
-        letter-spacing:1px;
-        font-weight:600;
-        cursor:pointer;
-        font-family:'Montserrat', sans-serif;
-
+input[type="submit"] {
+    background: #fbecd8;
+    border: 1px solid #000;
+}
+    input[type="submit"]:hover {
+        background: #fbecd8;
     }
-        input [type="submit"]:hover {
-            background: #2691d9;
-        }
         .login{
             color:black;
             margin:20px 0;
@@ -118,23 +107,35 @@
 
         }
         .link{
-            display:none;
+            display:flex;
             cursor:pointer;
-            color:black;
-            margin: 0 0 2px 0;
+            color:white;
+            margin: 0 0 30px 0;
         }
-        .facebook{
-            width:100%;
-            height:42px;
-            line-height:45px;
-            margin-top:10px;
-            margin-left:10px;
+.facebook {
+    width: 60%;
+    height: 42px;
+    top: 5px;
+    line-height: 40px;
+    margin-top:10px;
+    margin: 10px 80px;
+}
+#email_error,#pass_error{
+    margin-top:3px;
+    width:345px;
+    font-size:15px;
+    color:#C62828;
+    background:rgba(255,0,0,0.1);
+    text-align:center;
+    padding:5px 8px;
+    border-radius:3px;
+    border:1px solid #EF9A9A;
+}
+.facebook {
+    background:#4267B2;
+    border: 1px solid #3e61a8;
+}
 
-            background:#4267B2;
-            border:1px solid #3e61a8;
-
-
-        }
         .link span{
             font-size:16px;
             margin-left:8px;
@@ -152,7 +153,4 @@
     text-decoration:none;
 }
 
-.signup:hover{
-    text-decoration:underline;
 
-}

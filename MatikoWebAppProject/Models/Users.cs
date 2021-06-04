@@ -15,15 +15,15 @@ namespace MatikoWebAppProject.Models
     public class Users
     {
         [Key]
-        [Required(ErrorMessage = "You must input user's Email Address")]
+        [Required(ErrorMessage = "You must input your Email Address")]
         [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "You must input user's first name")]
+        [Required(ErrorMessage = "You must input your first name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "You must input user's first name")]
+        [Required(ErrorMessage = "You must input your last name")]
         public string LastName { get; set; }
 
         [Required]
