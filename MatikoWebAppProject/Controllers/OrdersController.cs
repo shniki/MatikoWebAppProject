@@ -19,6 +19,13 @@ namespace MatikoWebAppProject.Controllers
             _context = context;
         }
 
+        // GET: Cart
+        public IActionResult Cart(string id)
+        {
+            // return View("Cart" ,await _context.Orders.Where(a => a.Id.Equals(id)).ToListAsync());
+            return View(this._context.Orders.Where(a => a.Id.ToString().CompareTo(id) == 0).ToListAsync());
+        }
+
         // GET: Orders
         public async Task<IActionResult> Index()
         {
