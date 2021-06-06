@@ -16,7 +16,5 @@ namespace MatikoWebAppProject.Models
 
         public int Counter { get; set; }
 
-        //public ICollection<ProductsWishList> Product { get; set; }
-
     }
 }

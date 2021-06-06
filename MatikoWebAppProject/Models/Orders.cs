@@ -8,7 +8,6 @@ namespace MatikoWebAppProject.Models
 {
     public enum Status
     {
-        Cart,
         Paid,
         Shipped,
         Arrived
@@ -21,7 +20,7 @@ namespace MatikoWebAppProject.Models
         public int UserEmail { get; set; }
 
         [Required]
-        public Status status { get; set; } = Status.Cart;
+        public Status status { get; set; } = Status.Paid;
 
         [Required]
         public float FullPrice { get; set; } = 0;
