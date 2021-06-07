@@ -9,13 +9,12 @@ namespace MatikoWebAppProject.Models
 {
     public class ProductsOrders
     {
-        public int ProductsOrdersId { get; set; }
         //product
-        //public int ProductId { get; set; }
+        public int ProductId { get; set; }
         public Products Product { get; set; }
 
         //order
-        //public int OrderId { get; set; }
+        public int OrderId { get; set; }
         public Orders Order { get; set; }
 
         //choosings

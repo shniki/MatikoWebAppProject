@@ -22,7 +22,8 @@ namespace MatikoWebAppProject.Controllers
         // GET: ProductsOrders
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ProductsOrders.ToListAsync());
+            var matikoWebAppProjectContext = _context.ProductsOrders.Include(p => p.Order).Include(p => p.Product);
+            return View(await matikoWebAppProjectContext.ToListAsync());
         }
 
         // GET: ProductsOrders/Details/5
@@ -34,7 +35,9 @@ namespace MatikoWebAppProject.Controllers
             }
 
             var productsOrders = await _context.ProductsOrders
-                .FirstOrDefaultAsync(m => m.ProductsOrdersId == id);
+                .Include(p => p.Order)
+                .Include(p => p.Product)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
             if (productsOrders == null)
             {
                 return NotFound();
@@ -46,6 +49,8 @@ namespace MatikoWebAppProject.Controllers
         // GET: ProductsOrders/Create
         public IActionResult Create()
         {
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id");
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductsOrdersId,Size,Amount")] ProductsOrders productsOrders)
+        public async Task<IActionResult> Create([Bind("ProductId,OrderId,Size,Amount")] ProductsOrders productsOrders)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +67,8 @@ namespace MatikoWebAppProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", productsOrders.OrderId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", productsOrders.ProductId);
             return View(productsOrders);
         }
 
@@ -78,6 +85,8 @@ namespace MatikoWebAppProject.Controllers
             {
                 return NotFound();
             }
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", productsOrders.OrderId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", productsOrders.ProductId);
             return View(productsOrders);
         }
 
@@ -86,9 +95,9 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductsOrdersId,Size,Amount")] ProductsOrders productsOrders)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,OrderId,Size,Amount")] ProductsOrders productsOrders)
         {
-            if (id != productsOrders.ProductsOrdersId)
+            if (id != productsOrders.ProductId)
             {
                 return NotFound();
             }
@@ -102,7 +111,7 @@ namespace MatikoWebAppProject.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductsOrdersExists(productsOrders.ProductsOrdersId))
+                    if (!ProductsOrdersExists(productsOrders.ProductId))
                     {
                         return NotFound();
                     }
@@ -113,6 +122,8 @@ namespace MatikoWebAppProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", productsOrders.OrderId);
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", productsOrders.ProductId);
             return View(productsOrders);
         }
 
@@ -125,7 +136,9 @@ namespace MatikoWebAppProject.Controllers
             }
 
             var productsOrders = await _context.ProductsOrders
-                .FirstOrDefaultAsync(m => m.ProductsOrdersId == id);
+                .Include(p => p.Order)
+                .Include(p => p.Product)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
             if (productsOrders == null)
             {
                 return NotFound();
@@ -147,7 +160,7 @@ namespace MatikoWebAppProject.Controllers
 
         private bool ProductsOrdersExists(int id)
         {
-            return _context.ProductsOrders.Any(e => e.ProductsOrdersId == id);
+            return _context.ProductsOrders.Any(e => e.ProductId == id);
         }
     }
 }

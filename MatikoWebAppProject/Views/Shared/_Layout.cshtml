@@ -36,6 +36,10 @@
                 <li>
                     <a id="help" class="icons1" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" /></svg></a>
                 </li>
+                @*Should be the user's name instead of count. Plus,NOY- change the color to white so we can see what written*@
+                <li>
+                    <div class= "labelForUser"> Hello,@Context.User.Claims.Count() </div>
+                </li>
             </ul>
         </div>
         <div class="clearfix"></div>
@@ -64,6 +68,7 @@
         </main>
     </div>
 
+    @*Change Footer when we have time*@
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - MatikoWebAppProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

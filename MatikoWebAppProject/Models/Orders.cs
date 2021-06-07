@@ -18,7 +18,7 @@ namespace MatikoWebAppProject.Models
         public int Id { get; set; }
 
         [Required]
-        public int UserEmail { get; set; }
+        public string UserEmail { get; set; }
 
         [Required]
         public Status status { get; set; } = Status.Cart;
@@ -28,6 +28,6 @@ namespace MatikoWebAppProject.Models
         public DataType DateOrder { get; set; }
         public DataType EstimatedDateArrival { get; set; }
 
-        //public ICollection<ProductsOrders> Products { get; set; }
+        public List<ProductsOrders> Products { get; set; }
     }
 }

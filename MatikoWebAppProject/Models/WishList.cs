@@ -12,9 +12,10 @@ namespace MatikoWebAppProject.Models
         [Required(ErrorMessage = "You must input user's Email Address")]
         [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress)]
-        public int UserEmail { get; set; }
+        public string UserEmail { get; set; }
 
         public int Counter { get; set; }
 
+        List<Products> ProductsInWishList { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatikoWebAppProject.Migrations
 {
     [DbContext(typeof(MatikoWebAppProjectContext))]
-    [Migration("20210604094304_includingCart")]
-    partial class includingCart
+    [Migration("20210607141037_updated")]
+    partial class updated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,8 +59,9 @@ namespace MatikoWebAppProject.Migrations
                     b.Property<float>("FullPrice")
                         .HasColumnType("real");
 
-                    b.Property<int>("UserEmail")
-                        .HasColumnType("int");
+                    b.Property<string>("UserEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsersEmail")
                         .HasColumnType("nvarchar(450)");
@@ -113,51 +114,40 @@ namespace MatikoWebAppProject.Migrations
 
             modelBuilder.Entity("MatikoWebAppProject.Models.ProductsOrders", b =>
                 {
-                    b.Property<int>("ProductsOrdersId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ProductsOrdersId");
+                    b.HasKey("ProductId", "OrderId");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductsOrders");
                 });
 
             modelBuilder.Entity("MatikoWebAppProject.Models.ProductsWishList", b =>
                 {
-                    b.Property<int>("ProductsWishListId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("WishlistUserEmail")
-                        .HasColumnType("int");
+                    b.Property<string>("WishlistUserEmail")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("ProductsWishListId");
-
-                    b.HasIndex("ProductId");
+                    b.HasKey("ProductId", "UserEmail");
 
                     b.HasIndex("WishlistUserEmail");
 
@@ -243,10 +233,8 @@ namespace MatikoWebAppProject.Migrations
 
             modelBuilder.Entity("MatikoWebAppProject.Models.WishList", b =>
                 {
-                    b.Property<int>("UserEmail")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("UserEmail")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Counter")
                         .HasColumnType("int");
@@ -277,12 +265,16 @@ namespace MatikoWebAppProject.Migrations
             modelBuilder.Entity("MatikoWebAppProject.Models.ProductsOrders", b =>
                 {
                     b.HasOne("MatikoWebAppProject.Models.Orders", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId");
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MatikoWebAppProject.Models.Products", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Order");
 
@@ -293,7 +285,9 @@ namespace MatikoWebAppProject.Migrations
                 {
                     b.HasOne("MatikoWebAppProject.Models.Products", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MatikoWebAppProject.Models.WishList", "Wishlist")
                         .WithMany()
@@ -312,6 +306,11 @@ namespace MatikoWebAppProject.Migrations
                 });
 
             modelBuilder.Entity("MatikoWebAppProject.Models.Categories", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("MatikoWebAppProject.Models.Orders", b =>
                 {
                     b.Navigation("Products");
                 });

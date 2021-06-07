@@ -26,7 +26,7 @@ namespace MatikoWebAppProject.Controllers
         }
 
         // GET: WishLists/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -66,7 +66,7 @@ namespace MatikoWebAppProject.Controllers
         }
 
         // GET: WishLists/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
@@ -86,7 +86,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserEmail,Counter")] WishList wishList)
+        public async Task<IActionResult> Edit(string id, [Bind("UserEmail,Counter")] WishList wishList)
         {
             if (id != wishList.UserEmail)
             {
@@ -117,7 +117,7 @@ namespace MatikoWebAppProject.Controllers
         }
 
         // GET: WishLists/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -137,7 +137,7 @@ namespace MatikoWebAppProject.Controllers
         // POST: WishLists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var wishList = await _context.WishList.FindAsync(id);
             _context.WishList.Remove(wishList);
@@ -145,7 +145,7 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool WishListExists(int id)
+        private bool WishListExists(string id)
         {
             return _context.WishList.Any(e => e.UserEmail == id);
         }

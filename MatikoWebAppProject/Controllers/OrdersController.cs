@@ -7,12 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MatikoWebAppProject.Data;
 using MatikoWebAppProject.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MatikoWebAppProject.Controllers
 {
-    [Authorize]
     public class OrdersController : Controller
     {
         private readonly MatikoWebAppProjectContext _context;
@@ -20,15 +17,6 @@ namespace MatikoWebAppProject.Controllers
         public OrdersController(MatikoWebAppProjectContext context)
         {
             _context = context;
-        }
-
-        // GET: Cart
-        public IActionResult Cart(string id)
-        {
-          /* if (HttpContext.Session.GetString("email") != null)
-                return RedirectToAction("Login","Users");*/
-            // return View("Cart" ,await _context.Orders.Where(a => a.Id.Equals(id)).ToListAsync());
-            return View(this._context.Orders.Where(a => a.Id.ToString().CompareTo(id) == 0).ToListAsync());
         }
 
         // GET: Orders
@@ -53,6 +41,15 @@ namespace MatikoWebAppProject.Controllers
             }
 
             return View(orders);
+        }
+
+        // GET: Cart
+        public IActionResult Cart(string id)
+        {
+            /* if (HttpContext.Session.GetString("email") != null)
+                  return RedirectToAction("Login","Users");*/
+            // return View("Cart" ,await _context.Orders.Where(a => a.Id.Equals(id)).ToListAsync());
+            return View(this._context.Orders.Where(a => a.Id.ToString().CompareTo(id) == 0).ToListAsync());
         }
 
         // GET: Orders/Create

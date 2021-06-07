@@ -1,7 +1,4 @@
-﻿{
-        ViewData["Title"] = "Register";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+﻿
 
     <h1>Register</h1>
 @model MatikoWebAppProject.Models.Users
@@ -36,11 +33,9 @@
 </div>
 
 <div>
-    Already Registered? <a asp-action="Login">Click HERE</a> to login
+    Already Registered? <a asp-action="Login" asp-controller="Users">Click HERE</a> to login
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-*@

@@ -132,6 +132,12 @@ namespace MatikoWebAppProject.Controllers
             return _context.Users.Any(e => e.Email == id);
         }
 
+        //GET: Users/Register
+        public IActionResult Register()
+        {
+            return View();
+        }
+
         // POST: Users/Register
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

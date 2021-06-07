@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MatikoWebAppProject.Migrations
 {
-    public partial class first : Migration
+    public partial class All : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace MatikoWebAppProject.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    type = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     ZipCode = table.Column<int>(type: "int", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -46,8 +46,7 @@ namespace MatikoWebAppProject.Migrations
                 name: "WishList",
                 columns: table => new
                 {
-                    UserEmail = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserEmail = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Counter = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -108,21 +107,20 @@ namespace MatikoWebAppProject.Migrations
                 name: "ProductsWishList",
                 columns: table => new
                 {
-                    ProductsWishListId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: true),
-                    WishlistUserEmail = table.Column<int>(type: "int", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    UserEmail = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    WishlistUserEmail = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductsWishList", x => x.ProductsWishListId);
+                    table.PrimaryKey("PK_ProductsWishList", x => new { x.ProductId, x.UserEmail });
                     table.ForeignKey(
                         name: "FK_ProductsWishList_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductsWishList_WishList_WishlistUserEmail",
                         column: x => x.WishlistUserEmail,
@@ -159,28 +157,26 @@ namespace MatikoWebAppProject.Migrations
                 name: "ProductsOrders",
                 columns: table => new
                 {
-                    ProductsOrdersId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: true),
-                    OrderId = table.Column<int>(type: "int", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Amount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductsOrders", x => x.ProductsOrdersId);
+                    table.PrimaryKey("PK_ProductsOrders", x => new { x.ProductId, x.OrderId });
                     table.ForeignKey(
                         name: "FK_ProductsOrders_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProductsOrders_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -197,16 +193,6 @@ namespace MatikoWebAppProject.Migrations
                 name: "IX_ProductsOrders_OrderId",
                 table: "ProductsOrders",
                 column: "OrderId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductsOrders_ProductId",
-                table: "ProductsOrders",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductsWishList_ProductId",
-                table: "ProductsWishList",
-                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductsWishList_WishlistUserEmail",

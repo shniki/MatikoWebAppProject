@@ -14,6 +14,12 @@ namespace MatikoWebAppProject.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductsOrders>().HasKey(po => new { po.ProductId, po.OrderId });
+            modelBuilder.Entity<ProductsWishList>().HasKey(pw => new { pw.ProductId, pw.UserEmail });
+        }
+
         public DbSet<MatikoWebAppProject.Models.Categories> Categories { get; set; }
 
         public DbSet<MatikoWebAppProject.Models.Products> Products { get; set; }
