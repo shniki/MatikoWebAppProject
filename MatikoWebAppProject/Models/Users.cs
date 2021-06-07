@@ -49,8 +49,6 @@ namespace MatikoWebAppProject.Models
         [Required(ErrorMessage = "You must input user's country")]
         public string Country { get; set; }
 
-        public ICollection<Products> UsersCart { get; set; }
-
         //orders
         public ICollection<Orders> AllOrdersMade { get; set; }
 

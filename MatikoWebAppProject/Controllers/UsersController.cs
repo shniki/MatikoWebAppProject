@@ -47,28 +47,6 @@ namespace MatikoWebAppProject.Controllers
             return View(users);
         }
 
-        // GET: Users/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Email,FirstName,LastName,Password,Birthday,type,ZipCode,Address,City,Country")] Users users)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(users);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(users);
-        }
-
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
@@ -197,8 +175,11 @@ namespace MatikoWebAppProject.Controllers
                 var q = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
                 if (q != null)
                 {
-                    HttpContext.Session.SetString("email", q.Email);
+                    /*HttpContext.Session.SetString("email", q.Email);
+                    HttpContext.Session.SetString("name", q.FirstName);*/
+                    Signin(q);
                     return RedirectToAction(nameof(Index), "Home");
+
                 }
                 else
                 {
@@ -213,6 +194,7 @@ namespace MatikoWebAppProject.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, account.Email),
+                new Claim(ClaimTypes.Name, account.FirstName + " " + account.LastName),
                 new Claim(ClaimTypes.Role, account.Type.ToString()),
             };
             var claimsIdentity = new ClaimsIdentity(
