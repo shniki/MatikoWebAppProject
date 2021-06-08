@@ -52,6 +52,9 @@ namespace MatikoWebAppProject.Models
 
         public string ImageUrl { get; set; }
 
+        List<ProductsOrders> ProOrders { get; set; }
+
+        //List<ProductsWishList> ProWish { get; set; }
         //reviews
         public ICollection<Reviews> AllReviewsMade { get; set; }
 

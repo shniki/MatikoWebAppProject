@@ -1,14 +1,6 @@
-﻿@*
-@{
-    ViewData["Title"] = "Cart";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model IEnumerable<MatikoWebAppProject.Models.Orders>
 
-<h1>Cart</h1>
-    *@
-@model IEnumerable<MatikoWebAppProject.Models.Orders>
-
-@{ ViewData["Title"] = "Cart";
+@{ ViewData["Title"] = "MyOrders";
     Layout = "_Layout"; }
 
 <link rel="stylesheet" href="~/css/StyleCart.css" type="text/css" />
@@ -73,16 +65,16 @@
     <div>
         @foreach (var item in Model)
         {
-            <div class="product">
-            <div class="product-image">
-              <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
-              </div>
-              <div class="product-details">
+<div class="product">
+    <div class="product-image">
+        <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
+    </div>
+    <div class="product-details">
 
-             <div class="product-title">modelItem => item.Id</div>
-            <p class="product-description">
+        <div class="product-title">modelItem => item.Id</div>
+        <p class="product-description">
             modelItem => item.UserEmail
-             </p>
+        </p>
     </div>
     <div class="product-price">modelItem => item.FullPrice</div>
     <div class="product-quantity">
@@ -126,11 +118,10 @@
 
 </div>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/forCart.js" asp-append-version="true"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/forCart.js" asp-append-version="true"></script>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
-
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

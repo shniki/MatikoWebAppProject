@@ -22,7 +22,8 @@ namespace MatikoWebAppProject.Controllers
         // GET: ProductsWishLists
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ProductsWishList.ToListAsync());
+            var matikoWebAppProjectContext = _context.ProductsWishList.Include(p => p.Product);
+            return View(await matikoWebAppProjectContext.ToListAsync());
         }
 
         // GET: ProductsWishLists/Details/5
@@ -34,7 +35,8 @@ namespace MatikoWebAppProject.Controllers
             }
 
             var productsWishList = await _context.ProductsWishList
-                .FirstOrDefaultAsync(m => m.ProductsWishListId == id);
+                .Include(p => p.Product)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
             if (productsWishList == null)
             {
                 return NotFound();
@@ -46,6 +48,7 @@ namespace MatikoWebAppProject.Controllers
         // GET: ProductsWishLists/Create
         public IActionResult Create()
         {
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name");
             return View();
         }
 
@@ -54,7 +57,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductsWishListId,Size")] ProductsWishList productsWishList)
+        public async Task<IActionResult> Create([Bind("ProductId,UserEmail,Size")] ProductsWishList productsWishList)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +65,7 @@ namespace MatikoWebAppProject.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", productsWishList.ProductId);
             return View(productsWishList);
         }
 
@@ -78,6 +82,7 @@ namespace MatikoWebAppProject.Controllers
             {
                 return NotFound();
             }
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", productsWishList.ProductId);
             return View(productsWishList);
         }
 
@@ -86,9 +91,9 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductsWishListId,Size")] ProductsWishList productsWishList)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,UserEmail,Size")] ProductsWishList productsWishList)
         {
-            if (id != productsWishList.ProductsWishListId)
+            if (id != productsWishList.ProductId)
             {
                 return NotFound();
             }
@@ -102,7 +107,7 @@ namespace MatikoWebAppProject.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductsWishListExists(productsWishList.ProductsWishListId))
+                    if (!ProductsWishListExists(productsWishList.ProductId))
                     {
                         return NotFound();
                     }
@@ -113,6 +118,7 @@ namespace MatikoWebAppProject.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["ProductId"] = new SelectList(_context.Products, "Id", "Name", productsWishList.ProductId);
             return View(productsWishList);
         }
 
@@ -125,7 +131,8 @@ namespace MatikoWebAppProject.Controllers
             }
 
             var productsWishList = await _context.ProductsWishList
-                .FirstOrDefaultAsync(m => m.ProductsWishListId == id);
+                .Include(p => p.Product)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
             if (productsWishList == null)
             {
                 return NotFound();
@@ -147,7 +154,7 @@ namespace MatikoWebAppProject.Controllers
 
         private bool ProductsWishListExists(int id)
         {
-            return _context.ProductsWishList.Any(e => e.ProductsWishListId == id);
+            return _context.ProductsWishList.Any(e => e.ProductId == id);
         }
     }
 }
