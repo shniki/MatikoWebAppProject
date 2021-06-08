@@ -120,16 +120,18 @@ input[type="submit"] {
     margin-top:10px;
     margin: 10px 80px;
 }
-#email_error,#pass_error{
-    margin-top:3px;
-    width:345px;
-    font-size:15px;
-    color:#C62828;
-    background:rgba(255,0,0,0.1);
-    text-align:center;
-    padding:5px 8px;
-    border-radius:3px;
-    border:1px solid #EF9A9A;
+ 
+#email_error, #pass_error {
+    margin-top: 3px;
+    width: 345px;
+    font-size: 15px;
+    color: #C62828;
+    background: rgba(255,0,0,0.1);
+    text-align: center;
+    padding: 5px 8px;
+    border-radius: 3px;
+    border: 1px solid #EF9A9A;
+    display:none;
 }
 .facebook {
     background:#4267B2;
