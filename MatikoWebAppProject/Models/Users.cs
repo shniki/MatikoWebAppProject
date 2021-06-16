@@ -24,12 +24,14 @@ namespace MatikoWebAppProject.Models
         public string FirstName { get; set; }
 
         [Required(ErrorMessage = "You must input your last name")]
+
         public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
         public DateTime Birthday { get; set; }
 
         [Required]

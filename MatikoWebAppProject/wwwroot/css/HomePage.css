@@ -126,16 +126,25 @@ ul {
 .main {
     max-width: 1200px;
 }
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 
-.footer {
-    position: absolute;
+footer {
+    background-color: rgba(0,0,0,0.6);
+    overflow-x: hidden;
+    padding: 14vmin 18vmin;
+    /*position: absolute;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
+    line-height: 60px;*/ /* Vertically center the text there */
 }
+    footer.column i {
+        color: #fff;
+    }
 
-
+footer.column i+i{
+    padding:0 0.5em;
+}
 .nav1 {
     background-color: #fbecd8;
     margin: auto;
@@ -144,16 +153,37 @@ ul {
 }
 
 .navbar {
-    right: 150px;
+    right: 100px;
     padding: 3px;
     height: 5vh;
 }
 
+
 .navbar-nav li {
     display: inline-block;
+    position:relative;
 }
 
+.dropdown-menu {
+    text-transform: none;
+    display: none;
+    position: absolute;
+    width: 220px;
+    background-color: rgba(0,0,0,0.8);
+}
+.nav_item:hover .submenu{
+
+    display:block;
+}
+dropdown-item {
+    border-left: 4px solid transparent;
+}
+dropdown-item:hover{
+    background-color: rgba(0,0,0,0.6);
+    border-left: 4px solid rgba(450,0,60,0.8);
+}
     .navbar-nav li a {
+        display:block;
         margin-left: auto;
         font-size: 16px;
         padding: 15px 40px 15px !important;
@@ -161,6 +191,7 @@ ul {
         margin-left: auto;
         text-decoration: none;
         transition: 0.6s ease;
+        cursor:pointer;
     }
 
         .navbar-nav li a:hover {
@@ -192,7 +223,10 @@ ul {
     .navbar-light {
         background-color: #fff;
     }
+    .labelForUser{
+        color:white;
 
+    }
     .navbar-nav li a {
         text-align: center;
         background-color: aliceblue;

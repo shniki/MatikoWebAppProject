@@ -68,7 +68,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Email,FirstName,LastName,Password,Birthday,type,ZipCode,Address,City,Country")] Users users)
+        public async Task<IActionResult> Edit(string id, [Bind("Email,FirstName,LastName,Password,PhoneNumber,Birthday,type,ZipCode,Address,City,Country")] Users users)
         {
             if (id != users.Email)
             {
