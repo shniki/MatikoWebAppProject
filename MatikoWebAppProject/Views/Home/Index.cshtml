@@ -1,4 +1,155 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<link href="~/css/HomePage.css" rel="stylesheet" />
+
+
+<head>
+</head>
+<body>
+    <div class="sale-area">
+        <div class="sale-text">
+            <h1 class="ml2 ">SALE</h1>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+            <h1 class="ml16 ">use code MAT3 to get 30% off everything</h1>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+        </div>
+    </div>
+
+    <script>
+        var textWrapper = document.querySelector('.ml2');
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+        anime.timeline({ loop: true })
+            .add({
+                targets: '.ml2 .letter',
+                scale: [4, 1],
+                opacity: [0, 1],
+                translateZ: 0,
+                easing: "easeOutExpo",
+                duration: 1000,
+                delay: (el, i) => 70 * i
+            }).add({
+                targets: '.ml2',
+                opacity: 0,
+                duration: 1000,
+                easing: "easeOutExpo",
+                delay: 1400
+            });
+    </script>
+
+    <script>
+        var textWrapper = document.querySelector('.ml16');
+        textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+        anime.timeline({ loop: true })
+            .add({
+                targets: '.ml16 .letter',
+                translateY: [-100, 0],
+                easing: "easeOutExpo",
+                duration: 1400,
+                delay: (el, i) => 30 * i
+            }).add({
+                targets: '.ml16',
+                opacity: 0,
+                duration: 1000,
+                easing: "easeOutExpo",
+                delay: 1000
+            });
+    </script>
+
+    <div class="slideshow-container">
+
+        <div class="mySlides fade">
+            <img class="pic" src="https://images.unsplash.com/photo-1518131901452-29ef2e026182?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80">
+        </div>
+
+        <div class="mySlides fade">
+            <img class="pic" src="https://images.unsplash.com/photo-1512962159894-164f59a2e8b0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1653&q=80">
+        </div>
+
+        <div class="mySlides fade">
+            <img class="pic" src="https://images.unsplash.com/photo-1563740286948-086ac5eaa46f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1651&q=80">
+        </div>
+
+        <div class="center">
+            <button class="button">SHOP NEW</button>
+        </div>
+
+    </div>
+    <br>
+
+    <div style="display:none">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+    <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1 }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            setTimeout(showSlides, 4000); // Change image every 2 seconds
+        }
+    </script>
+
+    <div id="portfolio">
+        <div class="project">
+            <img class="project__image" src="https://images.unsplash.com/photo-1519211975560-4ca611f5a72a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ae34625b8db390fb2b784800d76d225&auto=format&fit=crop&w=700&q=80" />
+            <p>best sellers</p>
+            <div class="grid__overlay">
+                <button class="viewbutton">view more</button>
+            </div>
+        </div>
+
+        <div class="project">
+            <img class="project__image" src="https://images.unsplash.com/photo-1617059070087-d05ea39977dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=668&q=80" />
+            <p>denim</p>
+            <div class="grid__overlay">
+                <button class="viewbutton">view more</button>
+            </div>
+        </div>
+
+        <div class="project">
+            <img class="project__image" src="https://images.unsplash.com/photo-1618375325729-03447ed04aa2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80" />
+            <p>tops</p>
+            <div class="grid__overlay">
+                <button class="viewbutton">view more</button>
+            </div>
+        </div>
+
+        <div class="project">
+            <img class="project__image" src="https://images.unsplash.com/photo-1617922001439-4a2e6562f328?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80" />
+            <p>dresses</p>
+            <div class="grid__overlay">
+                <button class="viewbutton">view more</button>
+            </div>
+        </div>
+
+        <div class="overlay">
+            <div class="overlay__inner">
+                <button class="close">close X</button>
+                <img>
+            </div>
+        </div>
+    </div>
+
+</body>
 
