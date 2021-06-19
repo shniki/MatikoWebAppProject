@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MatikoWebAppProject.Migrations
 {
-    public partial class All : Migration
+    public partial class updated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,7 @@ namespace MatikoWebAppProject.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
                     ZipCode = table.Column<int>(type: "int", nullable: false),
@@ -85,11 +86,11 @@ namespace MatikoWebAppProject.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserEmail = table.Column<int>(type: "int", nullable: false),
+                    UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     status = table.Column<int>(type: "int", nullable: false),
                     FullPrice = table.Column<float>(type: "real", nullable: false),
-                    DateOrder = table.Column<int>(type: "int", nullable: false),
-                    EstimatedDateArrival = table.Column<int>(type: "int", nullable: false),
+                    DateOrder = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EstimatedDateArrival = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UsersEmail = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>

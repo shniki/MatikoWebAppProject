@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MatikoWebAppProject.Data;
 using MatikoWebAppProject.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MatikoWebAppProject.Controllers
 {
+    [Authorize]
     public class WishListsController : Controller
     {
         private readonly MatikoWebAppProjectContext _context;

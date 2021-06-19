@@ -48,11 +48,11 @@ namespace MatikoWebAppProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DateOrder")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("DateOrder")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("EstimatedDateArrival")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EstimatedDateArrival")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("FullPrice")
                         .HasColumnType("real");

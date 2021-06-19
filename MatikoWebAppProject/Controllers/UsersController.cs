@@ -143,25 +143,29 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Email,Password")] Users users)
+        public async Task<IActionResult> Register([Bind("Email,Password")] Users user)
         {
             if (ModelState.IsValid)
             {
-                var q = _context.Users.FirstOrDefault(u => u.Email == users.Email);
+                var q = _context.Users.FirstOrDefault(u => u.Email == user.Email);
+
                 if (q == null)
                 {
-                    _context.Add(users);
+                    _context.Add(user);
                     await _context.SaveChangesAsync();
-                    var u = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
+
+                    var u = _context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
+
                     Signin(u);
+
                     return RedirectToAction(nameof(Index), "Home");
                 }
                 else
                 {
-                    ViewData["Error"] = "A user with this email already exists.";
+                    ViewData["Error"] = "Unable to comply; cannot register this user.";
                 }
             }
-            return View(users);
+            return View(user);
         }
         // GET: Users/Login
         public IActionResult Login()
@@ -176,41 +180,46 @@ namespace MatikoWebAppProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([Bind("Email,Password")] Users users)
         {
-            if (ModelState.IsValid)
-            {
-                var q = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
-                if (q != null)
+                //var q = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
+                var q = from u in _context.Users
+                        where u.Email == users.Email && u.Password == users.Password
+                        select u;
+                if (q.Count() > 0)
                 {
-                    /*HttpContext.Session.SetString("email", q.Email);
-                    HttpContext.Session.SetString("name", q.FirstName);*/
-                    Signin(q);
-                    return RedirectToAction(nameof(Index), "Home");
+                    /*HttpContext.Session.SetString("Email", q.First().Email);
+                    HttpContext.Session.SetString("Name", q.First().FirstName + " " + q.First().LastName);
+                    */
+                    Signin(q.First());
 
+                    return RedirectToAction(nameof(Index), "Home");
                 }
                 else
                 {
-                    ViewData["Error"] = "Login credentials are incorrect.";
+                    ViewData["Error"] = "Username and/or password are incorrect.";
                 }
-            }
             return View(users);
         }
 
         private async void Signin(Users account)
         {
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, account.Email),
-                new Claim(ClaimTypes.Name, account.FirstName + " " + account.LastName),
-                new Claim(ClaimTypes.Role, account.Type.ToString()),
-            };
+                {
+                    new Claim(ClaimTypes.Name, account.FirstName + " " + account.LastName),
+                    new Claim(ClaimTypes.Email, account.Email),
+                };
+
             var claimsIdentity = new ClaimsIdentity(
                 claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10)
             };
+
             await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
         }
 
         public async Task<IActionResult> Logout()

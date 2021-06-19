@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MatikoWebAppProject.Data;
 using MatikoWebAppProject.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MatikoWebAppProject.Controllers
 {
@@ -43,6 +44,7 @@ namespace MatikoWebAppProject.Controllers
             return View(orders);
         }
 
+        [Authorize]
         // GET: Cart
         public IActionResult Cart(string id)
         {

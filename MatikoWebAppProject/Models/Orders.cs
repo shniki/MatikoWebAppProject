@@ -25,8 +25,8 @@ namespace MatikoWebAppProject.Models
 
         [Required]
         public float FullPrice { get; set; } = 0;
-        public DataType DateOrder { get; set; }
-        public DataType EstimatedDateArrival { get; set; }
+        public DateTime DateOrder { get; set; }
+        public DateTime EstimatedDateArrival { get; set; }
 
         public List<ProductsOrders> Products { get; set; }
     }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatikoWebAppProject.Migrations
 {
     [DbContext(typeof(MatikoWebAppProjectContext))]
-    [Migration("20210616150445_firstSharedDB")]
-    partial class firstSharedDB
+    [Migration("20210619133314_updated")]
+    partial class updated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,11 +50,11 @@ namespace MatikoWebAppProject.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DateOrder")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("DateOrder")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("EstimatedDateArrival")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EstimatedDateArrival")
+                        .HasColumnType("datetime2");
 
                     b.Property<float>("FullPrice")
                         .HasColumnType("real");
