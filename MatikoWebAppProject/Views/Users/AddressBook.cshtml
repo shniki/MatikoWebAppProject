@@ -1,0 +1,72 @@
+﻿@model IEnumerable<MatikoWebAppProject.Models.Users>
+
+@{ ViewData["Title"] = "AddressBook";
+    Layout = "_Layout"; }
+
+
+<link rel="stylesheet" href="~/css/edituser.css" type="text/css" />
+
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Hagay Samuel</h6>
+                            </div>
+                            
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Noam Launer 57</h6>
+                            </div>
+                            
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Israel</h6>
+                            </div>
+                            
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Rishon Lezion, 7591800</h6>
+                            </div>
+                           
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">0503021691</h6>
+                            </div>
+                
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-9 text-secondary">
+                                <button class="btn btn-primary">Edit</button>
+                                <button class="btn btn-outline-primary">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
+
