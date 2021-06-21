@@ -23,6 +23,15 @@ namespace MatikoWebAppProject.Controllers
             _context = context;
         }
 
+        public IActionResult InfoAndPersonalOrders()
+        {
+            return View();
+        }
+        public IActionResult PersonalArea()
+        {
+            return View();
+        }
+
         // GET: Users
         public async Task<IActionResult> Index()
         {
@@ -137,6 +146,17 @@ namespace MatikoWebAppProject.Controllers
         {
             return View();
         }
+
+        public IActionResult EditUser()
+        {
+            return View();
+        }
+
+        public IActionResult AddressBook()
+        {
+            return View();
+        }
+
 
         // POST: Users/Register
         // To protect from overposting attacks, enable the specific properties you want to bind to.
