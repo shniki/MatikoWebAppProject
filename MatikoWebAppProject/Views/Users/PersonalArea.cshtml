@@ -20,15 +20,21 @@
         </div>
         *@
         <div class="menu">
-            <h3>Someone Famous<br><span>Website Designer</span></h3>
+            <h3>@Context.User.Claims.ElementAt(0).Value</h3>
             <ul>
 
-                <li><img src="~/img/user.png"><a href="#">My Profile</a></li>
+                <li><img src="~/img/user.png"><a asp-action ="InfoAndPersonalOrders">My Profile</a></li>
                 @* <li><img src="~/img/edit.png"><a href="#">Edit Profile</a></li> *@
-                <li><img src="~/img/envelope.png"><a href="#">Inbox</a></li>
-                <li><img src="~/img/settings.png"><a href="#">Settings</a></li>
-                <li><img src="~/img/question.png"><a href="#">Help</a></li>
-                <li><img src="~/img/log-out.png"><a href="#">Logout</a></li>
+                @*<li><img src="~/img/settings.png"><a href="#">Settings</a></li>*@
+                @if (Context.User != null && Context.User.Claims != null)
+                {
+                    <li><img src="~/img/log-out.png"><a asp-action="Logout" asp-controller="Users">Logout</a></li>
+                }
+                else
+                {
+                    @*add appropriate login icon*@
+                    <li><img src="~/img/log-out.png"><a asp-action="Login" asp-controller="Users">Login</a></li>
+                }
             </ul>
         </div>
 

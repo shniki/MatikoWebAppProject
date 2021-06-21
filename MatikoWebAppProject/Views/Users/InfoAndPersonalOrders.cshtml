@@ -17,9 +17,8 @@
                         <div class="d-flex flex-column align-items-center text-center">
                             <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
-                                <h4>Hagay Samuel</h4>
-                                <p class="text-secondary mb-1">Full Stack Developer</p>
-                                <p class="text-muted font-size-sm">Samuel INC</p>
+                                <h4>@Context.User.Claims.ElementAt(0).Value</h4>
+                                <p class="text-muted font-size-sm">@Context.User.Claims.ElementAt(1).Value</p>
                                 <a asp-action="EditUser" asp-controller="Users"><button type="button" class="btn btn-info">Edit</button></a></a>
                             </div>
                         </div>
@@ -28,12 +27,10 @@
                
             
                 <div class="card mt-3">
-
-                    <li> <a href="#"><a asp-action="Register" asp-controller="Users"><button type="button" class="btn btn-dark">My Orders</button></a></a></li>
+                    @*need to build pages for orders info for a specific person*@
+                    <li> <a asp-action="Index" asp-controller="Orders"><button type="button" class="btn btn-dark">My Orders</button></a></a></li>
                     <hr>
-                    <li> <a href="#"><a asp-action="Register" asp-controller="Users"><button type="button" class="btn btn-dark">My Details</button></a></a></li>
-                    <hr>
-                    <li> <a href="#"><a asp-action="Register" asp-controller="Users"><button type="button" class="btn btn-dark">Address Book</button></a></a></li>
+                    <li> <a asp-action="AddressBook" asp-controller="Users"><button type="button" class="btn btn-dark">Address Book</button></a></a></li>
                 </div>
             </div>  
          

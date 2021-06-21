@@ -226,6 +226,13 @@ namespace MatikoWebAppProject.Controllers
                 {
                     new Claim(ClaimTypes.Name, account.FirstName + " " + account.LastName),
                     new Claim(ClaimTypes.Email, account.Email),
+                    new Claim(ClaimTypes.MobilePhone, account.PhoneNumber),
+                    new Claim(ClaimTypes.Role, account.Type.ToString()),
+                    new Claim(ClaimTypes.StreetAddress, account.Address),
+                    new Claim(ClaimTypes.StateOrProvince, account.City),
+                    new Claim(ClaimTypes.PostalCode, account.ZipCode.ToString()),
+                    new Claim(ClaimTypes.Country, account.Country),
+
                 };
 
             var claimsIdentity = new ClaimsIdentity(
