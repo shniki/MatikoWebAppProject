@@ -131,7 +131,7 @@
                 <div id="pass_error">Please fill up your password</div>
 
                 <div class="field">
-                    <input type="submit" value="JOIN MATIKO" /><a asp-action="Index" asp-controller="Home"></a>
+                    <input type="submit" value="JOIN MATIKO" /><a asp-action="Register" asp-controller="Users"></a>
                 </div>
                 <div class="signup"> Already Registered? <a asp-action="Login">Click HERE</a> to login </div>
 
@@ -141,11 +141,11 @@
 </body>
 </html>
 
-<script src="~/js/ReagisterJ.js"></script>
+<script src="~/js/RegisterJ.js"></script>
 
 
 
-@*@if (ViewBag.Error != null)
+@* @if (ViewBag.Error != null)
     {
         <div class="text-danger">@ViewBag.Error</div>
     }*@
