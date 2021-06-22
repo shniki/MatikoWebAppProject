@@ -13,37 +13,44 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">@Context.User.Claims.ElementAt(0).Value</h6>
                             </div>
-                            
+
                         </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0" hidden>@Context.User.Claims.ElementAt(1).Value</h6>
+                            </div>
+
+                        </div>
+
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">@Context.User.Claims.ElementAt(4).Value</h6>
                             </div>
-                            
+
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">@Context.User.Claims.ElementAt(7).Value</h6>
                             </div>
-                            
+
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">@Context.User.Claims.ElementAt(5).Value,@Context.User.Claims.ElementAt(6).Value</h6>
                             </div>
-                           
+
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
                                 <h6 class="mb-0">@Context.User.Claims.ElementAt(2).Value</h6>
                             </div>
-                
+
                         </div>
                         <div class="row">
                             <div class="col-sm-3"></div>
                             <div class="col-sm-9 text-secondary">
-                                <button class="btn btn-primary">Edit</button>
-                                <button class="btn btn-outline-primary">Delete</button>
+                                <a asp-action="EditAddressBook" asp-controller="Users"><button class="btn btn-primary">Edit</button></a>
                             </div>
                         </div>
                     </div>
