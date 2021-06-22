@@ -46,12 +46,13 @@ namespace MatikoWebAppProject.Controllers
 
         [Authorize]
         // GET: Cart
-        public IActionResult Cart(string id)
+        public async Task<IActionResult> CartAsync(string id)
         {
             /* if (HttpContext.Session.GetString("email") != null)
                   return RedirectToAction("Login","Users");*/
             // return View("Cart" ,await _context.Orders.Where(a => a.Id.Equals(id)).ToListAsync());
-            return View(this._context.Orders.Where(a => a.Id.ToString().CompareTo(id) == 0).ToListAsync());
+            var orders = await _context.Orders.FirstOrDefaultAsync(m => m.Id.CompareTo(id) == 0 && m.status == Status.Cart);
+            return View(orders);
         }
 
         // GET: Orders/Create

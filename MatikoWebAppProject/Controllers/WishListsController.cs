@@ -153,7 +153,7 @@ namespace MatikoWebAppProject.Controllers
             var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
             var cart = await _context.Orders
-                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == 0);
+                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
             cart.FullPrice += prod.Price;
             _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S"});
             return RedirectToAction(nameof(Index));
