@@ -1,11 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<link href="~/css/HomePage.css" rel="stylesheet" />
 
+<link href="~/css/StyleHome.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-</head>
 <body>
     <div class="sale-area">
         <div class="sale-text">
@@ -13,7 +12,7 @@
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 
-            <h1 class="ml16 ">use code MAT3 to get 30% off everything</h1>
+            <h2 class="ml16 ">use code HEMI for 30% off everything</h2>
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
         </div>
@@ -61,6 +60,7 @@
             });
     </script>
 
+
     <div class="slideshow-container">
 
         <div class="mySlides fade">
@@ -80,7 +80,19 @@
         </div>
 
     </div>
-    <br>
+
+    <script>
+        $("#slideshow-container > div:gt(0)").hide();
+
+        setInterval(function () {
+            $('#slideshow > div:first')
+                .fadeOut(1000)
+                .next()
+                .fadeIn(1000)
+                .end()
+                .appendTo('#slideshow');
+        }, 3000);
+    </script>
 
     <div style="display:none">
         <span class="dot"></span>
@@ -106,9 +118,10 @@
             }
             slides[slideIndex - 1].style.display = "block";
             dots[slideIndex - 1].className += " active";
-            setTimeout(showSlides, 4000); // Change image every 2 seconds
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
         }
     </script>
+
 
     <div id="portfolio">
         <div class="project">
@@ -152,4 +165,3 @@
     </div>
 
 </body>
-
