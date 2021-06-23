@@ -23,6 +23,7 @@ namespace MatikoWebAppProject.Controllers
             _context = context;
         }
 
+     
         public IActionResult InfoAndPersonalOrders()
         {
             return View();
@@ -65,6 +66,7 @@ namespace MatikoWebAppProject.Controllers
             }
 
             var users = await _context.Users.FindAsync(id);
+            
             if (users == null)
             {
                 return NotFound();
@@ -77,18 +79,46 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Email,FirstName,LastName,Password,PhoneNumber,Birthday,type,ZipCode,Address,City,Country")] Users users)
+        public async Task<IActionResult> Edit([Bind("FirstName,Email,PhoneNumber,Address,City,Country,ZipCode")] Users users)
         {
-            if (id != users.Email)
-            {
-                return NotFound();
-            }
+            /* if (id != users.Email)
+             {
+                 return NotFound();
+             }*/
 
-            if (ModelState.IsValid)
+            /// users.LastName = "Samuel";
+            ///users.Password = "hagayh11";
+
+         _context.Attach(users);
+
+
+         _context.Entry(users).Property(p => p.FirstName).IsModified = true;
+           // _context.Entry(users).Property(p => p.Email).IsModified = true;
+            _context.Entry(users).Property(p => p.Address).IsModified = true;
+         _context.Entry(users).Property(p => p.PhoneNumber).IsModified = true;
+         _context.Entry(users).Property(p => p.ZipCode).IsModified = true;
+         _context.Entry(users).Property(p => p.City).IsModified = true;
+         _context.Entry(users).Property(p => p.Country).IsModified = true;
+         _context.Entry(users).Property(p => p.LastName).IsModified = users.LastName != null;
+         _context.Entry(users).Property(p => p.Password).IsModified = users.Password != null;
+
+
+
+         _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index), "Home");
+
+
+
+
+
+
+
+            //  if (ModelState.IsValid)
+            //  {
+            try
             {
-                try
-                {
-                    _context.Update(users);
+                   _context.Update(users);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -101,11 +131,15 @@ namespace MatikoWebAppProject.Controllers
                     {
                         throw;
                     }
-                }
+            //    }
                 return RedirectToAction(nameof(Index));
             }
-            return View(users);
+            //return View(users);
+            return RedirectToAction(nameof(Index), "Home");
+
         }
+
+
 
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(string id)
@@ -148,6 +182,11 @@ namespace MatikoWebAppProject.Controllers
         }
 
         public IActionResult EditUser()
+        {
+            return View();
+        }
+
+        public IActionResult EditAddressBook()
         {
             return View();
         }
