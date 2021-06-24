@@ -202,7 +202,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Email,Password")] Users user)
+        public async Task<IActionResult> Register([Bind("Email,FirstName,LastName,Birthday,ZipCode,PhoneNumber,Address,City,Country,Password")] Users user)
         {
             if (ModelState.IsValid)
             {
