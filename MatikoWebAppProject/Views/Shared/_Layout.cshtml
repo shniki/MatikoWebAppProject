@@ -62,19 +62,11 @@
                         <link rel="style-sheet" href="style.css">
                     </head>
                     <div class="action">
-
-                        @*
-                <div class="profile" onclick="menuToggle();">
-                   <img src="~/img/img.jpg">
-                </div>
-                        *@
                         <div class="menu">
-                            <h3>
-                                @if (Context.User != null && Context.User.Claims != null)
-                                { Context.User.Claims.ElementAt(0).Value </ h3 >ָ }
+                            <h3>Hello, @Context.User.Claims.ElementAt(0).Value</h3>
                             <ul>
 
-                                <li><img src="~/img/user.png"><a asp-action="InfoAndPersonalOrders" asp-controller="Users">My Profile</a></li>
+                                <li><img src="~/img/user.png"><a asp-action="InfoAndPersonalOrders">My Profile</a></li>
                                 @* <li><img src="~/img/edit.png"><a href="#">Edit Profile</a></li> *@
                                 @*<li><img src="~/img/settings.png"><a href="#">Settings</a></li>*@
                                 @if (Context.User != null && Context.User.Claims != null)
@@ -87,8 +79,8 @@
                                     <li><img src="~/img/log-out.png"><a asp-action="Login" asp-controller="Users">Login</a></li>
                                 }
                             </ul>
+                        </div>
                     </div>
-
 
                     <script>
                         document.getElementById("help").onclick = function () { menuToggle() };
