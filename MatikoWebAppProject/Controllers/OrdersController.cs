@@ -156,6 +156,29 @@ namespace MatikoWebAppProject.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        //need to change the size to whatever the user put in his input box 
+        public async Task<IActionResult> AddToCartAsync(Products prod)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
+            var cart = await _context.Orders
+                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
+            cart.FullPrice += prod.Price;
+            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S" });
+            return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult> RemoveFromCartAsync(Products prod)
+        {
+            var cart = await _context.Orders
+                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
+            if (cart != null)
+            {
+                ProductsOrders po = _context.ProductsOrders.Find(cart.UserEmail, prod.Id);
+                cart.FullPrice -= po.Product.Price * po.Amount;
+                _context.ProductsOrders.Remove(po);
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
         private bool OrdersExists(int id)
         {

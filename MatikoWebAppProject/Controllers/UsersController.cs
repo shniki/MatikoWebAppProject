@@ -237,25 +237,25 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([Bind("Email,Password")] Users users)
+        public IActionResult Login([Bind("Email,Password")] Users users)
         {
-                //var q = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
-                var q = from u in _context.Users
-                        where u.Email == users.Email && u.Password == users.Password
-                        select u;
-                if (q.Count() > 0)
-                {
-                    /*HttpContext.Session.SetString("Email", q.First().Email);
-                    HttpContext.Session.SetString("Name", q.First().FirstName + " " + q.First().LastName);
-                    */
-                    Signin(q.First());
+            //var q = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
+            var q = from u in _context.Users
+                    where u.Email == users.Email && u.Password == users.Password
+                    select u;
+            if (q.Count() > 0)
+            {
+                /*HttpContext.Session.SetString("Email", q.First().Email);
+                HttpContext.Session.SetString("Name", q.First().FirstName + " " + q.First().LastName);
+                */
+                Signin(q.First());
 
-                    return RedirectToAction(nameof(Index), "Home");
-                }
-                else
-                {
-                    ViewData["Error"] = "Username and/or password are incorrect.";
-                }
+                return RedirectToAction(nameof(Index), "Home");
+            }
+            else
+            {
+                ViewData["Error"] = "Username and/or password are incorrect.";
+            }
             return View(users);
         }
 
@@ -287,7 +287,6 @@ namespace MatikoWebAppProject.Controllers
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
         }
-
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
