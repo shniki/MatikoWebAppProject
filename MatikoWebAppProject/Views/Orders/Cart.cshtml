@@ -1,122 +1,146 @@
-﻿@model IEnumerable<MatikoWebAppProject.Models.Orders>
+﻿@* @model MatikoWebAppProject.Models.Orders *@
+@* @model IEnumerable<MatikoWebAppProject.Models.Orders> *@
+@* @model IEnumerable<MatikoWebAppProject.Models.ProductsOrders> *@
 
-@{ ViewData["Title"] = "MyOrders";
-    Layout = "_Layout"; }
+
+ @model IEnumerable<MatikoWebAppProject.Models.Products> 
+
+
+
+@{ ViewData["Title"] = "Cart";
+    Layout = "_Layout";
+
+    List<int> foo = new List<int>();
+    List<String> size = new List<string>();
+    int n = 7;
+    foo.Add(n);
+    String d = "L";
+    size.Add(d);
+    double total = 3;
+    int amountremove = 2;
+    String sizeremove = "S";
+
+}
 
 <link rel="stylesheet" href="~/css/StyleCart.css" type="text/css" />
 
 
 <h1>Shopping Cart</h1>
+<body>
+    <form asp-action="Edit" method="post" name="form" class="login_form">
+        <div class="shopping-cart">
 
-<div class="shopping-cart">
+            <div class="column-labels">
+                <label class="product-image">Image</label>
+                <label class="product-details">Product</label>
+                <label class="product-price">Price</label>
+                <label class="product-quantity">Quantity</label>
+                <label class="product-removal">Remove</label>
+                <label class="product-line-price">Total</label>
 
-    <div class="column-labels">
-        <label class="product-image">Image</label>
-        <label class="product-details">Product</label>
-        <label class="product-price">Price</label>
-        <label class="product-quantity">Quantity</label>
-        <label class="product-removal">Remove</label>
-        <label class="product-line-price">Total</label>
-    </div>
+            </div>
 
-    <div class="product">
-        <div class="product-image">
-            <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
+            <div class="product">
+                <div class="product-image">
+                    <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
+                </div>
+                <div class="product-details">
+                    <div class="product-title">Dingo Dog Bones</div>
+                    <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be begging for these things! I got curious once and ate one myself. I'm a fan.</p>
+                </div>
+                <div class="product-price">12.99</div>
+                <div class="product-quantity">
+                    
+                    <input type="number" class="amount" value="2" min="1">
+                </div>
+
+                <div class="product-removal">
+                    @* for remove*@
+                    <a asp-controller="Orders" asp-action="Cart2" asp-route-amountremove=@amountremove asp-route-sizeremove=@sizeremove asp-route-total=@total>Remove</a>
+
+                </div>
+
+
+                <div class="product-line-price">25.98</div>
+            </div>
+
+            <div class="product">
+                <div class="product-image">
+                    <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
+                </div>
+                <div class="product-details">
+                    <div class="product-title">Nutro™ Adult Lamb and Rice Dog Food</div>
+                    <p class="product-description">Who doesn't like lamb and rice? We've all hit the halal cart at 3am while quasi-blackout after a night of binge drinking in Manhattan. Now it's your dog's turn!</p>
+                </div>
+                <div class="product-price">45.99</div>
+                <div class="product-quantity">
+                    <input type="number" value="1" min="1">
+                </div>
+
+                <div class="product-removal">
+                    @* for checkout*@
+                    @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
+
+                </div>
+                <div class="product-line-price">45.99</div>
+            </div>
+
+
+            @* This needs the database too, you can comment from here     @Html.DisplayFor(modelItem => item.Name)*@
+
+            <div>
+                @foreach (var item in Model)
+                {
+                    <div class="product">
+                        <div class="product-image">
+                            <img src=@item.ImageUrl>
+                        </div>
+                        <div class="product-details">
+                            <div class="product-title"> @Html.DisplayFor(modelItem => item.Name)</div>
+                            <p class="product-description">@Html.DisplayFor(modelItem => item.Category)</p>
+                        </div>
+                        <div class="product-price"> @Html.DisplayFor(modelItem => item.Price)</div>
+                        <div class="product-quantity">
+                            <input type="number" value="1" min="1">
+                        </div>
+
+                        <div class="product-removal">
+
+                            <a asp-controller="Orders" asp-action="Cart2" asp-route-id=@item.Id>Remove</a>
+
+                        </div>
+                        <div class="product-line-price">@Html.DisplayFor(modelItem => item.Price)</div>
+                    </div>
+
+                }
+            </div>
+
+            @* To Here*@
+
+            <div class="totals">
+                <div class="totals-item">
+                    <label>Subtotal</label>
+                    <div class="totals-value" id="cart-subtotal">71.97</div>
+                </div>
+                <div class="totals-item">
+                    <label>Tax (5%)</label>
+                    <div class="totals-value" id="cart-tax">3.60</div>
+                </div>
+                <div class="totals-item">
+                    <label>Shipping</label>
+                    <div class="totals-value" id="cart-shipping">15.00</div>
+                </div>
+                <div class="totals-item totals-item-total">
+                    <label>Grand Total</label>
+                    <div class="totals-value" id="cart-total">90.57</div>
+                </div>
+            </div>
+
+            @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
+
         </div>
-        <div class="product-details">
-            <div class="product-title">Dingo Dog Bones</div>
-            <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be begging for these things! I got curious once and ate one myself. I'm a fan.</p>
-        </div>
-        <div class="product-price">12.99</div>
-        <div class="product-quantity">
-            <input type="number" value="2" min="1">
-        </div>
-        <div class="product-removal">
-            <button class="remove-product">
-                Remove
-            </button>
-        </div>
-        <div class="product-line-price">25.98</div>
-    </div>
-
-    <div class="product">
-        <div class="product-image">
-            <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
-        </div>
-        <div class="product-details">
-            <div class="product-title">Nutro™ Adult Lamb and Rice Dog Food</div>
-            <p class="product-description">Who doesn't like lamb and rice? We've all hit the halal cart at 3am while quasi-blackout after a night of binge drinking in Manhattan. Now it's your dog's turn!</p>
-        </div>
-        <div class="product-price">45.99</div>
-        <div class="product-quantity">
-            <input type="number" value="1" min="1">
-        </div>
-        <div class="product-removal">
-            <button class="remove-product">
-                Remove
-            </button>
-        </div>
-        <div class="product-line-price">45.99</div>
-    </div>
-
-
-    @* This needs the database too, you can comment from here*@
-
-    <div>
-        @foreach (var item in Model)
-        {
-<div class="product">
-    <div class="product-image">
-        <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
-    </div>
-    <div class="product-details">
-
-        <div class="product-title">modelItem => item.Id</div>
-        <p class="product-description">
-            modelItem => item.UserEmail
-        </p>
-    </div>
-    <div class="product-price">modelItem => item.FullPrice</div>
-    <div class="product-quantity">
-        <input type="number" value="2" min="1">
-    </div>
-    <div class="product-removal">
-        <button class="remove-product">
-        </button>
-    </div>
-    <div class="product-status">modelItem => item.status</div>
-    <div class="product-dateorder">modelItem => item.DateOrder</div>
-    <div class="product-dateorder">modelItem => item.EstimatedDateArrival</div>
-
-
-
-</div>}
-    </div>
-
-    @* To Here*@
-
-    <div class="totals">
-        <div class="totals-item">
-            <label>Subtotal</label>
-            <div class="totals-value" id="cart-subtotal">71.97</div>
-        </div>
-        <div class="totals-item">
-            <label>Tax (5%)</label>
-            <div class="totals-value" id="cart-tax">3.60</div>
-        </div>
-        <div class="totals-item">
-            <label>Shipping</label>
-            <div class="totals-value" id="cart-shipping">15.00</div>
-        </div>
-        <div class="totals-item totals-item-total">
-            <label>Grand Total</label>
-            <div class="totals-value" id="cart-total">90.57</div>
-        </div>
-    </div>
-
-    <button class="checkout">Checkout</button>
-
-</div>
+    </form>
+</body>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

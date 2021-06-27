@@ -18,6 +18,11 @@
     width: 10%;
 }
 
+.product-size {
+    float: left;
+    width: 10%;
+}
+
 .product-removal {
     float: left;
     width: 9%;
@@ -126,6 +131,10 @@ label {
         width: 40px;
     }
 
+    .product .product-size input {
+        width: 40px;
+    }
+
     .product .remove-product {
         border: 0;
         padding: 4px 8px;
@@ -221,6 +230,18 @@ label {
         }
 
         .product-quantity:before {
+            content: "x";
+        }
+
+    .product-size {
+        width: 100px;
+    }
+
+        .product-size input {
+            margin-left: 20px;
+        }
+
+        .product-size:before {
             content: "x";
         }
 

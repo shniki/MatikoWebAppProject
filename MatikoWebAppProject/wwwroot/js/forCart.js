@@ -46,6 +46,20 @@ function recalculateCart() {
 
 /* Update quantity */
 function updateQuantity(quantityInput) {
+
+    
+    String sParam = quantityInput.toString();
+    $.ajax({
+        type: "POST",
+        url: "OrdersController/Cart4",
+        data: "{s:sParam}", // passing the parameter 
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (retValue) {
+            // Do something with the return value from.Net method
+        }
+    }); 
+
     /* Calculate line price */
     var productRow = $(quantityInput).parent().parent();
     var price = parseFloat(productRow.children('.product-price').text());
