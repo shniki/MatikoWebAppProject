@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MatikoWebAppProject.Data;
 using MatikoWebAppProject.Models;
+using System.Collections.ObjectModel;
 
 namespace MatikoWebAppProject.Controllers
 {
@@ -155,9 +156,73 @@ namespace MatikoWebAppProject.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult Statistics()
+        {
+            //statistic 1- how many orders every customer had made, there is only one shopping cart
+            ICollection<Stat> statistic1 = new Collection<Stat>();
+            var result1 = from c in _context.Users.Include(o => o.AllOrdersMade)
+                          where (c.AllOrdersMade.Count) > 0
+                          orderby (c.AllOrdersMade.Count) descending
+                          select c;
+            foreach (var v in result1)
+            {
+                statistic1.Add(new Stat(v.FirstName, v.AllOrdersMade.Count()));
+            }
+
+            ViewBag.data = statistic1;
+            //finish first statistic
+            //statistic 2- which colors the customers like to order
+            ICollection<Stat> statistic2 = new Collection<Stat>();
+
+            int Count;
+            var result2 = (from p in _context.Products where (1 < 0) select new ResultPair()).ToList();//create empty result table
+            foreach (var pro in _context.Products.Include(po => po.ProOrders).ThenInclude(o => o.Order))
+            {
+                Count = 0;
+                if (pro == null)
+                    continue;
+                foreach (var po in pro.ProOrders)
+                {
+                    if (po == null)
+                        continue;
+                    if (po.Order.status != Status.Cart)
+                    {
+                        if (po.Product.color == pro.color)
+                            ++Count;
+                    }
+                }
+                result2.Add(new ResultPair() { Color = pro.color, count = Count });
+            }
+            foreach (var v in result2)
+            {
+                if (v.count > 0)
+                    statistic2.Add(new Stat(v.Color.ToString(), v.count));
+            }
+
+            ViewBag.data2 = statistic2;
+            return View();
+        }
+
         private bool ProductsExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);
         }
+
+        internal class ResultPair
+        {
+            public Color Color { get; set; }
+            public int count { get; set; }
+        }
     }
 }
+    public class Stat
+    {
+        public string Key;
+        public int Values;
+        public Stat(string key, int values)
+        {
+            Key = key;
+            Values = values;
+        }
+    }

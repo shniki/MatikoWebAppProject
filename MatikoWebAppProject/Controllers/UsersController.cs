@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MatikoWebAppProject.Controllers
 {
@@ -32,7 +33,7 @@ namespace MatikoWebAppProject.Controllers
         {
             return View();
         }
-
+        [Authorize]
         // GET: Users
         public async Task<IActionResult> Index()
         {

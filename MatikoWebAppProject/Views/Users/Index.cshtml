@@ -27,10 +27,11 @@
                     <thead>
                         <tr>
                             <th>Email</th>
-                            <th>Address</th>
-                            <th>Type</th>
                             <th>First Name</th>
                             <th>Last Name</th>
+                            <th>Type</th>
+                            <th>Address</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -41,10 +42,10 @@
 
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Address)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Type)</td>
                             <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
                             <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Type)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Address)</td>
                         </tr>
                         }
                     </tbody>

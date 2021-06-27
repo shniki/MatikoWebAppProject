@@ -10,6 +10,9 @@ header {
     background-color: #000;
     height: 7vh;
 }
+body{
+    background-color: white;
+}
 
 ul {
     float: left;
@@ -38,6 +41,9 @@ ul {
                 color: #000;
             }
 
+            .nameTag{
+                color: white;
+            }
 .logo img {
     float: left;
     width: 120px;
@@ -129,10 +135,14 @@ ul {
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 
 footer {
+
     background-color: rgba(0,0,0,0.6);
     overflow-x: hidden;
     padding: 14vmin 18vmin;
     position: fixed;
+    left : 0;
+    text-align: center;
+    color: white;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
