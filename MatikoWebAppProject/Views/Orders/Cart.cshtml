@@ -89,33 +89,33 @@
             @* This needs the database too, you can comment from here     @Html.DisplayFor(modelItem => item.Name)*@
 
             <div>
-                @foreach (var item in Model)
+                @for (int i = 0; i <Model.Count(); i++)//int i = 0 ....
                 {
                     <div class="product">
                         <div class="product-image">
-                            <img src=@item.ImageUrl>
+                            <img src=@Model.ElementAt(i).ImageUrl> @*item is Model[i]*@
                         </div>
                         <div class="product-details">
-                            <div class="product-title"> @Html.DisplayFor(modelItem => item.Name)</div>
-                            <p class="product-description">@Html.DisplayFor(modelItem => item.Category)</p>
+                            <div class="product-title"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Name)</div>
+                            <p class="product-description">@Html.DisplayFor(modelItem => Model.ElementAt(i).Category)</p>
                         </div>
-                        <div class="product-price"> @Html.DisplayFor(modelItem => item.Price)</div>
+                        <div class="product-price"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Price)</div>
                         <div class="product-quantity">
-                            <input type="number" value="1" min="1">
+                            <input type="number" value="@ViewBag["popo"].ElementAt(i).Amount" min="1">
                         </div>
 
                         <div class="product-removal">
 
-                            <a asp-controller="Orders" asp-action="Cart2" asp-route-id=@item.Id>Remove</a>
+                            <a asp-controller="Orders" asp-action="Cart2" asp-route-id=@Model.ElementAt(i).Id>Remove</a>
 
                         </div>
-                        <div class="product-line-price">@Html.DisplayFor(modelItem => item.Price)</div>
+                        <div class="product-line-price">@Html.DisplayFor(modelItem => Model.ElementAt(i).Price)</div>
                     </div>
 
                 }
             </div>
 
-            @* To Here*@
+            @* make the prices dynamic(except for shipping)*@
 
             <div class="totals">
                 <div class="totals-item">
@@ -135,7 +135,7 @@
                     <div class="totals-value" id="cart-total">90.57</div>
                 </div>
             </div>
-
+            @*fix this line*@
             @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
 
         </div>

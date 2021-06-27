@@ -262,6 +262,16 @@ namespace MatikoWebAppProject.Controllers
 
         private async void Signin(Users account)
         {
+            List<Users> list = _context.Users.ToList();
+            int index = -1;
+            for(int i = 0; i < list.Count; i++)
+            {
+                if (list.ElementAt(i).Email == account.Email)
+                {
+                    index = i;
+                    continue;
+                }
+            }
             var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, account.FirstName + " " + account.LastName),
@@ -272,7 +282,7 @@ namespace MatikoWebAppProject.Controllers
                     new Claim(ClaimTypes.StateOrProvince, account.City),
                     new Claim(ClaimTypes.PostalCode, account.ZipCode.ToString()),
                     new Claim(ClaimTypes.Country, account.Country),
-
+                    new Claim(ClaimTypes.Rsa, index.ToString())
                 };
 
             var claimsIdentity = new ClaimsIdentity(

@@ -179,8 +179,8 @@ namespace MatikoWebAppProject.Controllers
                     select u;
 
            ProductsOrders[] productsOrders =h.ToArray();
-            
-            List<Products> list = new List<Products>();
+           List<Products> list = new List<Products>();
+            ViewBag["popo"] = productsOrders;
 
             int[] productsid = new int[h.Count()];
             for (int i = 0; i < productsid.Length; i++)
@@ -313,15 +313,33 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
         //need to change the size to whatever the user put in his input box 
-        public async Task<IActionResult> AddToCartAsync(Products prod)
+        public async Task<IActionResult> AddToCartAsync(int ProductId)
         {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
+            var user = _context.Users.Find(HttpContext.User.Claims.ElementAt(1).Value);
+            var product = _context.Products.Find(ProductId);
             var cart = await _context.Orders
                 .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
-            cart.FullPrice += prod.Price;
-            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S" });
-            return RedirectToAction(nameof(Index));
+            if (cart.Products == null)
+                cart.Products = new List<ProductsOrders>();
+            if (cart.Products.Where(p => p.ProductId == ProductId).FirstOrDefault() != null)
+            {
+                if (cart.Products.Where(p => p.ProductId == ProductId).FirstOrDefault().Amount >= 1)
+                {
+                    cart.Products.Where(p => p.ProductId == ProductId).FirstOrDefault().Amount += 1;
+                    _context.ProductsOrders.Update(cart.Products.Where(p => p.ProductId == ProductId).FirstOrDefault());
+                    cart.FullPrice += product.Price;
+                    _context.SaveChanges();
+                    _context.Orders.Update(cart);
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                cart.Products.Add(new ProductsOrders { ProductId = ProductId, Product = _context.Products.Find(ProductId), Order = cart, OrderId = cart.Id, Amount = 1, Size = "S" });
+                _context.Orders.Update(cart);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index), _context.Products.ToList());
         }
         public async Task<IActionResult> RemoveFromCartAsync(Products prod)
         {
@@ -332,6 +350,7 @@ namespace MatikoWebAppProject.Controllers
                 ProductsOrders po = _context.ProductsOrders.Find(cart.UserEmail, prod.Id);
                 cart.FullPrice -= po.Product.Price * po.Amount;
                 _context.ProductsOrders.Remove(po);
+                _context.SaveChanges();
             }
             return RedirectToAction(nameof(Index));
         }
