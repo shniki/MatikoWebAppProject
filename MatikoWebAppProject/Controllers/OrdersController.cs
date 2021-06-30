@@ -64,20 +64,20 @@ namespace MatikoWebAppProject.Controllers
 
             ProductsOrders[] productsOrders = h.ToArray();
             List<ProductsOrders> list = h.ToList();
-            for (int i=0; i<productsOrders.Length;i++)
+            for (int i = 0; i < productsOrders.Length; i++)
             {
-                if(productsOrders[i].ProductId == id)
+                if (productsOrders[i].ProductId == id)
                 {
                     list.Remove(productsOrders[i]);
                     _context.ProductsOrders.Remove(productsOrders[i]);
                     _context.SaveChanges();
-                    
+
 
                     break;
                 }
             }
-           
-            
+
+
 
 
         }
@@ -86,45 +86,43 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart3 for checkout 
-        public IActionResult Cart3( int[] foo, String[] size, int[] total)
+        public IActionResult Cart3(float total)
         {
             var j = from u in _context.Orders
                     where u.UserEmail.CompareTo(idu) == 0
                     select u;
-            Orders[] arr =j.ToArray();
-            arr[0].FullPrice = total[0];
-
-            var q = from u in _context.Orders
-                    where u.UserEmail.CompareTo(idu) == 0
-                    select u.Id;
+            j.First().FullPrice = total;
 
 
-            var h = from u in _context.ProductsOrders
-                    where u.OrderId.CompareTo(q.First()) == 0
-                    select u;
 
-            ProductsOrders[] productsOrders = h.ToArray();
+            /*       var q = from u in _context.Orders
+                           where u.UserEmail.CompareTo(idu) == 0
+                           select u.Id;
 
-            for(int i=0; i<productsOrders.Length;i++)
-            {
-                _context.ProductsOrders.Find(productsOrders[i]).Size = size[i];
-                _context.ProductsOrders.Find(productsOrders[i]).Amount = foo[i];
-            }
+
+                   var h = from u in _context.ProductsOrders
+                           where u.OrderId.CompareTo(q.First()) == 0
+                           select u;
+
+                   ProductsOrders[] productsOrders = h.ToArray();
+
+                   for(int i=0; i<productsOrders.Length;i++)
+                   {
+                       _context.ProductsOrders.Find(productsOrders[i]).Size = size[i];
+                       _context.ProductsOrders.Find(productsOrders[i]).Amount = foo[i];
+                   }
+
+                   */
             _context.SaveChanges();
 
-            return View();
+            //return View();
+            return RedirectToAction(nameof(Index), "Home");
+            // change to thank you page
         }
 
-        [Authorize]
-        [HttpGet]
 
-        // GET: Cart3 for checkout 
-        public IActionResult Cart4(String id)
-        {
-            int s = 5;
 
-            return View();
-        }
+
 
 
 
@@ -147,7 +145,7 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart
-        public  async Task<IActionResult> Cart(string id)
+        public async Task<IActionResult> Cart(string id)
         {
             /* if (HttpContext.Session.GetString("email") != null)
                  return RedirectToAction("Login","Users");*/
@@ -174,13 +172,16 @@ namespace MatikoWebAppProject.Controllers
                     select u.Id;
 
 
-            var h = from  u in _context.ProductsOrders
+            var h = from u in _context.ProductsOrders
                     where u.OrderId.CompareTo(q.First()) == 0
                     select u;
 
-           ProductsOrders[] productsOrders =h.ToArray();
-           List<Products> list = new List<Products>();
-            ViewBag["popo"] = productsOrders;
+            ProductsOrders[] productsOrders = h.ToArray();
+            //
+            //ViewBag["popo"] = productsOrders;
+            ViewBag.popo = productsOrders;
+            //
+            List<Products> list = new List<Products>();
 
             int[] productsid = new int[h.Count()];
             for (int i = 0; i < productsid.Length; i++)
@@ -192,9 +193,9 @@ namespace MatikoWebAppProject.Controllers
 
 
 
-            for (int i=0; i<h.Count();i++)
+            for (int i = 0; i < h.Count(); i++)
             {
-                foreach(var line in _context.Products)
+                foreach (var line in _context.Products)
                 {
                     if (productsid[i] == line.Id)
                         list.Add(line);
@@ -313,33 +314,15 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
         //need to change the size to whatever the user put in his input box 
-        public async Task<IActionResult> AddToCartAsync(int ProductId)
+        public async Task<IActionResult> AddToCartAsync(Products prod)
         {
-            var user = _context.Users.Find(HttpContext.User.Claims.ElementAt(1).Value);
-            var product = _context.Products.Find(ProductId);
+            var user = await _context.Users
+                .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
             var cart = await _context.Orders
                 .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
-            if (cart.Products == null)
-                cart.Products = new List<ProductsOrders>();
-            if (cart.Products.Where(p => p.ProductId == ProductId).FirstOrDefault() != null)
-            {
-                if (cart.Products.Where(p => p.ProductId == ProductId).FirstOrDefault().Amount >= 1)
-                {
-                    cart.Products.Where(p => p.ProductId == ProductId).FirstOrDefault().Amount += 1;
-                    _context.ProductsOrders.Update(cart.Products.Where(p => p.ProductId == ProductId).FirstOrDefault());
-                    cart.FullPrice += product.Price;
-                    _context.SaveChanges();
-                    _context.Orders.Update(cart);
-                    _context.SaveChanges();
-                }
-            }
-            else
-            {
-                cart.Products.Add(new ProductsOrders { ProductId = ProductId, Product = _context.Products.Find(ProductId), Order = cart, OrderId = cart.Id, Amount = 1, Size = "S" });
-                _context.Orders.Update(cart);
-                _context.SaveChanges();
-            }
-            return RedirectToAction(nameof(Index), _context.Products.ToList());
+            cart.FullPrice += prod.Price;
+            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S" });
+            return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> RemoveFromCartAsync(Products prod)
         {
@@ -350,7 +333,6 @@ namespace MatikoWebAppProject.Controllers
                 ProductsOrders po = _context.ProductsOrders.Find(cart.UserEmail, prod.Id);
                 cart.FullPrice -= po.Product.Price * po.Amount;
                 _context.ProductsOrders.Remove(po);
-                _context.SaveChanges();
             }
             return RedirectToAction(nameof(Index));
         }

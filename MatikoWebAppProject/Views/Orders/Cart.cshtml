@@ -3,22 +3,16 @@
 @* @model IEnumerable<MatikoWebAppProject.Models.ProductsOrders> *@
 
 
- @model IEnumerable<MatikoWebAppProject.Models.Products> 
+@model IEnumerable<MatikoWebAppProject.Models.Products>
 
 
 
 @{ ViewData["Title"] = "Cart";
     Layout = "_Layout";
 
-    List<int> foo = new List<int>();
-    List<String> size = new List<string>();
-    int n = 7;
-    foo.Add(n);
-    String d = "L";
-    size.Add(d);
-    double total = 3;
-    int amountremove = 2;
-    String sizeremove = "S";
+    float total = 0;
+
+
 
 }
 
@@ -40,56 +34,86 @@
 
             </div>
 
-            <div class="product">
-                <div class="product-image">
-                    <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
-                </div>
-                <div class="product-details">
-                    <div class="product-title">Dingo Dog Bones</div>
-                    <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be begging for these things! I got curious once and ate one myself. I'm a fan.</p>
-                </div>
-                <div class="product-price">12.99</div>
-                <div class="product-quantity">
-                    
-                    <input type="number" class="amount" value="2" min="1">
-                </div>
 
-                <div class="product-removal">
-                    @* for remove*@
+            @*
+                    <div class="product">
+                        <div class="product-image">
+                            <img src="https://s.cdpn.io/3/dingo-dog-bones.jpg">
+                        </div>
+                        <div class="product-details">
+                            <div class="product-title">Dingo Dog Bones</div>
+                            <p class="product-description">The best dog bones of all time. Holy crap. Your dog will be begging for these things! I got curious once and ate one myself. I'm a fan.</p>
+                        </div>
+                        <div class="product-price">12.99</div>
+                        <div class="product-quantity">
+
+                            <input type="number" class="amount" value="2" min="1">
+                        </div>
+
+                        <div class="product-removal">
+
                     <a asp-controller="Orders" asp-action="Cart2" asp-route-amountremove=@amountremove asp-route-sizeremove=@sizeremove asp-route-total=@total>Remove</a>
 
                 </div>
 
 
                 <div class="product-line-price">25.98</div>
-            </div>
-
-            <div class="product">
-                <div class="product-image">
-                    <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
-                </div>
-                <div class="product-details">
-                    <div class="product-title">Nutro™ Adult Lamb and Rice Dog Food</div>
-                    <p class="product-description">Who doesn't like lamb and rice? We've all hit the halal cart at 3am while quasi-blackout after a night of binge drinking in Manhattan. Now it's your dog's turn!</p>
-                </div>
-                <div class="product-price">45.99</div>
-                <div class="product-quantity">
-                    <input type="number" value="1" min="1">
                 </div>
 
-                <div class="product-removal">
-                    @* for checkout*@
-                    @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
+                <div class="product">
+                    <div class="product-image">
+                        <img src="https://s.cdpn.io/3/large-NutroNaturalChoiceAdultLambMealandRiceDryDogFood.png">
+                    </div>
+                    <div class="product-details">
+                        <div class="product-title">Nutro™ Adult Lamb and Rice Dog Food</div>
+                        <p class="product-description">Who doesn't like lamb and rice? We've all hit the halal cart at 3am while quasi-blackout after a night of binge drinking in Manhattan. Now it's your dog's turn!</p>
+                    </div>
+                    <div class="product-price">45.99</div>
+                    <div class="product-quantity">
+                        <input type="number" value="1" min="1">
+                    </div>
 
+                    <div class="product-removal">
+                        @* for checkout
+                        @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
+
+                    </div>
+                    <div class="product-line-price">45.99</div>
                 </div>
-                <div class="product-line-price">45.99</div>
-            </div>
-
+            *@
 
             @* This needs the database too, you can comment from here     @Html.DisplayFor(modelItem => item.Name)*@
 
             <div>
-                @for (int i = 0; i <Model.Count(); i++)//int i = 0 ....
+                @*
+                    @foreach (var item in Model)
+                    {
+                        <div class="product">
+                            <div class="product-image">
+                                <img src=@item.ImageUrl>
+                            </div>
+                            <div class="product-details">
+                                <div class="product-title"> @Html.DisplayFor(modelItem => item.Name)</div>
+                                <p class="product-description">@Html.DisplayFor(modelItem => item.Category)</p>
+                            </div>
+                            <div class="product-price"> @Html.DisplayFor(modelItem => item.Price)</div>
+                            <div class="product-quantity">
+                                <input type="number" value="@ViewBag["popo"].ElementAt(i).Amount" min="1">
+                            </div>
+
+                            <div class="product-removal">
+
+                                <a asp-controller="Orders" asp-action="Cart2" asp-route-id=@item.Id>Remove</a>
+
+                            </div>
+                            <div class="product-line-price">@Html.DisplayFor(modelItem => item.Price)</div>
+                        </div>
+
+                    }
+
+                *@
+
+                @for (int i = 0; i < Model.Count(); i++)//int i = 0 ....
                 {
                     <div class="product">
                         <div class="product-image">
@@ -101,21 +125,35 @@
                         </div>
                         <div class="product-price"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Price)</div>
                         <div class="product-quantity">
-                            <input type="number" value="@ViewBag["popo"].ElementAt(i).Amount" min="1">
+                            @ViewBag.popo[i].Amount
+
+                            @{
+                                float am = ViewBag.popo[i].Amount;
+                                float pr = Model.ElementAt(i).Price;
+                                float total1 = am * pr;
+                                total += total1;
+
+                            }
+
                         </div>
 
                         <div class="product-removal">
 
-                            <a asp-controller="Orders" asp-action="Cart2" asp-route-id=@Model.ElementAt(i).Id>Remove</a>
+                            <a asp-controller="Orders" asp-action="Cart2" asp-route-id=@Model.ElementAt(i).Id>
+
+                                Remove
+
+                            </a>
 
                         </div>
-                        <div class="product-line-price">@Html.DisplayFor(modelItem => Model.ElementAt(i).Price)</div>
+                        <div class="product-line-price">@total1</div>
                     </div>
 
                 }
+
             </div>
 
-            @* make the prices dynamic(except for shipping)*@
+            @* To Here*@
 
             <div class="totals">
                 <div class="totals-item">
@@ -132,12 +170,17 @@
                 </div>
                 <div class="totals-item totals-item-total">
                     <label>Grand Total</label>
-                    <div class="totals-value" id="cart-total">90.57</div>
+                    <div class="totals-value" id="cart-total">@total</div>
                 </div>
             </div>
-            @*fix this line*@
-            @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
+            @*
+                @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
+            *@
 
+
+            <a asp-controller="Orders" asp-action="Cart3" asp-route-total=@total>Checkout</a>
+
+        </div>
         </div>
     </form>
 </body>
