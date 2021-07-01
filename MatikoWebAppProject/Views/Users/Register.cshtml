@@ -15,7 +15,7 @@
         <div class="content">
             <header> SIGN UP</header>
             <form asp-action="Register" method="post" class="register_form" name="form" onsubmit="return validated()">
-                @* <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
                 <div class="field">
@@ -149,8 +149,6 @@
     {
         <div class="text-danger">@ViewBag.Error</div>
     }*@
-
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

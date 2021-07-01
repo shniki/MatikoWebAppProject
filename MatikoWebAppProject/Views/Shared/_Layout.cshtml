@@ -58,7 +58,7 @@
                                 <h3>@Context.User.Claims.ElementAt(0).Value</h3>
                                 <ul>
 
-                                    <li><img src="~/img/user.png"><a asp-action="InfoAndPersonalOrders">My Profile</a></li>
+                                    <li><img src="~/img/user.png"><a asp-action="InfoAndPersonalOrders" asp-controller="Users">My Profile</a></li>
                                     @* <li><img src="~/img/edit.png"><a href="#">Edit Profile</a></li> *@
                                     @*<li><img src="~/img/settings.png"><a href="#">Settings</a></li>*@
                                     @if (Context.User != null && Context.User.Claims != null)

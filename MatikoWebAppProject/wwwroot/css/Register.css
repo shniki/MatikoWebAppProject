@@ -31,7 +31,7 @@ body {
     transform: translate(-50%,-50%);
     text-align: center;
     width: 370px;
-    height:70%;
+    height:60%;
     z-index: 999;
     padding: 60px 32px;
     background: rgba(255,255,255,0.04);
