@@ -464,7 +464,27 @@ dropdown-item:hover{
     margin-left: auto;
 }
 
+.shop-item-image {
+    float: left;
+    width: 20%;
+}
 
+.product .shop-item-image img {
+    width: 100px;
+}
+
+.shop-item-image {
+    float: right;
+    width: auto;
+}
+
+    .shop-item-image img {
+        margin: 0 0 10px 10px;
+    }
+
+.product .shop-item-image {
+    text-align: center;
+}
 
 /*.nav1 {
     left: 10px;
