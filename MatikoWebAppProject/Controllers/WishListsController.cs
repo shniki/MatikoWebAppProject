@@ -15,6 +15,8 @@ namespace MatikoWebAppProject.Controllers
     public class WishListsController : Controller
     {
         private readonly MatikoWebAppProjectContext _context;
+        public static string idu;
+
 
         public WishListsController(MatikoWebAppProjectContext context)
         {
@@ -22,10 +24,11 @@ namespace MatikoWebAppProject.Controllers
         }
 
         // GET: WishLists
+      /*
         public async Task<IActionResult> Index()
         {
             return View(await _context.WishList.ToListAsync());
-        }
+        } */
 
         // GET: WishLists/Details/5
         public async Task<IActionResult> Details(string id)
@@ -174,5 +177,55 @@ namespace MatikoWebAppProject.Controllers
         {
             return _context.WishList.Any(e => e.UserEmail == id);
         }
+
+
+        [Authorize]
+        [HttpGet]
+
+        // GET: Whishlist
+        public async Task<IActionResult> Index(string id)
+        {
+
+            var q = from u in _context.ProductsWishList
+                    where u.UserEmail.CompareTo(id) == 0
+                    select u;
+
+
+        
+            ProductsWishList[] productswishlist = q.ToArray();
+            
+            ViewBag.popo = productswishlist;
+        
+            List<Products> list = new List<Products>();
+
+            int[] productsid = new int[q.Count()];
+            for (int i = 0; i < productsid.Length; i++)
+                productsid[i] = productswishlist[i].ProductId;
+
+
+
+
+
+
+
+            for (int i = 0; i < q.Count(); i++)
+            {
+                foreach (var line in _context.Products)
+                {
+                    if (productsid[i] == line.Id)
+                        list.Add(line);
+                }
+            }
+
+
+            idu = id;
+
+            //  return View(h);
+            //return View(h.ToList());
+
+            return View(list);
+
+        }
+
     }
 }
