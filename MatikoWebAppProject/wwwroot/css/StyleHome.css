@@ -1,4 +1,5 @@
 ﻿/* Slideshow container */
+
 .slideshow-container {
     width: 100%;
     height: 500px;
@@ -225,7 +226,26 @@
     margin-left: auto;
 }
 
+footer {
+    background-color: rgba(0,0,0,0.6);
+    overflow-x: hidden;
+    padding: 14vmin 18vmin;
+    left: 0;
+    text-align: center;
+    color: white;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 20px; /* Vertically center the text there */
+}
 
+    footer.column i {
+        color: #fff;
+    }
+
+        footer.column i + i {
+            padding: 0 0.5em;
+        }
 
 /*.nav1 {
     left: 10px;

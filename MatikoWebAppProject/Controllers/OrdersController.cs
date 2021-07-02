@@ -52,7 +52,7 @@ namespace MatikoWebAppProject.Controllers
         // GET: Cart2 for remove
         public void Cart2(int id)
         {
-            int ddd = 100;
+            //int ddd = 100;
             var q = from u in _context.Orders
                     where u.UserEmail.CompareTo(idu) == 0
                     select u.Id;

@@ -1,144 +1,82 @@
 ﻿@using MatikoWebAppProject.Models;
 @using MatikoWebAppProject.Controllers;
+
 @{
-    ViewBag.Title = "Statistics";
-    Layout = "_Layout";
+    ViewBag.Title = "statistics";
+    ViewData["Title"] = "Statistics";
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<div>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+    @foreach (var v in ViewBag.data as ICollection<Stat>)
+    {
+        //now v is the model, need to convert to {key: , value: } ok?
+    }
 
-    <br />
-    <br />
-    <br />
-    <table id="datatable" style="display:none">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Type</th>
-
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var v in ViewBag.data as ICollection<Stat>)
-            {
-                <tr>
-                    <th> @v.Key</th>
-                    <th>@v.Values</th>
-                </tr>
-            }
-        </tbody>
-    </table>
-
+    <h2>Pie Chart</h2>
+    <svg id="piechart1body" width="500" height="400"></svg> <!--Step 2-->
     <script>
-        Highcharts.chart('container', {
-            data: {
-                table: 'datatable'
-            },
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'How many orders every customer had made'
-            },
-            yAxis: {
-                allowDecimals: false,
-                title: {
-                    text: 'Number of Items'
-                }
-            },
-            tooltip: {
-                formatter: function () {
-                    return '<b>' + this.series.name + '</b><br/>' +
-                        this.point.y + ' ' + this.point.name.toLowerCase();
-                }
-            }
+        var s = @(ViewBag.data2 as ICollection<Stat>);
+        var jsonS = JSON.stringify(s);
+        console.log(jsonS);//?
+        // Step 3
+        var svg = d3.select("#piechart1body"),
+            width = svg.attr("width"),
+            height = svg.attr("height"),
+            radius = 200;
 
+        // Step 1
+        var data = [{ name: "Alex", share: 20.70 },
+        { name: "Shelly", share: 30.92 },
+        { name: "Clark", share: 15.42 },
+        { name: "Matt", share: 13.65 },
+        { name: "Jolene", share: 19.31 }];
+
+        var g = svg.append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        // Step 4
+        var ordScale = d3.scaleOrdinal()
+            .domain(jsonS)
+            .range(['#ffd384', '#94ebcd', '#fbaccc', '#d3e0ea', '#fa7f72']);
+
+        // Step 5
+        var pie = d3.pie().value(function (d) {
+            return d.Values;
         });
-    </script>
 
-</div>
+        var arc = g.selectAll("arc")
+            .data(pie(jsonS))
+            .enter();
 
+        // Step 6
+        var path = d3.arc()
+            .outerRadius(radius)
+            .innerRadius(0);
 
+        arc.append("path")
+            .attr("d", path)
+            .attr("fill", function (d) { return ordScale(d.jsonS.Key); });
 
-<p>
+        // Step 7
+        var label = d3.arc()
+            .outerRadius(radius)
+            .innerRadius(0);
 
-
-
-
-</p>
-
-<table id="datatable2" style="display:none">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Item Name</th>
-
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var v in ViewBag.data2 as ICollection<Stat>)
-        {
-            <tr>
-                <th> @v.Key</th>
-                <th>@v.Values</th>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
-
-<div>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/data.js"></script>
-    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-
-    <div id="container2" style="min-width: 310px; max-width: 600px; height: 400px; margin: 0 auto"></div>
-
-
-
-    <script>
-            Highcharts.chart('container2', {
-                data: {
-                    table: 'datatable2'
-                },
-                chart: {
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Which colors the customers like to order'
-                },
-                plotOptions: {
-                    series: {
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.name}: {point.percentage:.1f} %'
-                        }
-                    }
-
-                },
-
-                tooltip: {
-                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-                }
-            });
+        arc.append("text")
+            .attr("transform", function (d) {
+                return "translate(" + label.centroid(d) + ")";
+            })
+            .text(function (d) { return d.jsonS.Key; })
+            .style("font-family", "arial")
+            .style("font-size", 15);
 
 
 
     </script>
-
-</div>
+</body>
+</html>

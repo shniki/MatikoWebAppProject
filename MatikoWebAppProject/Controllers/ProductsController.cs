@@ -155,9 +155,13 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //[HttpGet]
+        //public ActionResult Statistics()
+        //{
+        //    return View();
+        //}
 
-        [HttpGet]
-        public ActionResult Statistics()
+        public async Task<IActionResult> Statistics()
         {
             //statistic 1- how many orders every customer had made, there is only one shopping cart
             ICollection<Stat> statistic1 = new Collection<Stat>();
@@ -165,6 +169,7 @@ namespace MatikoWebAppProject.Controllers
                           where (c.AllOrdersMade.Count) > 0
                           orderby (c.AllOrdersMade.Count) descending
                           select c;
+            var result2 = from c in _context.Users select c;
             foreach (var v in result1)
             {
                 statistic1.Add(new Stat(v.FirstName, v.AllOrdersMade.Count()));
@@ -176,7 +181,7 @@ namespace MatikoWebAppProject.Controllers
             ICollection<Stat> statistic2 = new Collection<Stat>();
 
             int Count;
-            var result2 = (from p in _context.Products where (1 < 0) select new ResultPair()).ToList();//create empty result table
+            var result3 = (from p in _context.Products where (1 < 0) select new ResultPair()).ToList();//create empty result table
             foreach (var pro in _context.Products.Include(po => po.ProOrders).ThenInclude(o => o.Order))
             {
                 Count = 0;
@@ -186,20 +191,19 @@ namespace MatikoWebAppProject.Controllers
                 {
                     if (po == null)
                         continue;
-                    if (po.Order.status != Status.Cart)
-                    {
-                        if (po.Product.color == pro.color)
-                            ++Count;
-                    }
+                    //if (po.Order.status != Status.Cart)
+                    //{
+                    if (po.Product.color == pro.color)
+                        ++Count;
+                    //}
                 }
-                result2.Add(new ResultPair() { Color = pro.color, count = Count });
+                result3.Add(new ResultPair() { Color = pro.color.ToString(), count = Count });
             }
-            foreach (var v in result2)
+            foreach (var v in result3)
             {
                 if (v.count > 0)
-                    statistic2.Add(new Stat(v.Color.ToString(), v.count));
+                    statistic2.Add(new Stat(v.Color, v.count));
             }
-
             ViewBag.data2 = statistic2;
             return View();
         }
@@ -211,7 +215,7 @@ namespace MatikoWebAppProject.Controllers
 
         internal class ResultPair
         {
-            public Color Color { get; set; }
+            public string Color { get; set; }
             public int count { get; set; }
         }
     }
