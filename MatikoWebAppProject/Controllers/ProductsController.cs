@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MatikoWebAppProject.Data;
 using MatikoWebAppProject.Models;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 
 namespace MatikoWebAppProject.Controllers
 {
@@ -55,10 +56,11 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Category,Gender,ImageUrl,Rate")] Products products)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,Category,Gender,ImageUrl,Rate")] Products products)
         {
             if (ModelState.IsValid)
             {
+                products.CategoriesId = products.Category.Id;
                 _context.Add(products);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -161,7 +163,8 @@ namespace MatikoWebAppProject.Controllers
         //    return View();
         //}
 
-        public async Task<IActionResult> Statistics()
+        [HttpGet]
+        public ActionResult Statistics()
         {
             //statistic 1- how many orders every customer had made, there is only one shopping cart
             ICollection<Stat> statistic1 = new Collection<Stat>();
@@ -169,7 +172,6 @@ namespace MatikoWebAppProject.Controllers
                           where (c.AllOrdersMade.Count) > 0
                           orderby (c.AllOrdersMade.Count) descending
                           select c;
-            var result2 = from c in _context.Users select c;
             foreach (var v in result1)
             {
                 statistic1.Add(new Stat(v.FirstName, v.AllOrdersMade.Count()));
@@ -177,11 +179,11 @@ namespace MatikoWebAppProject.Controllers
 
             ViewBag.data = statistic1;
             //finish first statistic
-            //statistic 2- which colors the customers like to order
+            //statistic 2- which brand the customers prefer to order
             ICollection<Stat> statistic2 = new Collection<Stat>();
 
             int Count;
-            var result3 = (from p in _context.Products where (1 < 0) select new ResultPair()).ToList();//create empty result table
+            var result2 = (from p in _context.Products where (1 < 0) select new ResultPair()).ToList();//create empty result table
             foreach (var pro in _context.Products.Include(po => po.ProOrders).ThenInclude(o => o.Order))
             {
                 Count = 0;
@@ -191,23 +193,33 @@ namespace MatikoWebAppProject.Controllers
                 {
                     if (po == null)
                         continue;
-                    //if (po.Order.status != Status.Cart)
-                    //{
                     if (po.Product.color == pro.color)
                         ++Count;
-                    //}
                 }
-                result3.Add(new ResultPair() { Color = pro.color.ToString(), count = Count });
+                result2.Add(new ResultPair() { Color = pro.color.ToString(), count = Count });
             }
-            foreach (var v in result3)
-            {
+           foreach (var v in result2)
+           {
                 if (v.count > 0)
-                    statistic2.Add(new Stat(v.Color, v.count));
+                {
+                    bool flag = false;
+                    foreach(var v2 in statistic2)
+                    {
+                        if (v2.Key.CompareTo(v.Color) == 0)
+                        {
+                            flag = true;
+                            v2.Values += v.count;
+                        }
+                    }
+                    if(!flag)
+                        statistic2.Add(new Stat(v.Color, v.count));
+                }
             }
+
             ViewBag.data2 = statistic2;
+
             return View();
         }
-
         private bool ProductsExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);

@@ -93,6 +93,8 @@ namespace MatikoWebAppProject.Controllers
                     select u;
             j.First().FullPrice = total;
 
+            var user = from u in _context.Users where u.Email.CompareTo(j.First().UserEmail) == 0 select u;
+            user.First().AllOrdersMade.Add(j.First());
 
 
             /*       var q = from u in _context.Orders
