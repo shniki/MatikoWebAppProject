@@ -316,14 +316,15 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
         //need to change the size to whatever the user put in his input box 
-        public async Task<IActionResult> AddToCartAsync(Products prod)
+        public async Task<IActionResult> AddToCartAsync(int? id)
         {
+            var prod= await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
             var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
             var cart = await _context.Orders
                 .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
             cart.FullPrice += prod.Price;
-            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S" });
+            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = ViewBag.sizeselected });
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> RemoveFromCartAsync(Products prod)

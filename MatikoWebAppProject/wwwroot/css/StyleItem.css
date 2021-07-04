@@ -1,0 +1,128 @@
+﻿@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+/* center container in the middle */
+
+p {
+    font-size: 1em;
+    color: #E3CAB8;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-size: 2.4em;
+    color: #4E4E4E;
+    margin-top: -5px;
+    margin-bottom: 0px;
+}
+
+h2 {
+    font-size: 2.6em;
+    color: #E3BD9D;
+    margin-top: -2px;
+    margin-bottom: 10px;
+}
+
+.images {
+    margin-top: 20px;
+    top: 5%;
+}
+
+img {
+    width: 40%;
+    height: 40%;
+    left: 45%;
+    max-height: 450px;
+}
+
+.product {
+    margin-top: 80px;
+    position: absolute;
+    width: 50%;
+    height: 1000px;
+    top: 5%;
+    left: 50%;
+    margin-bottom: 80px;
+}
+
+button {
+    background: #fbecd8;
+    padding: 10px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    margin: 0;
+    border-radius: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+    button:hover {
+        background: #E3CAB8;
+        transition: all 0.4s ease-in-out;
+    }
+
+.add {
+    width: 67%;
+}
+
+.like {
+    width: 22%;
+}
+
+.edit {
+    width: 89%;
+}
+
+.sizes {
+    display: grid;
+    color: #E3CAB8;
+    grid-template-columns: repeat(auto-fill, 30px);
+    width: 60%;
+    grid-gap: 10px;
+    margin-left: 0px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+    .sizes:hover {
+        cursor: pointer;
+    }
+
+.pick {
+    margin-top: 10px;
+    margin-bottom: 0;
+    margin-left: 0px;
+}
+
+.size {
+    padding: 9px;
+    padding-right: 30PX;
+    border: 1px solid #E3CAB8;
+    font-size: 1em;
+    text-align: center;
+}
+
+    .size:hover {
+        background: #E3CAB8;
+        color: #FFFFFF;
+        transition: all 0.4s ease-in-out;
+    }
+
+.focus {
+    background: #E3CAB8;
+    color: #FFFFFF;
+}
+
+.checked {
+    color: #E3BD9D;
+}
+
+.star-rate {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.fa-star {
+    padding-left: 2px;
+}

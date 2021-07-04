@@ -41,8 +41,20 @@ namespace MatikoWebAppProject.Controllers
             {
                 return NotFound();
             }
+            var q = from c in _context.Categories where c.Id == products.CategoriesId select c;
+            ViewBag.productscategoryName = q.First().Name;
+            ViewBag.productscategorySizes= q.First().Sizes;
+            ViewBag.rate = int.Parse(products.Rate.ToString());
 
             return View(products);
+        }
+
+        public IActionResult Shirts()
+        {
+            var q = from p in _context.Products where p.CategoriesId==1 select p;
+            ViewBag.shirts = q.ToListAsync();
+
+            return View();
         }
 
         // GET: Products/Create

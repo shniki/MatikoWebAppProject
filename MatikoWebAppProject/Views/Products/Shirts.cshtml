@@ -1,0 +1,107 @@
+﻿@model MatikoWebAppProject.Models.Orders
+
+@{
+    ViewData["Title"] = "Shirts";
+}
+
+<link href="~/css/StyleCategory.css" rel="stylesheet" />
+
+<div class="titles">
+    <h2>
+        SHIRTS
+    </h2>
+    <p>You’ve found your perfect pair of bottoms, now all you need is a top to complete the look. Introducing our edit of tops for women, which features everything from vests and casual T-shirts to smart shirts and trend-led, cold-shoulder tops. New Look has all your style essentials, whatever your occasion or taste; you can find fresh V-neck tops to enhance your daytime look as well as oversized tops in boyfriend styles for that cosy feel. And Topshop is here to help you add drama, with bold prints and backless tops, while ASOS DESIGN has hundreds of styles to help you express your individuality. Invent your own style with our collection of tops for women.</p>
+</div>
+
+
+<div class="sortby">
+    <lable formaction="sorting">Sort by: </lable>
+    <select id="sorting" class="form-select" se style="width:200px; right:0px;" aria-label="Default select example">
+        <option value="1">Recommended</option>
+        <option value="2">Price High to Low</option>
+        <option value="3">Price Low to High</option>
+        <option value="4">Top Rated</option>
+    </select>
+</div>
+
+<form class="filters" action="FilterShirts">
+    <p>gender:</p>
+    <input type="radio" name="gender" value="men">
+    <label class="gen link-flash">men</label><br>
+    <input type="radio" name="gender" value="women">
+    <label class="gen link-flash">women</label><br>
+    <input type="radio" name="gender" value="unisex">
+    <label class="gen link-flash">unisex</label><br>
+
+
+    <p>color:</p>
+    <input type="checkbox" name="color" value="Red">
+    <a style="color:#ff5050;">
+        <span>♥</span>
+    </a>
+    <input type="checkbox" name="color" value="Orange">
+    <a style="color:#ffcc66;">
+        <span>♥</span>
+    </a>
+    <input type="checkbox" name="color" value="Yellow">
+    <a style="color:#ffff00;">
+        <span>♥</span>
+    </a>
+    <input type="checkbox" name="color" value="Green">
+    <a style="color:#99ff66;">
+        <span>♥</span>
+    </a>
+    <input type="checkbox" name="color" value="Blue">
+    <a style="color:#66b3ff;"><span>♥</span></a>
+    <input type="checkbox" name="color" value="Purple">
+    <a style="color:#cc99ff;"><span>♥</span></a>
+    <input type="checkbox" name="color" value="Pink">
+    <a style="color:#ff99ff;"><span>♥</span></a>
+    <input type="checkbox" name="color" value="White">
+    <a style="color:#f2f2f2;"><span>♥</span></a>
+    <input type="checkbox" name="color" value="Grey">
+    <a style="color:#999999;"><span>♥</span></a>
+    <input type="checkbox" name="color" value="Black">
+    <a style="color:#1a1a1a;"><span>♥</span></a>
+    <input type="checkbox" name="color" value="Multi">
+    <a class="multi"><span>♥</span></a>
+
+    <p>min:</p> <input class="price" name="minprice" min="0" max="maxprice.value" />
+
+    <p>max:</p> <input class="price" name="maxprice" min="minprice.value" />
+
+    <input type="submit" value="filter" />
+</form>
+
+<div class="small-container">
+    <div class="row">
+        <div class="col-4">
+            @{var shirts = ViewBag.shirts;
+                foreach (var item in shirts)
+                {
+                <div class="wrapper">
+                    <div class="container">
+                        <div class="top">
+                        </div>
+                        <div class="bottom">
+                            <div class="left" asp-action="Details" asp-route-id="item.Id">
+                                <div class="details">
+                                                <h1 class="name">
+                                                    Html.DisplayFor(modelItem => item.Name);
+                                                </h1>
+                                                <p class="price">
+                                                    $
+                                                    Html.DisplayFor(modelItem => item.Price);
+                                                </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                    } }
+            </div>
+    </div>
+
+</div>
+
