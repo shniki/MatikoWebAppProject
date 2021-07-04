@@ -1,0 +1,249 @@
+﻿.titles {
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h2 {
+    letter-spacing: 6px;
+    font-size: 2.6em;
+    color: #E3BD9D;
+    margin-bottom: -10px;
+}
+
+p {
+    font-size: 1em;
+    color: #4E4E4E;
+    letter-spacing: 1px;
+}
+
+label {
+    color: #4E4E4E;
+    letter-spacing: 1px;
+}
+
+.sortby {
+   right:0;
+}
+
+.filters {
+    position: fixed;
+    padding-left: 1%;
+    text-align: left;
+    height: 500px;
+    width: 15%;
+    border: 1px solid #E3BD9D;
+}
+
+.gen {
+    margin-top: -5px;
+    margin-bottom: 3px;
+}
+
+.multi {
+    background: -webkit-linear-gradient(#ff5050, #ffcc66, #ffff00, #99ff66, #66b3ff, #cc99ff, #ff99ff, #f2f2f2);
+    -webkit-text-fill-color: transparent;
+}
+
+.coloradd {
+    -webkit-text-stroke-color: black;
+}
+
+.price {
+    width: 10%;
+}
+
+
+
+
+
+/*product*/
+.wrapper {
+    width: 300px;
+    height: 500px;
+    background: white;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0;
+    transform: scale(0.95);
+    transition: box-shadow 0.5s, transform 0.5s;
+}
+
+    .wrapper:hover {
+        transform: scale(1);
+        box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .wrapper .container {
+        width: 100%;
+        height: 100%;
+    }
+
+        .wrapper .container .top {
+            height: 80%;
+            width: 100%;
+            background: url(https://s-media-cache-ak0.pinimg.com/736x/49/80/6f/49806f3f1c7483093855ebca1b8ae2c4.jpg) no-repeat center center;
+            -webkit-background-size: 100%;
+            -moz-background-size: 100%;
+            -o-background-size: 100%;
+            background-size: 100%;
+        }
+
+        .wrapper .container .bottom {
+            width: 200%;
+            height: 20%;
+            transition: transform 0.5s;
+        }
+
+            .wrapper .container .bottom.clicked {
+                transform: translateX(-50%);
+            }
+
+            .wrapper .container .bottom h1 {
+                margin: 0;
+                padding: 0;
+            }
+
+            .wrapper .container .bottom p {
+                margin: 0;
+                padding: 0;
+            }
+
+            .wrapper .container .bottom .left {
+                height: 100%;
+                width: 50%;
+                background: #f4f4f4;
+                position: relative;
+                float: left;
+            }
+
+                .wrapper .container .bottom .left .details {
+                    padding: 20px;
+                    float: left;
+                    width: calc(70% - 40px);
+                }
+
+                .wrapper .container .bottom .left:hover {
+                    background: #FBECD8;
+                }
+
+                    .wrapper .container .bottom .left:hover i {
+                        transform: translateY(5px);
+                        color: #00394B;
+                    }
+
+        .wrapper .container .right {
+            width: 50%;
+            background: #FBECD8;
+            color: white;
+            float: right;
+            height: 200%;
+            overflow: hidden;
+        }
+
+            .wrapper .container .right .details {
+                padding: 20px;
+                float: right;
+                width: calc(70% - 40px);
+            }
+
+            .wrapper .container .right .done {
+                width: calc(30% - 2px);
+                float: left;
+                transition: transform 0.5s;
+                border-right: solid thin rgba(255, 255, 255, 0.3);
+                height: 50%;
+            }
+
+                .wrapper .container .right .done i {
+                    font-size: 30px;
+                    padding: 30px;
+                    color: white;
+                }
+
+            .wrapper .container .right .remove {
+                width: calc(30% - 1px);
+                clear: both;
+                border-right: solid thin rgba(255, 255, 255, 0.3);
+                height: 50%;
+                background: #BC3B59;
+                transition: transform 0.5s, background 0.5s;
+            }
+
+                .wrapper .container .right .remove:hover {
+                    background: #9B2847;
+                }
+
+                    .wrapper .container .right .remove:hover i {
+                        transform: translateY(5px);
+                    }
+
+                .wrapper .container .right .remove i {
+                    transition: transform 0.5s;
+                    font-size: 30px;
+                    padding: 30px;
+                    color: white;
+                }
+
+            .wrapper .container .right:hover .remove, .wrapper .container .right:hover .done {
+                transform: translateY(-100%);
+            }
+
+.inside {
+    z-index: 9;
+    background: #92879B;
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    top: -70px;
+    right: -70px;
+    border-radius: 0px 0px 200px 200px;
+    transition: all 0.5s, border-radius 2s, top 1s;
+    overflow: hidden;
+}
+
+    .inside .icon {
+        position: absolute;
+        right: 85px;
+        top: 85px;
+        color: white;
+        opacity: 1;
+    }
+
+    .inside:hover {
+        width: 100%;
+        right: 0;
+        top: 0;
+        border-radius: 0;
+        height: 80%;
+    }
+
+        .inside:hover .icon {
+            opacity: 0;
+            right: 15px;
+            top: 15px;
+        }
+
+        .inside:hover .contents {
+            opacity: 1;
+            transform: scale(1);
+            transform: translateY(0);
+        }
+
+    .inside .contents {
+        padding: 5%;
+        opacity: 0;
+        transform: scale(0.5);
+        transform: translateY(-200%);
+        transition: opacity 0.2s, transform 0.8s;
+    }
+
+        .inside .contents .name, .inside .contents .price {
+            color: white;
+        }
+
+        .inside .contents p {
+            font-size: 13px;
+        }
