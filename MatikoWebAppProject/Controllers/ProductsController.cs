@@ -51,9 +51,11 @@ namespace MatikoWebAppProject.Controllers
 
         public IActionResult Shirts()
         {
-            var q = from p in _context.Products where p.CategoriesId==1 select p;
-            ViewBag.shirts = q.ToListAsync();
-
+            var s = from p in _context.Products where p.CategoriesId == 1 select p;
+            ICollection<Products> arr = new Collection<Products>();
+            foreach(var item in s)
+                arr.Add(item);
+            ViewBag.shirts = arr;
             return View();
         }
 

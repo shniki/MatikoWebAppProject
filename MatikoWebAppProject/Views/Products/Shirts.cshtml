@@ -1,7 +1,8 @@
-﻿@model MatikoWebAppProject.Models.Orders
+﻿@model MatikoWebAppProject.Models.Products
 
 @{
     ViewData["Title"] = "Shirts";
+    ViewBag.title = "shirts";
 }
 
 <link href="~/css/StyleCategory.css" rel="stylesheet" />
@@ -76,22 +77,21 @@
 <div class="small-container">
     <div class="row">
         <div class="col-4">
-            @{var shirts = ViewBag.shirts;
-                foreach (var item in shirts)
+            @foreach (var item in ViewBag.shirts as ICollection<Products>)
                 {
                 <div class="wrapper">
                     <div class="container">
                         <div class="top">
                         </div>
                         <div class="bottom">
-                            <div class="left" asp-action="Details" asp-route-id="item.Id">
+                            <div class="left" asp-action="Details" asp-route-id="@item.Id">
                                 <div class="details">
                                                 <h1 class="name">
-                                                    Html.DisplayFor(modelItem => item.Name);
+                                                    @Html.DisplayFor(modelItem => item.Name);
                                                 </h1>
                                                 <p class="price">
                                                     $
-                                                    Html.DisplayFor(modelItem => item.Price);
+                                                    @Html.DisplayFor(modelItem => item.Price);
                                                 </p>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                     </div>
 
                 </div>
-                    } }
+             }
             </div>
     </div>
 
