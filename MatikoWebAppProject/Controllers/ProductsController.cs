@@ -174,7 +174,7 @@ namespace MatikoWebAppProject.Controllers
                           select c;
             foreach (var v in result1)
             {
-                statistic1.Add(new Stat(v.FirstName, v.AllOrdersMade.Count()));
+                statistic1.Add(new Stat(v.FirstName + " "  + v.LastName, v.AllOrdersMade.Count()));
             }
 
             ViewBag.data = statistic1;
