@@ -50,9 +50,9 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart2 for remove
-        public void Cart2(int id)
+        public async Task<IActionResult> Cart2(int id)
         {
-            //int ddd = 100;
+            int ddd = 100;
             var q = from u in _context.Orders
                     where u.UserEmail.CompareTo(idu) == 0
                     select u.Id;
@@ -76,10 +76,25 @@ namespace MatikoWebAppProject.Controllers
                     break;
                 }
             }
+            //
+            ViewBag.popo = productsOrders;
+            List<Products> list2 = new List<Products>();
+            int[] productsid = new int[h.Count()];
+            for (int i = 0; i < productsid.Length; i++)
+                productsid[i] = productsOrders[i].ProductId;
 
+            for (int i = 0; i < h.Count(); i++)
+            {
+                foreach (var line in _context.Products)
+                {
+                    if (productsid[i] == line.Id)
+                        list2.Add(line);
+                }
+            }
 
+            //  return View(Cart(idu));
 
-
+            return Redirect("~/Orders/Cart/" + idu);
         }
 
         [Authorize]
@@ -316,15 +331,14 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
         //need to change the size to whatever the user put in his input box 
-        public async Task<IActionResult> AddToCartAsync(int? id)
+        public async Task<IActionResult> AddToCartAsync(Products prod)
         {
-            var prod= await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
             var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
             var cart = await _context.Orders
                 .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
             cart.FullPrice += prod.Price;
-            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = ViewBag.sizeselected });
+            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S" });
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> RemoveFromCartAsync(Products prod)
