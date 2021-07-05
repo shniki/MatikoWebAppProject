@@ -147,7 +147,7 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart
-        public async Task<IActionResult> Cart(int? products, string size, int isAddition)
+        public async Task<IActionResult> Cart(int? products, int isAddition, string size = "")
         {
             /* if (HttpContext.Session.GetString("email") != null)
                  return RedirectToAction("Login","Users");*/
@@ -170,16 +170,16 @@ namespace MatikoWebAppProject.Controllers
                 var prod = await _context.Products.FirstOrDefaultAsync(m => m.Id == products);
                 var user = await _context.Users
                     .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
-                var cart = await _context.Orders
+                var cart1 = await _context.Orders
                     .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
-                cart.FullPrice += prod.Price;
-                if (cart.Products.Find(p => p.ProductId == products) != null)
+                cart1.FullPrice += prod.Price;
+                if (cart1.Products.Find(p => p.ProductId == products) != null)
                 {
-                    cart.Products.Find(m => m.ProductId == products).Amount++;
+                    cart1.Products.Find(m => m.ProductId == products).Amount++;
                 }
                 else
                 {
-                    cart.Products.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = size });
+                    cart1.Products.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = size });
                     _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = size });
                 }
                 _context.SaveChanges();
@@ -187,14 +187,14 @@ namespace MatikoWebAppProject.Controllers
 
             else if(products.HasValue && isAddition == 0)
             {
-                var cart = await _context.Orders
+                var cart2 = await _context.Orders
                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
-                if (cart != null)
+                if (cart2 != null)
                 {
                     ProductsOrders po = _context.ProductsOrders.FirstOrDefault(p => p.ProductId == products && p.OrderId == cart.Id);
                     Products p = _context.Products.FirstOrDefault(p => p.Id == po.ProductId);
-                    cart.FullPrice -= p.Price * po.Amount;
-                    cart.Products.Remove(po);
+                    cart2.FullPrice -= p.Price * po.Amount;
+                    cart2.Products.Remove(po);
                     _context.ProductsOrders.Remove(po);
                     _context.SaveChanges();
                 }
@@ -205,6 +205,17 @@ namespace MatikoWebAppProject.Controllers
                     where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
                     select u.Id;
 
+            var cart3 = from u in _context.Orders
+                       where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
+                       select u;
+
+            var sum = 0.0;
+            foreach (var item in cart3.First().Products)
+            {
+                var prod = from p in _context.Products where p.Id == item.ProductId select p;
+                sum += item.Amount * prod.First().Price;
+            }
+            ViewBag.subtotal = sum;
 
             var h = from u in _context.ProductsOrders
                     where u.OrderId.CompareTo(q.First()) == 0
