@@ -28,6 +28,6 @@ namespace MatikoWebAppProject.Models
         public DateTime DateOrder { get; set; }
         public DateTime EstimatedDateArrival { get; set; }
 
-        public List<ProductsOrders> Products { get; set; }
+        public List<ProductsOrders> Products { get; set; } = new List<ProductsOrders>();
     }
 }

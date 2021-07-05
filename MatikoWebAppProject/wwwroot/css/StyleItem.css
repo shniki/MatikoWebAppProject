@@ -14,6 +14,12 @@ h1 {
     margin-bottom: 0px;
 }
 
+.dark {
+    font-size: 1em;
+    letter-spacing: 1px;
+    color: #4E4E4E;
+}
+
 h2 {
     font-size: 2.6em;
     color: #E3BD9D;

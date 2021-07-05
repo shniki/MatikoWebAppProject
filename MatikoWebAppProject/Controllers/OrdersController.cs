@@ -147,7 +147,7 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart
-        public async Task<IActionResult> Cart(string id)
+        public async Task<IActionResult> Cart(int? products)
         {
             /* if (HttpContext.Session.GetString("email") != null)
                  return RedirectToAction("Login","Users");*/
@@ -165,12 +165,26 @@ namespace MatikoWebAppProject.Controllers
                   .OrderByDesceding(p => p.Occured)
                    .ToListAsync();
           */
-
-
+            if (products.HasValue)
+            {
+                var prod = await _context.Products.FirstOrDefaultAsync(m => m.Id == products);
+                var user = await _context.Users
+                    .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
+                var cart = await _context.Orders
+                    .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
+                cart.FullPrice += prod.Price;
+                if (cart.Products.Where(m => m.ProductId == products) != null)
+                {
+                    cart.Products.Where(m => m.ProductId == products).First().Amount++;
+                }
+                else
+                    _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S" });
+                _context.SaveChanges();
+            }
 
 
             var q = from u in _context.Orders
-                    where u.UserEmail.CompareTo(id) == 0
+                    where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
                     select u.Id;
 
 
@@ -205,7 +219,7 @@ namespace MatikoWebAppProject.Controllers
             }
 
 
-            idu = id;
+            idu = this.HttpContext.User.Claims.ElementAt(1).Value;
 
             //  return View(h);
             //return View(h.ToList());
@@ -316,17 +330,6 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
         //need to change the size to whatever the user put in his input box 
-        public async Task<IActionResult> AddToCartAsync(int? id)
-        {
-            var prod= await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
-            var cart = await _context.Orders
-                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
-            cart.FullPrice += prod.Price;
-            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = ViewBag.sizeselected });
-            return RedirectToAction(nameof(Index));
-        }
         public async Task<IActionResult> RemoveFromCartAsync(Products prod)
         {
             var cart = await _context.Orders
