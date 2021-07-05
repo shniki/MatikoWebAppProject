@@ -147,7 +147,7 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart
-        public async Task<IActionResult> Cart(int? products)
+        public async Task<IActionResult> Cart(int? products, string size, int isAddition)
         {
             /* if (HttpContext.Session.GetString("email") != null)
                  return RedirectToAction("Login","Users");*/
@@ -165,7 +165,7 @@ namespace MatikoWebAppProject.Controllers
                   .OrderByDesceding(p => p.Occured)
                    .ToListAsync();
           */
-            if (products.HasValue)
+            if (products.HasValue && isAddition == 1)
             {
                 var prod = await _context.Products.FirstOrDefaultAsync(m => m.Id == products);
                 var user = await _context.Users
@@ -173,13 +173,31 @@ namespace MatikoWebAppProject.Controllers
                 var cart = await _context.Orders
                     .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
                 cart.FullPrice += prod.Price;
-                if (cart.Products.Where(m => m.ProductId == products) != null)
+                if (cart.Products.Find(p => p.ProductId == products) != null)
                 {
-                    cart.Products.Where(m => m.ProductId == products).First().Amount++;
+                    cart.Products.Find(m => m.ProductId == products).Amount++;
                 }
                 else
-                    _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S" });
+                {
+                    cart.Products.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = size });
+                    _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = size });
+                }
                 _context.SaveChanges();
+            }
+
+            else if(products.HasValue && isAddition == 0)
+            {
+                var cart = await _context.Orders
+               .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
+                if (cart != null)
+                {
+                    ProductsOrders po = _context.ProductsOrders.FirstOrDefault(p => p.ProductId == products && p.OrderId == cart.Id);
+                    Products p = _context.Products.FirstOrDefault(p => p.Id == po.ProductId);
+                    cart.FullPrice -= p.Price * po.Amount;
+                    cart.Products.Remove(po);
+                    _context.ProductsOrders.Remove(po);
+                    _context.SaveChanges();
+                }
             }
 
 
@@ -330,18 +348,18 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
         //need to change the size to whatever the user put in his input box 
-        public async Task<IActionResult> RemoveFromCartAsync(Products prod)
-        {
-            var cart = await _context.Orders
-                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
-            if (cart != null)
-            {
-                ProductsOrders po = _context.ProductsOrders.Find(cart.UserEmail, prod.Id);
-                cart.FullPrice -= po.Product.Price * po.Amount;
-                _context.ProductsOrders.Remove(po);
-            }
-            return RedirectToAction(nameof(Index));
-        }
+        //public async Task<IActionResult> RemoveFromCartAsync(Products prod)
+        //{
+        //    var cart = await _context.Orders
+        //        .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
+        //    if (cart != null)
+        //    {
+        //        ProductsOrders po = _context.ProductsOrders.Find(cart.UserEmail, prod.Id);
+        //        cart.FullPrice -= po.Product.Price * po.Amount;
+        //        _context.ProductsOrders.Remove(po);
+        //    }
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool OrdersExists(int id)
         {
