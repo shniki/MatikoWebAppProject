@@ -107,36 +107,7 @@ namespace MatikoWebAppProject.Controllers
 
          _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index), "Home");
-
-
-
-
-
-
-
-            //  if (ModelState.IsValid)
-            //  {
-            try
-            {
-                   _context.Update(users);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UsersExists(users.Email))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-            //    }
-                return RedirectToAction(nameof(Index));
-            }
-            //return View(users);
-            return RedirectToAction(nameof(Index), "Home");
+        return RedirectToAction(nameof(Index), "Home");
 
         }
 

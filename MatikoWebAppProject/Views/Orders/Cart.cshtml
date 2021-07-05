@@ -169,8 +169,8 @@
                 <div class="totals-item totals-item-total">
                     <label>Grand Total</label>
                     @{
-                        total += total * 0.05f;
-                        total += 71.97f + 15.00f;
+                        total += ViewBag.subtotal * 0.05f;
+                        total += ViewBag.subtotal + 15.00f;
                     }
                     <div class="totals-value" id="cart-total">@total</div>
                 </div>

@@ -16,6 +16,6 @@ namespace MatikoWebAppProject.Models
 
         public int Counter { get; set; }
 
-        List<Products> ProductsInWishList { get; set; }
+        List<ProductsWishList> ProductsInWishList { get; set; } = new List<ProductsWishList>();
     }
 }
