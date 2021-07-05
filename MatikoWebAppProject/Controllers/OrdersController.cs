@@ -27,6 +27,13 @@ namespace MatikoWebAppProject.Controllers
             return View(await _context.Orders.ToListAsync());
         }
 
+        public async Task<IActionResult> ThankYou()
+        {
+            return View();
+        }
+
+
+
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -101,12 +108,16 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart3 for checkout 
-        public IActionResult Cart3(float total)
+        public IActionResult Cart3(float total,string id)
         {
             var j = from u in _context.Orders
                     where u.UserEmail.CompareTo(idu) == 0
                     select u;
             j.First().FullPrice = total;
+
+            string[] vs = new string[2];
+            vs[0] = id;
+            ViewBag.kkk = vs;
 
             var user = from u in _context.Users where u.Email.CompareTo(j.First().UserEmail) == 0 select u;
             user.First().AllOrdersMade.Add(j.First());
@@ -133,7 +144,9 @@ namespace MatikoWebAppProject.Controllers
             _context.SaveChanges();
 
             //return View();
-            return RedirectToAction(nameof(Index), "Home");
+            // return RedirectToAction(nameof(Index), "Home");
+            return View();
+
             // change to thank you page
         }
 
@@ -197,6 +210,7 @@ namespace MatikoWebAppProject.Controllers
             //
             //ViewBag["popo"] = productsOrders;
             ViewBag.popo = productsOrders;
+            ViewBag.pp = q.First().ToString();
             //
             List<Products> list = new List<Products>();
 
