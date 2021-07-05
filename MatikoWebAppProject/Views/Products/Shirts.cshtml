@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Shirts";
-    ViewBag.title = "shirts";
+    ViewBag.title = "Shirts";
 }
 
 <link href="~/css/StyleCategory.css" rel="stylesheet" />
@@ -14,94 +14,91 @@
     <p>You’ve found your perfect pair of bottoms, now all you need is a top to complete the look. Introducing our edit of tops for women, which features everything from vests and casual T-shirts to smart shirts and trend-led, cold-shoulder tops. New Look has all your style essentials, whatever your occasion or taste; you can find fresh V-neck tops to enhance your daytime look as well as oversized tops in boyfriend styles for that cosy feel. And Topshop is here to help you add drama, with bold prints and backless tops, while ASOS DESIGN has hundreds of styles to help you express your individuality. Invent your own style with our collection of tops for women.</p>
 </div>
 
+<hr class="solid">
 
-<div class="sortby">
-    <lable formaction="sorting">Sort by: </lable>
-    <select class="form-select" style="width:200px; right:0px;" aria-label="Default select example">
-        <option value="1">Recommended</option>
-        <option value="2">Price High to Low</option>
-        <option value="3">Price Low to High</option>
-        <option value="4">Top Rated</option>
-    </select>
+<div class="tiny-container">
+    <div class="row">
+        <div class="col-4">
+            <select id="sortby" onchange="ChangedSomething()" class="form-select">
+                <option value="0" selected>Sort</option>
+                <option value="1">Recommended</option>
+                <option value="2">Price High to Low</option>
+                <option value="3">Price Low to High</option>
+                <option value="4">Top Rated</option>
+                <option value="5">What's New</option>
+            </select>
+        </div>
+        <div class="col-4">
+            <select id="genderby" onchange="ChangedSomething()" class="form-select">
+                <option value="" selected>Gender</option>
+                <option value="f">Women</option>
+                <option value="m">Men</option>
+                <option value="u">Unisex</option>
+            </select>
+        </div>
+        <div class="col-4">
+            <select id="colorby" onchange="ChangedSomething()" class="form-select">
+                <option value="" selected>Color</option>
+                <option value="Red" style="text-decoration-color: #ff5050;">Red</option>
+                <option value="Yellow" style="text-decoration-color: #ffff00;">Yellow</option>
+                <option value="Purple" style="text-decoration-color: #cc99ff;">Purple</option>
+                <option value="Black" style="text-decoration-color: #1a1a1a;">Black</option>
+                <option value="Blue" style="text-decoration-color: #66b3ff;">Blue</option>
+                <option value="White" style="text-decoration-color: #f2f2f2;">White</option>
+                <option value="Green" style="text-decoration-color: #99ff66;">Green</option>
+                <option value="Orange" style="text-decoration-color: #ffcc66;">Orange</option>
+                <option value="Grey" style="text-decoration-color: #999999;">Grey</option>
+                <option value="Multi" style="text-decoration-color: #e3dee4;">Multi</option>
+            </select>
+        </div>
+    </div>
 </div>
 
-<form class="filters" action="FilterShirts">
-    <p>gender:</p>
-    <input type="radio" name="gender" value="men">
-    <label class="gen link-flash">men</label><br>
-    <input type="radio" name="gender" value="women">
-    <label class="gen link-flash">women</label><br>
-    <input type="radio" name="gender" value="unisex">
-    <label class="gen link-flash">unisex</label><br>
-
-
-    <p>color:</p>
-    <input type="checkbox" name="color" value="Red">
-    <a style="color:#ff5050;">
-        <span>♥</span>
-    </a>
-    <input type="checkbox" name="color" value="Orange">
-    <a style="color:#ffcc66;">
-        <span>♥</span>
-    </a>
-    <input type="checkbox" name="color" value="Yellow">
-    <a style="color:#ffff00;">
-        <span>♥</span>
-    </a>
-    <input type="checkbox" name="color" value="Green">
-    <a style="color:#99ff66;">
-        <span>♥</span>
-    </a>
-    <input type="checkbox" name="color" value="Blue">
-    <a style="color:#66b3ff;"><span>♥</span></a>
-    <input type="checkbox" name="color" value="Purple">
-    <a style="color:#cc99ff;"><span>♥</span></a>
-    <input type="checkbox" name="color" value="Pink">
-    <a style="color:#ff99ff;"><span>♥</span></a>
-    <input type="checkbox" name="color" value="White">
-    <a style="color:#f2f2f2;"><span>♥</span></a>
-    <input type="checkbox" name="color" value="Grey">
-    <a style="color:#999999;"><span>♥</span></a>
-    <input type="checkbox" name="color" value="Black">
-    <a style="color:#1a1a1a;"><span>♥</span></a>
-    <input type="checkbox" name="color" value="Multi">
-    <a class="multi"><span>♥</span></a>
-
-    <p>min:</p> <input class="price" name="minprice" min="0" max="maxprice.value" />
-
-    <p>max:</p> <input class="price" name="maxprice" min="minprice.value" />
-
-    <input type="submit" value="filter" />
-</form>
+<hr class="solid">
+<p style="text-align: center; margin-bottom: -40px;">@(ViewBag.shirtsLength) items found</p>
 
 <div class="small-container">
     <div class="row">
-        <div class="col-4">
-            @foreach (var item in ViewBag.shirts as ICollection<Products>)
-                {
-                <div class="wrapper">
-                    <div class="container">
-                        <div class="top">
-                        </div>
-                        <div class="bottom">
-                            <div class="left" asp-action="Details" asp-route-id="@item.Id">
-                                <div class="details">
-                                                <h1 class="name">
-                                                    @Html.DisplayFor(modelItem => item.Name);
-                                                </h1>
-                                                <p class="price">
-                                                    $
-                                                    @Html.DisplayFor(modelItem => item.Price);
-                                                </p>
-                                </div>
+        @foreach (var item in ViewBag.shirts as ICollection<Products>)
+        {
+            <div class="col-4">
+                <div class="wrapper" onclick="GoToItem(@(item.Id))">
+                    <div class="top">
+                        <img src="@(Html.DisplayFor(modelItem => item.ImageUrl))" />
+                    </div>
+                    <div class="bottom">
+                        <div class="left">
+                            <div class="details">
+                                <p class="name">@(Html.DisplayFor(modelItem => item.Name))</p>
+                                <p class="price">$@(Html.DisplayFor(modelItem => item.Price))</p>
                             </div>
                         </div>
                     </div>
-
                 </div>
-             }
-            </div>
-    </div>
 
+            </div>
+        }
+    </div>
 </div>
 
+<script>
+function ChangedSomething()
+{
+    $.ajax({
+        url: "Products/Shirts",
+        data: {
+            sort: document.getElementsById('sortby').value,
+            gender: document.getElementsById('genderby').value,
+            color: document.getElementsById('colorby').value
+        }
+    });
+}
+    function GoToItem(itemid)
+    {
+    $.ajax({
+        url: "Products/Details",
+        data: { id: itemid },
+        type: 'GET'
+    });
+}
+</script>

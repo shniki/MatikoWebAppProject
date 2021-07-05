@@ -95,16 +95,17 @@
     </div>
 
     <script>
-        var x = document.getElementsById("selectSize");
-        function clickSize() {
-            if (x.value != "")
-                @ViewBag.sizeselected= x.value;
+        function func(){
+            string sizeval = document.getElementsById('selectSize').value;
+            if (sizeval != "")
+                return sizeval;
+            //error
         }
     </script>
 
     <div class="buttons">
-        <a class="add" asp-controller="Orders" asp-action="Cart" asp-route-products="@(Model.Id)" asp-route-size="" asp-route-isAddition ="1">Add to Cart</a>
-        <a class="like"><span>♥</span></a>
+        <a type="button" class="add" asp-controller="Orders" asp-action="Cart" asp-route-products="@(Model.Id)" asp-route-size="S" asp-route-isAddition="1">Add to Cart</a>
+        <a class="like" asp-controller="WishLists" asp-action="AddToWishListAsync" asp-route-products="@(Model.Id)"><span>♥</span></a>
     </div>
 </div>
 

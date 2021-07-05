@@ -49,13 +49,62 @@ namespace MatikoWebAppProject.Controllers
             return View(products);
         }
 
-        public IActionResult Shirts()
+
+        public IActionResult Shirts(int sort=1, string gender="", string color="")
         {
-            var s = from p in _context.Products where p.CategoriesId == 1 select p;
-            ICollection<Products> arr = new Collection<Products>();
-            foreach(var item in s)
+
+            Color _color=Color.Black;
+            switch (color) {
+                case "Black": _color = Color.Black; break;
+                case "Blue": _color = Color.Blue; break;
+                case "Green": _color = Color.Green; break;
+                case "Grey": _color = Color.Grey; break;
+                case "Multi": _color = Color.Multi; break;
+                case "Orange": _color = Color.Orange; break;
+                case "Pink": _color = Color.Pink; break;
+                case "Purple": _color = Color.Purple; break;
+                case "Red": _color = Color.Red; break;
+                case "White": _color = Color.White; break;
+                case "Yellow": _color = Color.Yellow; break;
+            }
+
+            Gender _gender=Gender.Unisex;
+            switch (gender)
+            {
+                case "u": _gender = Gender.Unisex; break;
+                case "m": _gender = Gender.Woman; break;
+                case "f": _gender = Gender.Man; break;
+            }
+
+            var s = from p in _context.Products where p.CategoriesId == 1 select p; //all
+            if (gender != "")
+            {
+                if (color != "") // c & g
+                {
+                    s = from p in _context.Products where p.CategoriesId == 1 & p.color==_color & p.Gender==_gender select p; 
+                }
+                else // g
+                {
+                    s = from p in _context.Products where p.CategoriesId == 1 & p.Gender == _gender select p;
+                }
+            }
+            else
+            {
+                if (color != "") // c
+                {
+                    s = from p in _context.Products where p.CategoriesId == 1 & p.color == _color select p;
+                }
+            }
+
+
+            ICollection< Products > arr = new Collection<Products>();
+            int len = 0;
+            foreach (var item in s) {
                 arr.Add(item);
+                len++;
+            }
             ViewBag.shirts = arr;
+            ViewBag.shirtsLength = len;
             return View();
         }
 
