@@ -51,9 +51,11 @@ namespace MatikoWebAppProject.Controllers
 
         public IActionResult Shirts()
         {
-            var q = from p in _context.Products where p.CategoriesId==1 select p;
-            ViewBag.shirts = q.ToListAsync();
-
+            var s = from p in _context.Products where p.CategoriesId == 1 select p;
+            ICollection<Products> arr = new Collection<Products>();
+            foreach(var item in s)
+                arr.Add(item);
+            ViewBag.shirts = arr;
             return View();
         }
 
@@ -186,7 +188,7 @@ namespace MatikoWebAppProject.Controllers
                           select c;
             foreach (var v in result1)
             {
-                statistic1.Add(new Stat(v.FirstName, v.AllOrdersMade.Count()));
+                statistic1.Add(new Stat(v.FirstName + " "  + v.LastName, v.AllOrdersMade.Count()));
             }
 
             ViewBag.data = statistic1;

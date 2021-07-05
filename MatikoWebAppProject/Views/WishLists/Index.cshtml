@@ -10,12 +10,14 @@
         <link rel="stylesheet" href="WishlistStyle.css" />
         <link rel="stylesheet" href="~/css/StyleCart.css" type="text/css" />
     *@
+
     <link rel="stylesheet" href="~/css/WishlistStyle.css" type="text/css" />
 
     <script src="store.js" async></script>
 </head>
 
 <link rel="stylesheet" href="~/css/StyleCart.css" type="text/css" />
+
 
 <body>
     <section class="container content-section">
@@ -40,6 +42,8 @@
 
                     <div class="product-price"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Price)</div>
                     <button asp-action="addToCartAsync" asp-controller="WishLists" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                    <button asp-action="RemoveFromWishListAsync" asp-controller="WishLists" class="btn btn-primary shop-item-button" type="button">REMOVE FROM WISHLIST</button>
+
                 </div>
             </div>
 
