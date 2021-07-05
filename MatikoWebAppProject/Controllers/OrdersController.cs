@@ -180,10 +180,9 @@ namespace MatikoWebAppProject.Controllers
                 else
                 {
                     cart1.Products.Add(new ProductsOrders { Amount = 1, Order = cart1, OrderId = cart1.Id, Product = prod, ProductId = prod.Id, Size = size });
-                    if(_context.ProductsOrders.FirstOrDefaultAsync(po => po.OrderId == cart1.Id && po.ProductId == prod.Id) == null)
-                         _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart1, OrderId = cart1.Id, Product = prod, ProductId = prod.Id, Size = size });
+                    _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart1, OrderId = cart1.Id, Product = prod, ProductId = prod.Id, Size = size });
                 }
-
+                _context.SaveChanges();
             }
 
             else if(products.HasValue && isAddition == 0)
@@ -197,11 +196,10 @@ namespace MatikoWebAppProject.Controllers
                     cart2.FullPrice -= p.Price * po.Amount;
                     cart2.Products.Remove(po);
                     _context.ProductsOrders.Remove(po);
-
+                    _context.SaveChanges();
                 }
             }
 
-            _context.SaveChanges();
 
             var q = from u in _context.Orders
                     where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0

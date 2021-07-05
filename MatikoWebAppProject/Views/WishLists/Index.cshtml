@@ -41,9 +41,9 @@
                     <div class="product-title"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Name)</div>
 
                     <div class="product-price"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Price)</div>
-                    <button asp-action="addToCartAsync" asp-controller="WishLists" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
-                    <button asp-action="RemoveFromWishListAsync" asp-controller="WishLists" class="btn btn-primary shop-item-button" type="button">REMOVE FROM WISHLIST</button>
-
+                    <a asp-action="Cart" asp-controller="Orders" asp-route-products=@Model.ElementAt(i).Id asp-route-size="" asp-route-isAddition="1" class="btn btn-primary shop-item-button" type="button">ADD TO CART</a>
+                    <a asp-action="Cart" asp-controller="Orders" asp-route-products=@Model.ElementAt(i).Id asp-route-size="" asp-route-isAddition="0" class="btn btn-primary shop-item-button" type="button">REMOVE FROM WISHLIST</a>
+                    
                 </div>
             </div>
 
