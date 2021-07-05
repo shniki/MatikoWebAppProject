@@ -179,10 +179,11 @@ namespace MatikoWebAppProject.Controllers
                 }
                 else
                 {
-                    cart1.Products.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = size });
-                    _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = size });
+                    cart1.Products.Add(new ProductsOrders { Amount = 1, Order = cart1, OrderId = cart1.Id, Product = prod, ProductId = prod.Id, Size = size });
+                    if(_context.ProductsOrders.FirstOrDefaultAsync(po => po.OrderId == cart1.Id && po.ProductId == prod.Id) == null)
+                         _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart1, OrderId = cart1.Id, Product = prod, ProductId = prod.Id, Size = size });
                 }
-                _context.SaveChanges();
+
             }
 
             else if(products.HasValue && isAddition == 0)
@@ -191,15 +192,16 @@ namespace MatikoWebAppProject.Controllers
                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
                 if (cart2 != null)
                 {
-                    ProductsOrders po = _context.ProductsOrders.FirstOrDefault(p => p.ProductId == products && p.OrderId == cart.Id);
+                    ProductsOrders po = _context.ProductsOrders.FirstOrDefault(p => p.ProductId == products && p.OrderId == cart2.Id);
                     Products p = _context.Products.FirstOrDefault(p => p.Id == po.ProductId);
                     cart2.FullPrice -= p.Price * po.Amount;
                     cart2.Products.Remove(po);
                     _context.ProductsOrders.Remove(po);
-                    _context.SaveChanges();
+
                 }
             }
 
+            _context.SaveChanges();
 
             var q = from u in _context.Orders
                     where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
