@@ -174,7 +174,6 @@ namespace MatikoWebAppProject.Controllers
                 var prod = from p in _context.Products where (p.Id == prodId) select p;
                 ProductsWishList pw = new ProductsWishList { UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Product = prod.First(), ProductId = prodId, Size = size, Wishlist = wishlist };
                 _context.ProductsWishList.Add(pw);
-                _context.SaveChanges();
             }
             else if (prodId != -1 && isAddition == 0)
             {
@@ -185,6 +184,7 @@ namespace MatikoWebAppProject.Controllers
                 var prod = from p in _context.ProductsWishList where (p.ProductId == prodId && p.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value) select p;
                 _context.ProductsWishList.Remove(prod.First());
             }
+            _context.SaveChanges();
 
             var q = from u in _context.ProductsWishList
                         where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
@@ -223,9 +223,7 @@ namespace MatikoWebAppProject.Controllers
 
             //  return View(h);
             //return View(h.ToList());
-
             return View(list);
-
         }
 
     }

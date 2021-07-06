@@ -147,7 +147,7 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart
-        public async Task<IActionResult> Cart(int? products, int isAddition = -1, string size = "")
+        public async Task<IActionResult> Cart(int? products, int isAddition = -1, string size = "",int isFromWishlist = 0)
         {
             if ( products.HasValue && isAddition == 1)
             {
@@ -177,6 +177,13 @@ namespace MatikoWebAppProject.Controllers
 
                         ShoppingCart.FullPrice += Product.Price;
                         _context.Orders.Update(ShoppingCart);
+                        _context.SaveChanges();
+                    }
+
+                    if(isFromWishlist == 1)
+                    {
+                        var pw = from p in _context.ProductsWishList where (p.ProductId == products && p.UserEmail == HttpContext.User.Claims.ElementAt(1).Value) select p;
+                        _context.ProductsWishList.Remove(pw.First());
                         _context.SaveChanges();
                     }
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MatikoWebAppProject.Models.Products>
+﻿@model List<MatikoWebAppProject.Models.Products>
 
 
 <!DOCTYPE html>
@@ -41,8 +41,8 @@
                     <div class="product-title"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Name)</div>
 
                     <div class="product-price"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Price)</div>
-                    <a asp-action="Cart" asp-controller="Orders" asp-route-products=@Model.ElementAt(i).Id asp-route-size="" asp-route-isAddition="1" class="btn btn-primary shop-item-button" type="button">ADD TO CART</a>
-                    <a asp-action="Index" asp-controller="WishLists" asp-route-products=@Model.ElementAt(i).Id asp-route-size="" asp-route-isAddition="0" class="btn btn-primary shop-item-button" type="button">REMOVE FROM WISHLIST</a>
+                    <a asp-action="Cart" asp-controller="Orders" asp-route-products=@Model.ElementAt(i).Id asp-route-size="" asp-route-isAddition="1" asp-route-isFromWishlist="1" class="btn btn-primary shop-item-button" type="button">ADD TO CART</a>
+                    <a asp-action="Index" asp-controller="WishLists" asp-route-prodId=@Model.ElementAt(i).Id asp-route-size="" asp-route-isAddition="0" class="btn btn-primary shop-item-button" type="button">REMOVE FROM WISHLIST</a>
                     
                 </div>
             </div>

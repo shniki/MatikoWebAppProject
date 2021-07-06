@@ -82,6 +82,15 @@ ul {
     padding: 3px 5px;
 }
 
+.icons3 {
+    position: absolute;
+    top: 7px;
+    right: 90px;
+    display: inline-block;
+    padding: 3px 5px;
+}
+
+
 .icons {
     position: absolute;
     top: 7px;

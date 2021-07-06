@@ -72,6 +72,9 @@ namespace MatikoWebAppProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Gender,ImageUrl,Rate")] Products products)
         {
+            var pro = from p in _context.Products where (p.CategoriesId == products.CategoriesId && p.color == products.color && p.Gender == products.Gender && p.ImageUrl == products.ImageUrl && p.Name == products.Name && p.Price == products.Price) select p;
+            if (pro.Count() > 0)
+                return View(products);
             var cat = from c in _context.Categories where c.Id == products.CategoriesId select c;
             products.Category = cat.First();
             _context.Products.Add(products);
