@@ -147,32 +147,74 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart
-        public async Task<IActionResult> Cart(string id)
+        public async Task<IActionResult> Cart(int? products, int isAddition = -1, string size = "")
         {
-            /* if (HttpContext.Session.GetString("email") != null)
-                 return RedirectToAction("Login","Users");*/
-            // return View("Cart" ,await _context.Orders.Where(a => a.Id.Equals(id)).ToListAsync());
+            if ( products.HasValue && isAddition == 1)
+            {
+                var user = _context.Users.Include(o => o.AllOrdersMade).ThenInclude(po => po.Products).Where(c => c.Email == HttpContext.User.Claims.ElementAt(1).Value).FirstOrDefault();
+                var Product = _context.Products.Find(products);
+                    if (user.AllOrdersMade.Where(o => o.status == Status.Cart).FirstOrDefault() == null)
+                        user.AllOrdersMade.Add(new Orders() { DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), Products = new List<ProductsOrders>(), UserEmail = HttpContext.User.Claims.ElementAt(1).Value, status = Status.Cart, FullPrice = 0 });
+                    var ShoppingCart = user.AllOrdersMade.Where(o => o.status == Status.Cart).FirstOrDefault();
+                    if (ShoppingCart.Products == null)
+                        ShoppingCart.Products = new List<ProductsOrders>();
+                    if (ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault() != null)
+                    {
 
-            // var orders =  _context.Orders.FirstOrDefaultAsync(m => m.Id.CompareTo(id) == 0 && m.status == Status.Cart);
+                        if (ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault().Amount >= 1)
+                        {
+                            ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault().Amount += 1;
+                            _context.ProductsOrders.Update(ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault());
+                            ShoppingCart.FullPrice += Product.Price;
+                            _context.SaveChanges();
+                            _context.Orders.Update(ShoppingCart);
+                            _context.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        ShoppingCart.Products.Add(new ProductsOrders() { ProductId = (int)products, Product = _context.Products.Find(products), Order = ShoppingCart, Amount = 1, OrderId = ShoppingCart.Id, Size = size });
 
+                        ShoppingCart.FullPrice += Product.Price;
+                        _context.Orders.Update(ShoppingCart);
+                        _context.SaveChanges();
+                    }
 
-            /*
-             var posts = await _applicationDbContext.Posts
-                  .Include(p => p.Account)
-                  .Include(p => p.Recording)
-                  .Where(p => p.AccountId == accountId && p.Type == postType)
-                  .Where(Post.IsValid)
-                  .OrderByDesceding(p => p.Occured)
-                   .ToListAsync();
-          */
-
-
-
+                    _context.Users.Update(user);
+                    _context.SaveChanges();
+            }
+            else if (products.HasValue && isAddition == 0)
+            {
+                var cart2 = await _context.Orders
+               .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
+                if (cart2 != null)
+                {
+                    ProductsOrders po = _context.ProductsOrders.FirstOrDefault(p => p.ProductId == products && p.OrderId == cart2.Id);
+                    Products p = _context.Products.FirstOrDefault(p => p.Id == po.ProductId);
+                    cart2.FullPrice -= p.Price * po.Amount;
+                    cart2.Products.Remove(po);
+                    _context.ProductsOrders.Remove(po);
+                    _context.Update(cart2);
+                    _context.SaveChanges();
+                }
+            }
 
             var q = from u in _context.Orders
-                    where u.UserEmail.CompareTo(id) == 0
+                    where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
                     select u.Id;
 
+            var cart3 = from u in _context.Orders
+                       where (u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0 && u.status == Status.Cart)
+                       select u;
+
+            var sum = 0.0;
+            var ps = (from po in _context.ProductsOrders where po.OrderId == cart3.First().Id select po).ToList();
+            foreach (var item in ps)
+            {
+                var prod = from p in _context.Products where p.Id == item.ProductId select p;
+                sum += item.Amount * prod.First().Price;
+            }
+            ViewBag.subtotal = sum;
 
             var h = from u in _context.ProductsOrders
                     where u.OrderId.CompareTo(q.First()) == 0
@@ -205,7 +247,7 @@ namespace MatikoWebAppProject.Controllers
             }
 
 
-            idu = id;
+            idu = this.HttpContext.User.Claims.ElementAt(1).Value;
 
             //  return View(h);
             //return View(h.ToList());
@@ -316,28 +358,18 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
         //need to change the size to whatever the user put in his input box 
-        public async Task<IActionResult> AddToCartAsync(Products prod)
-        {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
-            var cart = await _context.Orders
-                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
-            cart.FullPrice += prod.Price;
-            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S" });
-            return RedirectToAction(nameof(Index));
-        }
-        public async Task<IActionResult> RemoveFromCartAsync(Products prod)
-        {
-            var cart = await _context.Orders
-                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
-            if (cart != null)
-            {
-                ProductsOrders po = _context.ProductsOrders.Find(cart.UserEmail, prod.Id);
-                cart.FullPrice -= po.Product.Price * po.Amount;
-                _context.ProductsOrders.Remove(po);
-            }
-            return RedirectToAction(nameof(Index));
-        }
+        //public async Task<IActionResult> RemoveFromCartAsync(Products prod)
+        //{
+        //    var cart = await _context.Orders
+        //        .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
+        //    if (cart != null)
+        //    {
+        //        ProductsOrders po = _context.ProductsOrders.Find(cart.UserEmail, prod.Id);
+        //        cart.FullPrice -= po.Product.Price * po.Amount;
+        //        _context.ProductsOrders.Remove(po);
+        //    }
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool OrdersExists(int id)
         {
@@ -345,3 +377,33 @@ namespace MatikoWebAppProject.Controllers
         }
     }
 }
+
+
+
+
+/*              if (HttpContext.User == null || HttpContext.User.Claims == null || HttpContext.User.Claims.Count == 0)
+          {
+              return View("Login", "Users");
+          }
+
+          if (products.HasValue && isAddition == 1)
+          {
+              var prod = await _context.Products.FirstOrDefaultAsync(m => m.Id == products);
+              var user = await _context.Users
+                  .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
+              var cart1 = await _context.Orders
+                  .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
+              cart1.FullPrice += prod.Price;
+              if (cart1.Products.Find(p => p.ProductId == products) != null)
+              {
+                  cart1.Products.Find(m => m.ProductId == products).Amount++;
+              }
+              else
+              {
+                  cart1.Products.Add(new ProductsOrders { Amount = 1, Order = cart1, OrderId = cart1.Id, Product = prod, ProductId = prod.Id, Size = size });
+                  _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart1, OrderId = cart1.Id, Product = prod, ProductId = prod.Id, Size = size });
+              }
+              _context.Update(cart1);
+              _context.SaveChanges();
+          }
+*/

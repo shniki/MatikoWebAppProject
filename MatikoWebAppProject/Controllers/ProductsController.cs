@@ -41,8 +41,22 @@ namespace MatikoWebAppProject.Controllers
             {
                 return NotFound();
             }
+            var q = from c in _context.Categories where c.Id == products.CategoriesId select c;
+            ViewBag.productscategoryName = q.First().Name;
+            ViewBag.productscategorySizes= q.First().Sizes;
+            ViewBag.rate = int.Parse(products.Rate.ToString());
 
             return View(products);
+        }
+
+        public IActionResult Shirts()
+        {
+            var s = from p in _context.Products where p.CategoriesId == 1 select p;
+            ICollection<Products> arr = new Collection<Products>();
+            foreach(var item in s)
+                arr.Add(item);
+            ViewBag.shirts = arr;
+            return View();
         }
 
         // GET: Products/Create
@@ -56,15 +70,12 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,Category,Gender,ImageUrl,Rate")] Products products)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Gender,ImageUrl,Rate")] Products products)
         {
-            if (ModelState.IsValid)
-            {
-                products.CategoriesId = products.Category.Id;
-                _context.Add(products);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            var cat = from c in _context.Categories where c.Id == products.CategoriesId select c;
+            products.Category = cat.First();
+            _context.Products.Add(products);
+            await _context.SaveChangesAsync();
             return View(products);
         }
 
@@ -167,14 +178,14 @@ namespace MatikoWebAppProject.Controllers
         public ActionResult Statistics()
         {
             //statistic 1- how many orders every customer had made, there is only one shopping cart
-            ICollection<Stat> statistic1 = new Collection<Stat>();
+            ICollection < Stat > statistic1 = new Collection<Stat>();
             var result1 = from c in _context.Users.Include(o => o.AllOrdersMade)
                           where (c.AllOrdersMade.Count) > 0
                           orderby (c.AllOrdersMade.Count) descending
                           select c;
             foreach (var v in result1)
             {
-                statistic1.Add(new Stat(v.FirstName, v.AllOrdersMade.Count()));
+                statistic1.Add(new Stat(v.FirstName + " "  + v.LastName, v.AllOrdersMade.Count()));
             }
 
             ViewBag.data = statistic1;
@@ -182,39 +193,22 @@ namespace MatikoWebAppProject.Controllers
             //statistic 2- which brand the customers prefer to order
             ICollection<Stat> statistic2 = new Collection<Stat>();
 
-            int Count;
-            var result2 = (from p in _context.Products where (1 < 0) select new ResultPair()).ToList();//create empty result table
-            foreach (var pro in _context.Products.Include(po => po.ProOrders).ThenInclude(o => o.Order))
+            var result2 = new int[12];//create empty result table
+            for (int i = 0; i < 12; i++)
+                result2[i] = 0;
+
+            var products = new List<Products>();
+            foreach (var p in _context.Products)
+                products.Add(p);
+            foreach (var pro in _context.ProductsOrders)
             {
-                Count = 0;
-                if (pro == null)
-                    continue;
-                foreach (var po in pro.ProOrders)
-                {
-                    if (po == null)
-                        continue;
-                    if (po.Product.color == pro.color)
-                        ++Count;
-                }
-                result2.Add(new ResultPair() { Color = pro.color.ToString(), count = Count });
+                result2[(int)products.Find(m => m.Id == pro.ProductId).color]+= pro.Amount;
             }
-           foreach (var v in result2)
-           {
-                if (v.count > 0)
-                {
-                    bool flag = false;
-                    foreach(var v2 in statistic2)
-                    {
-                        if (v2.Key.CompareTo(v.Color) == 0)
-                        {
-                            flag = true;
-                            v2.Values += v.count;
-                        }
-                    }
-                    if(!flag)
-                        statistic2.Add(new Stat(v.Color, v.count));
-                }
-            }
+            for (int i = 0; i < result2.Length; i++)
+           {  
+               if(result2[i] > 0)
+                statistic2.Add(new Stat(((Color)i).ToString(),result2[i]));   
+           }
 
             ViewBag.data2 = statistic2;
 

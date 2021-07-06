@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input id="nameInput" asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -24,16 +24,39 @@
             </div>
             <div class="form-group">
                 <label asp-for="color" class="control-label"></label>
-                <select asp-for="color" class="form-control"></select>
+                <select asp-for="color" class="form-control">
+                    <option value="white">White</option>
+                    <option value="grey">Grey</option>
+                    <option value="black">Black</option>
+                    <option value="purple">Purple</option>
+                    <option value="pink">Pink</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="orange">Orange</option>
+                    <option value="red">Red</option>
+                    <option value="multi">Multi</option>
+                </select>
                 <span asp-validation-for="color" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <select asp-for="Category" class="form-control" asp-items="ViewBag.Category"></select>
+                <label asp-for="CategoriesId" class="control-label"></label>
+                @* <select asp-for="Category" class="form-control" asp-items="ViewBag.Category">*@
+                <select asp-for="CategoriesId" class="form-control">
+                    <option value=1>Shirts</option>
+                    <option value=2>Jeans</option>
+                    <option value=3>Shoes</option>
+                    <option value=4>Accessories</option>
+                    <option value=5>Shorts</option>
+                </select>
+                <span asp-validation-for="CategoriesId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control"></select>
+                <select asp-for="Gender" class="form-control">
+                    <option value="0">Men</option>
+                    <option value="1">Women</option>
+                </select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -47,7 +70,7 @@
                 <span asp-validation-for="Rate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input id="submitButton" type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -58,5 +81,7 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/facebookPosting.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }

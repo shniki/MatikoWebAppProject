@@ -1,54 +1,110 @@
 ﻿@model MatikoWebAppProject.Models.Products
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Html.DisplayFor(model => model.Name);
 }
 
-<h1>Details</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/css/StyleItem.css" rel="stylesheet" />
 
-<div>
-    <h4>Products</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.color)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.color)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rate)
-        </dd>
-    </dl>
+<div class="images">
+    <img src=@Html.DisplayFor(model => model.ImageUrl) />
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="product">
+    <p>
+        @Html.DisplayFor(model => model.Gender)
+        //
+        @ViewBag.productscategoryName
+    </p>
+    <h1>
+        @Html.DisplayFor(model => model.Name)
+    </h1>
+
+    <div class=star-rate>
+        @if (ViewBag.rate == 0)
+        {
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 1)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 2)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 3)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 4)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 5)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+        }
+    </div>
+
+    <h2>
+        $@Html.DisplayFor(model => model.Price)
+    </h2>
+    <p class="pick">COLOR:</p>
+    <a id="dark">@Html.DisplayFor(model => model.color)</a>
+    <p class="pick">SIZE:</p>
+    <div class="sizes">
+        @{
+            string sizes = ViewBag.productscategorySizes;
+            string[] sizesarr = sizes.Split();
+        }
+        <select id="selectSize" class="form-select" style="width:200px;" aria-label="Default select example">
+            <option value="" selected data-default>Please select</option>
+            @for (int i = 0; i < sizesarr.Length; i++)
+            {
+                <option class="size" value="@(sizesarr[i])">
+                    @sizesarr[i]
+                </option>
+            }
+        </select>
+    </div>
+
+    <script>
+        var x = document.getElementsById("selectSize");
+        function clickSize() {
+            if (x.value != "")
+                @ViewBag.sizeselected= x.value;
+        }
+    </script>
+
+    <div class="buttons">
+        <a class="add" asp-controller="Orders" asp-action="Cart" asp-route-products="@(Model.Id)" asp-route-size="" asp-route-isAddition ="1">Add to Cart</a>
+        <a class="like"><span>♥</span></a>
+    </div>
 </div>
+

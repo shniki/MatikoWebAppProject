@@ -131,7 +131,7 @@
                                 float am = ViewBag.popo[i].Amount;
                                 float pr = Model.ElementAt(i).Price;
                                 float total1 = am * pr;
-                                total += total1;
+                               // total += total1;
 
                             }
 
@@ -139,11 +139,9 @@
 
                         <div class="product-removal">
 
-                            <a asp-controller="Orders" asp-action="Cart2" asp-route-id=@Model.ElementAt(i).Id>
-
+                            <a asp-controller="Orders" asp-action="Cart" asp-route-products=@Model.ElementAt(i).Id asp-route-size ="" asp-route-isAddition="0">
                                 Remove
-
-                            </a>
+                             </a>
 
                         </div>
                         <div class="product-line-price">@total1</div>
@@ -158,18 +156,30 @@
             <div class="totals">
                 <div class="totals-item">
                     <label>Subtotal</label>
-                    <div class="totals-value" id="cart-subtotal">71.97</div>
+                    <div class="totals-value" id="cart-subtotal">@ViewBag.subtotal</div>
                 </div>
                 <div class="totals-item">
                     <label>Tax (5%)</label>
-                    <div class="totals-value" id="cart-tax">3.60</div>
+                    <div class="totals-value" id="cart-tax">@(ViewBag.subtotal*0.05)</div>
                 </div>
                 <div class="totals-item">
                     <label>Shipping</label>
-                    <div class="totals-value" id="cart-shipping">15.00</div>
+                    @if (ViewBag.subtotal != 0)
+                    {
+                        <div class="totals-value" id="cart-shipping">15.00</div>
+                    }
+                    else
+                    {
+                        <div class="totals-value" id="cart-shipping">0.00</div>
+                    }
+
                 </div>
                 <div class="totals-item totals-item-total">
                     <label>Grand Total</label>
+                    @{
+                        total += ViewBag.subtotal * 0.05f;
+                        total += ViewBag.subtotal + 15.00f;
+                    }
                     <div class="totals-value" id="cart-total">@total</div>
                 </div>
             </div>
@@ -178,7 +188,7 @@
             *@
 
 
-            <a asp-controller="Orders" asp-action="Cart3" asp-route-total=@total>Checkout</a>
+            <a asp-controller="Orders" asp-action="Cart3" asp-route-total=@total asp-route-id=@ViewBag.pp>Checkout</a>
 
         </div>
         </div>
