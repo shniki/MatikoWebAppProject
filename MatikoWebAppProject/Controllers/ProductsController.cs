@@ -50,7 +50,7 @@ namespace MatikoWebAppProject.Controllers
         }
 
 
-        public IActionResult Shirts(int sort=1, string gender="", string color="")
+        public IActionResult Shirts(string sort="1", string gender="", string color="")
         {
 
             Color _color=Color.Black;
@@ -96,13 +96,20 @@ namespace MatikoWebAppProject.Controllers
                 }
             }
 
-
             ICollection< Products > arr = new Collection<Products>();
             int len = 0;
             foreach (var item in s) {
                 arr.Add(item);
                 len++;
             }
+
+            switch (sort)
+            {
+                case "2": arr.ToList().Sort((a, b) => (int)(b.Price - a.Price)); break;
+                case "3": arr.ToList().Sort((a, b) => (int)(a.Price - b.Price)); break;
+                case "4": arr.ToList().Sort((a, b) => (int)(b.Rate - a.Rate)); break;
+            }
+
             ViewBag.shirts = arr;
             ViewBag.shirtsLength = len;
             return View();
@@ -119,16 +126,14 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,Category,Gender,ImageUrl,Rate")] Products products)
+        public async Task<IActionResult> Create(int prodId, string categoryName, int color, int gender, string imageUrl, float price, string name)
         {
-            if (ModelState.IsValid)
-            {
-                products.CategoriesId = products.Category.Id;
-                _context.Add(products);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(products);
+
+            var cat = from c in _context.Categories where c.Name == categoryName select c;
+            Products prod = new Products() { AllReviewsMade = new List<Reviews>(), CategoriesId = cat.First().Id, Category = cat.First(), color = (Color)color, Id = prodId, Gender = (Gender)gender, ImageUrl = imageUrl, Name = name, Price = price, ProOrders = new List<ProductsOrders>(), Rate = 0.0 };
+            _context.Products.Add(prod);
+            _context.SaveChanges();
+            return View(nameof(Index));
         }
 
 

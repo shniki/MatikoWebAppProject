@@ -139,11 +139,9 @@
 
                         <div class="product-removal">
 
-                            <a asp-controller="Orders" asp-action="Cart2" asp-route-id=@Model.ElementAt(i).Id>
-
+                            <a asp-controller="Orders" asp-action="Cart" asp-route-products=@Model.ElementAt(i).Id asp-route-size ="" asp-route-isAddition="0">
                                 Remove
-
-                            </a>
+                             </a>
 
                         </div>
                         <div class="product-line-price">@total1</div>
@@ -171,8 +169,8 @@
                 <div class="totals-item totals-item-total">
                     <label>Grand Total</label>
                     @{
-                        total += total * 0.05f;
-                        total += 71.97f + 15.00f;
+                        total += ViewBag.subtotal * 0.05f;
+                        total += ViewBag.subtotal + 15.00f;
                     }
                     <div class="totals-value" id="cart-total">@total</div>
                 </div>

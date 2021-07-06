@@ -182,6 +182,8 @@ namespace MatikoWebAppProject.Controllers
                     cart1.Products.Add(new ProductsOrders { Amount = 1, Order = cart1, OrderId = cart1.Id, Product = prod, ProductId = prod.Id, Size = size });
                     _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart1, OrderId = cart1.Id, Product = prod, ProductId = prod.Id, Size = size });
                 }
+                _context.Update(cart1);
+                _context.SaveChanges();
             }
 
             else if(products.HasValue && isAddition == 0)
@@ -195,16 +197,17 @@ namespace MatikoWebAppProject.Controllers
                     cart2.FullPrice -= p.Price * po.Amount;
                     cart2.Products.Remove(po);
                     _context.ProductsOrders.Remove(po);
+                    _context.Update(cart2);
+                    _context.SaveChanges();
                 }
             }
-
 
             var q = from u in _context.Orders
                     where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
                     select u.Id;
 
             var cart3 = from u in _context.Orders
-                       where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
+                       where (u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0 && u.status == Status.Cart)
                        select u;
 
             var sum = 0.0;

@@ -13,41 +13,71 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input id="nameInput" asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <form>
+                    <label asp-for="Name">Name:</label>
+                    <input id="nameInput" asp-for="Name" type="text" />
+                </form>
             </div>
+            <p></p>
             <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
+                <form>
+                    <label asp-for="Price">Price:</label>
+                    <input asp-for="Price" id="lfname" name="fname" type="text" />
+                </form>
             </div>
+            <p></p>
             <div class="form-group">
-                <label asp-for="color" class="control-label"></label>
-                <select asp-for="color" class="form-control"></select>
-                <span asp-validation-for="color" class="text-danger"></span>
+                <form action="/action_page.php">
+                    <label asp-for="color">Color:</label>
+                    <select asp-for="color" name="colors" id="colors">
+                        <option value="white">White</option>
+                        <option value="grey">Grey</option>
+                        <option value="black">Black</option>
+                        <option value="purple">Purple</option>
+                        <option value="pink">Pink</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="yellow">Yellow</option>
+                        <option value="orange">Orange</option>
+                        <option value="red">Red</option>
+                        <option value="multi">Multi</option>
+                    </select>
+                </form>
             </div>
+            <p></p>
             <div class="form-group">
-                <label asp-for="Category" class="control-label"></label>
-                <select asp-for="Category" class="form-control" asp-items="ViewBag.Category"></select>
+                <form action="/action_page.php">
+                    <label asp-for="Category">Category:</label>
+                    <select asp-for="Category" name="categories" id="categories">
+                        <option value="shirts">Shirts</option>
+                        <option value="jeans">Jeans</option>
+                        <option value="shoes">Shoes</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="shorts">Shorts</option>
+                    </select>
+                </form>
             </div>
+            <p></p>
             <div class="form-group">
-                <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control"></select>
-                <span asp-validation-for="Gender" class="text-danger"></span>
+                <form action="/action_page.php">
+                    <label asp-for="Gender">Gender:</label>
+                    <select asp-for="Gender" name="genders" id="genders">
+                        <option value="male">Man</option>
+                        <option value="memale">Woman</option>
+                        <option value="memale">Unisex</option>
+                    </select>
+                </form>
             </div>
+            <p></p>
             <div class="form-group">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                <form>
+                    <label asp-for="ImageUrl">ImageURL:</label>
+                    <input asp-for="ImageUrl" id="lfname" name="fname" type="text" />
+                </form>
             </div>
+            <p></p>
             <div class="form-group">
-                <label asp-for="Rate" class="control-label"></label>
-                <input asp-for="Rate" class="form-control" />
-                <span asp-validation-for="Rate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input id="submitButton" type="submit" value="Create" class="btn btn-primary"/>
+                <input id="submitButton" type="submit" value="Create" class="btn btn-primary" asp-action="Create" asp-controller="Products" asp-route-prodId="" asp-route-categoryName=" " />
             </div>
         </form>
     </div>

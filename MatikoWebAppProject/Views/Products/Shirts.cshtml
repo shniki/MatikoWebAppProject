@@ -6,6 +6,7 @@
 }
 
 <link href="~/css/StyleCategory.css" rel="stylesheet" />
+<script src="~/js/forShirts.js" asp-append-version="true"></script>
 
 <div class="titles">
     <h2>
@@ -25,7 +26,6 @@
                 <option value="2">Price High to Low</option>
                 <option value="3">Price Low to High</option>
                 <option value="4">Top Rated</option>
-                <option value="5">What's New</option>
             </select>
         </div>
         <div class="col-4">
@@ -80,25 +80,3 @@
         }
     </div>
 </div>
-
-<script>
-function ChangedSomething()
-{
-    $.ajax({
-        url: "Products/Shirts",
-        data: {
-            sort: document.getElementsById('sortby').value,
-            gender: document.getElementsById('genderby').value,
-            color: document.getElementsById('colorby').value
-        }
-    });
-}
-    function GoToItem(itemid)
-    {
-    $.ajax({
-        url: "Products/Details",
-        data: { id: itemid },
-        type: 'GET'
-    });
-}
-</script>

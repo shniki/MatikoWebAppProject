@@ -95,7 +95,7 @@
     </div>
 
     <script>
-        function func(){
+        function func() {
             string sizeval = document.getElementsById('selectSize').value;
             if (sizeval != "")
                 return sizeval;
@@ -104,8 +104,24 @@
     </script>
 
     <div class="buttons">
-        <a type="button" class="add" asp-controller="Orders" asp-action="Cart" asp-route-products="@(Model.Id)" asp-route-size="S" asp-route-isAddition="1">Add to Cart</a>
-        <a class="like" asp-controller="WishLists" asp-action="AddToWishListAsync" asp-route-products="@(Model.Id)"><span>♥</span></a>
+        <button id="add" class="add" onclick="AddToCart()">Add to Cart</button>
+        <button class="like" onclick="AddToWishList(@(Model.Id))"><span>♥</span></button>
     </div>
 </div>
+
+<script>
+    function AddToCart() {
+        string sizeval = document.getElementsById('selectSize').value;
+        if (sizeval == "")
+            alert("You must choose a size");
+        else {
+            int id=@(Model.Id);
+            window.location.href = Url.Action("Cart", "Orders", new { products = id, size = sizeval, isAddition = 1 });
+        }
+    }
+
+    document.getElementById("add").addEventListener("click", AddToCart);
+</script>
+
+
 
