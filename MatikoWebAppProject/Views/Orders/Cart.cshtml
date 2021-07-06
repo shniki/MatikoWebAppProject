@@ -131,7 +131,7 @@
                                 float am = ViewBag.popo[i].Amount;
                                 float pr = Model.ElementAt(i).Price;
                                 float total1 = am * pr;
-                                total += total1;
+                               // total += total1;
 
                             }
 
@@ -160,11 +160,19 @@
                 </div>
                 <div class="totals-item">
                     <label>Tax (5%)</label>
-                    <div class="totals-value" id="cart-tax">@(total*0.05)</div>
+                    <div class="totals-value" id="cart-tax">@(ViewBag.subtotal*0.05)</div>
                 </div>
                 <div class="totals-item">
                     <label>Shipping</label>
-                    <div class="totals-value" id="cart-shipping">15.00</div>
+                    @if (ViewBag.subtotal != 0)
+                    {
+                        <div class="totals-value" id="cart-shipping">15.00</div>
+                    }
+                    else
+                    {
+                        <div class="totals-value" id="cart-shipping">0.00</div>
+                    }
+
                 </div>
                 <div class="totals-item totals-item-total">
                     <label>Grand Total</label>

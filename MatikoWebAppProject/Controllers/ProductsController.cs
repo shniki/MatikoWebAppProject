@@ -70,14 +70,13 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int prodId, string categoryName, int color, int gender, string imageUrl, float price, string name)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Gender,ImageUrl,Rate")] Products products)
         {
-
-            var cat = from c in _context.Categories where c.Name == categoryName select c;
-            Products prod = new Products() { AllReviewsMade = new List<Reviews>(), CategoriesId = cat.First().Id, Category = cat.First(), color = (Color)color, Id = prodId, Gender = (Gender)gender, ImageUrl = imageUrl, Name = name, Price = price, ProOrders = new List<ProductsOrders>(), Rate = 0.0 };
-            _context.Products.Add(prod);
-            _context.SaveChanges();
-            return View(nameof(Index));
+            var cat = from c in _context.Categories where c.Id == products.CategoriesId select c;
+            products.Category = cat.First();
+            _context.Products.Add(products);
+            await _context.SaveChangesAsync();
+            return View(products);
         }
 
 
