@@ -80,7 +80,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("FirstName,Email,PhoneNumber,Address,City,Country,ZipCode")] Users users)
+        public IActionResult Edit([Bind("FirstName,Email,PhoneNumber,Address,City,Country,ZipCode")] Users users)
         {
             /* if (id != users.Email)
              {
@@ -90,24 +90,24 @@ namespace MatikoWebAppProject.Controllers
             /// users.LastName = "Samuel";
             ///users.Password = "hagayh11";
 
-         _context.Attach(users);
+            _context.Attach(users);
 
 
-         _context.Entry(users).Property(p => p.FirstName).IsModified = true;
-           // _context.Entry(users).Property(p => p.Email).IsModified = true;
+            _context.Entry(users).Property(p => p.FirstName).IsModified = true;
+            // _context.Entry(users).Property(p => p.Email).IsModified = true;
             _context.Entry(users).Property(p => p.Address).IsModified = true;
-         _context.Entry(users).Property(p => p.PhoneNumber).IsModified = true;
-         _context.Entry(users).Property(p => p.ZipCode).IsModified = true;
-         _context.Entry(users).Property(p => p.City).IsModified = true;
-         _context.Entry(users).Property(p => p.Country).IsModified = true;
-         _context.Entry(users).Property(p => p.LastName).IsModified = users.LastName != null;
-         _context.Entry(users).Property(p => p.Password).IsModified = users.Password != null;
+            _context.Entry(users).Property(p => p.PhoneNumber).IsModified = true;
+            _context.Entry(users).Property(p => p.ZipCode).IsModified = true;
+            _context.Entry(users).Property(p => p.City).IsModified = true;
+            _context.Entry(users).Property(p => p.Country).IsModified = true;
+            _context.Entry(users).Property(p => p.LastName).IsModified = users.LastName != null;
+            _context.Entry(users).Property(p => p.Password).IsModified = users.Password != null;
 
 
 
-         _context.SaveChanges();
+            _context.SaveChanges();
 
-        return RedirectToAction(nameof(Index), "Home");
+            return RedirectToAction(nameof(Index), "Home");
 
         }
 

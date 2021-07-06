@@ -48,7 +48,7 @@ function recalculateCart() {
 function updateQuantity(quantityInput) {
 
     
-    String sParam = quantityInput.toString();
+    var sParam = quantityInput.toString();
     $.ajax({
         type: "POST",
         url: "OrdersController/Cart4",
