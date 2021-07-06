@@ -9,14 +9,14 @@ body {
     background-position: center;
 }
 
-h1 {
-    color: black;
-    font-size: 42px;
-    top: 20%;
-    font-weight: 600;
-    margin: 0 0 35px 0;
-    font-family: 'Montserrat', sans-serif;
-}
+   h1 {
+        color: black;
+        font-size: 42px;
+        top:20%;
+        font-weight: 600;
+        margin: 0 0 35px 0;
+        font-family: 'Montserrat', sans-serif;
+    }
 
 
 input[type="submit"] {
@@ -25,14 +25,14 @@ input[type="submit"] {
     margin-bottom: 10px;
 }
 
-input, select {
-    border: 1px solid #ccc;
-    padding: 10px;
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 2px;
-    background-color: white;
+input,select{
+    border:1px solid #ccc;
+    padding:10px;
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+    border-radius:2px;
+    background-color:white;
 }
 
 .form-group input:focus {
@@ -45,21 +45,20 @@ input, select {
     color: black;
     font-size: 15px;
     font-family: 'Poppins',sans-serif;
-    cursor: pointer;
+    cursor:pointer;
 }
 
     .signup a {
         color: #3498db;
         text-decoration: none;
     }
+    @media screen and (max-width: 480px) {
 
-@media screen and (max-width: 480px) {
-
-    .social-panel-container.visible {
-        transform: translateX(0px);
-    }
-
-    .floating-btn {
-        right: 10px;
-    }
+	.social-panel-container.visible {
+		transform: translateX(0px);
+	}
+	
+	.floating-btn {
+		right: 10px;
+	}
 }

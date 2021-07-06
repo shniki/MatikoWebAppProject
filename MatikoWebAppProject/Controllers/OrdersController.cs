@@ -147,48 +147,48 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart
-        public async Task<IActionResult> Cart(int? products, int isAddition = -1, string size = "",int isFromWishlist = 0)
+        public async Task<IActionResult> Cart(int? products, int isAddition = -1, string size = "", int isFromWishlist = 0)
         {
-            if ( products.HasValue && isAddition == 1)
+            if (products.HasValue && isAddition == 1)
             {
                 var user = _context.Users.Include(o => o.AllOrdersMade).ThenInclude(po => po.Products).Where(c => c.Email == HttpContext.User.Claims.ElementAt(1).Value).FirstOrDefault();
                 var Product = _context.Products.Find(products);
-                    if (user.AllOrdersMade.Where(o => o.status == Status.Cart).FirstOrDefault() == null)
-                        user.AllOrdersMade.Add(new Orders() { DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), Products = new List<ProductsOrders>(), UserEmail = HttpContext.User.Claims.ElementAt(1).Value, status = Status.Cart, FullPrice = 0 });
-                    var ShoppingCart = user.AllOrdersMade.Where(o => o.status == Status.Cart).FirstOrDefault();
-                    if (ShoppingCart.Products == null)
-                        ShoppingCart.Products = new List<ProductsOrders>();
-                    if (ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault() != null)
-                    {
+                if (user.AllOrdersMade.Where(o => o.status == Status.Cart).FirstOrDefault() == null)
+                    user.AllOrdersMade.Add(new Orders() { DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), Products = new List<ProductsOrders>(), UserEmail = HttpContext.User.Claims.ElementAt(1).Value, status = Status.Cart, FullPrice = 0 });
+                var ShoppingCart = user.AllOrdersMade.Where(o => o.status == Status.Cart).FirstOrDefault();
+                if (ShoppingCart.Products == null)
+                    ShoppingCart.Products = new List<ProductsOrders>();
+                if (ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault() != null)
+                {
 
-                        if (ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault().Amount >= 1)
-                        {
-                            ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault().Amount += 1;
-                            _context.ProductsOrders.Update(ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault());
-                            ShoppingCart.FullPrice += Product.Price;
-                            _context.SaveChanges();
-                            _context.Orders.Update(ShoppingCart);
-                            _context.SaveChanges();
-                        }
-                    }
-                    else
+                    if (ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault().Amount >= 1)
                     {
-                        ShoppingCart.Products.Add(new ProductsOrders() { ProductId = (int)products, Product = _context.Products.Find(products), Order = ShoppingCart, Amount = 1, OrderId = ShoppingCart.Id, Size = size });
-
+                        ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault().Amount += 1;
+                        _context.ProductsOrders.Update(ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault());
                         ShoppingCart.FullPrice += Product.Price;
+                        _context.SaveChanges();
                         _context.Orders.Update(ShoppingCart);
                         _context.SaveChanges();
                     }
+                }
+                else
+                {
+                    ShoppingCart.Products.Add(new ProductsOrders() { ProductId = (int)products, Product = _context.Products.Find(products), Order = ShoppingCart, Amount = 1, OrderId = ShoppingCart.Id, Size = size });
 
-                    if(isFromWishlist == 1)
-                    {
-                        var pw = from p in _context.ProductsWishList where (p.ProductId == products && p.UserEmail == HttpContext.User.Claims.ElementAt(1).Value) select p;
-                        _context.ProductsWishList.Remove(pw.First());
-                        _context.SaveChanges();
-                    }
-
-                    _context.Users.Update(user);
+                    ShoppingCart.FullPrice += Product.Price;
+                    _context.Orders.Update(ShoppingCart);
                     _context.SaveChanges();
+                }
+
+                if (isFromWishlist == 1)
+                {
+                    var pw = from p in _context.ProductsWishList where (p.ProductId == products && p.UserEmail == HttpContext.User.Claims.ElementAt(1).Value) select p;
+                    _context.ProductsWishList.Remove(pw.First());
+                    _context.SaveChanges();
+                }
+
+                _context.Users.Update(user);
+                _context.SaveChanges();
             }
             else if (products.HasValue && isAddition == 0)
             {
@@ -211,8 +211,8 @@ namespace MatikoWebAppProject.Controllers
                     select u.Id;
 
             var cart3 = from u in _context.Orders
-                       where (u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0 && u.status == Status.Cart)
-                       select u;
+                        where (u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0 && u.status == Status.Cart)
+                        select u;
 
             var sum = 0.0;
             var ps = (from po in _context.ProductsOrders where po.OrderId == cart3.First().Id select po).ToList();

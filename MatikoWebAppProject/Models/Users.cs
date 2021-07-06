@@ -32,7 +32,7 @@ namespace MatikoWebAppProject.Models
         [Required(ErrorMessage = "You must input your phone number")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
-
+        
         [Required(ErrorMessage = "You must input your birthday date")]
         public DateTime Birthday { get; set; }
 

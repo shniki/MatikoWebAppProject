@@ -24,11 +24,11 @@ namespace MatikoWebAppProject.Controllers
         }
 
         // GET: WishLists
-      /*
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.WishList.ToListAsync());
-        } */
+        /*
+          public async Task<IActionResult> Index()
+          {
+              return View(await _context.WishList.ToListAsync());
+          } */
 
         // GET: WishLists/Details/5
         public async Task<IActionResult> Details(string id)
@@ -150,7 +150,7 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-  
+
 
         private bool WishListExists(string id)
         {
@@ -162,7 +162,7 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Whishlist
-        public async Task<IActionResult> Index( string size, int isAddition, int prodId = -1)
+        public async Task<IActionResult> Index(string size, int isAddition, int prodId = -1)
         {
 
             if (prodId != -1 && isAddition == 1)
@@ -187,16 +187,16 @@ namespace MatikoWebAppProject.Controllers
             _context.SaveChanges();
 
             var q = from u in _context.ProductsWishList
-                        where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
-                        select u;
+                    where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
+                    select u;
 
 
 
-        
+
             ProductsWishList[] productswishlist = q.ToArray();
-            
+
             ViewBag.popo = productswishlist;
-        
+
             List<Products> list = new List<Products>();
 
             int[] productsid = new int[q.Count()];
