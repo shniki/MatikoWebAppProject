@@ -24,7 +24,7 @@ namespace MatikoWebAppProject.Controllers
         // GET: Orders
         public async Task<IActionResult> Index(string userEmail = null)
         {
-            if(userEmail != null)
+            if (userEmail != null)
             {
                 var orders = from o in _context.Orders where o.UserEmail.CompareTo(userEmail) == 0 select o;
                 return View(await orders.ToListAsync());
@@ -93,6 +93,16 @@ namespace MatikoWebAppProject.Controllers
         // GET: Cart3 for checkout 
         public IActionResult Cart3(float total, string id)
         {
+
+            //save the order in DB
+
+            var order = from o in _context.Orders where (o.UserEmail == HttpContext.User.Claims.ElementAt(1).Value && o.status == Status.Cart) select o;
+            order.First().status = Status.Paid;
+            order.First().DateOrder = DateTime.Today;
+            order.First().EstimatedDateArrival = DateTime.Today.AddDays(14);
+            _context.Orders.Add(new Orders() { status = Status.Cart, DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), FullPrice = 0, Products = new List<ProductsOrders>(), UserEmail = HttpContext.User.Claims.ElementAt(1).Value });
+            _context.SaveChanges();
+
             var j = from u in _context.Orders
                     where u.UserEmail.CompareTo(idu) == 0
                     select u;
