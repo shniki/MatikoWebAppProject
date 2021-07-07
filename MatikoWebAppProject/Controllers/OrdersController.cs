@@ -101,6 +101,7 @@ namespace MatikoWebAppProject.Controllers
             order.First().DateOrder = DateTime.Today;
             order.First().EstimatedDateArrival = DateTime.Today.AddDays(14);
             _context.Orders.Add(new Orders() { status = Status.Cart, DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), FullPrice = 0, Products = new List<ProductsOrders>(), UserEmail = HttpContext.User.Claims.ElementAt(1).Value });
+            _context.SaveChanges();  _context.Orders.Add(new Orders() { status = Status.Cart, DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), FullPrice = 0, Products = new List<ProductsOrders>(), UserEmail = HttpContext.User.Claims.ElementAt(1).Value });
             _context.SaveChanges();
 
             var j = from u in _context.Orders
@@ -226,7 +227,7 @@ namespace MatikoWebAppProject.Controllers
             }
 
             var q = from u in _context.Orders
-                    where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
+                    where (u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0 && u.status == Status.Cart)
                     select u.Id;
 
             ViewBag.pp = q.First().ToString();
