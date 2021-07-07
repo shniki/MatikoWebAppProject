@@ -134,23 +134,23 @@ else if (Context.User != null && Context.User.Claims != null && Context.User.Cla
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
                     </li>
-                    <li class="nav-item"> <a class="nav-link" asp-controller="Products" asp-action="Shirts">Shoes</a>  </li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Accessories</a>  </li>
+                    <li class="nav-item"> <a class="nav-link" asp-controller="Products" asp-action="New">New</a>  </li>
+                    <li class="nav-item"> <a class="nav-link" asp-controller="Products" asp-action="Popular">Popular</a>  </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Clothing
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Jeans</a>
-                            <a class="dropdown-item" href="#">Shirts</a>
-                            <a class="dropdown-item" href="#">Shorts</a>
-                            <a class="dropdown-item" href="#">Swimwear</a>
+                            <a class="dropdown-item" asp-controller="Products" asp-action="Jeans">Jeans</a>
+                            <a class="dropdown-item" asp-controller="Products" asp-action="Shirts">Shirts</a>
+                            <a class="dropdown-item" asp-controller="Products" asp-action="Shorts">Shorts</a>
+                            <a class="dropdown-item" asp-controller="Products" asp-action="Swimwear">Swimwear</a>
                             <div class="dropdown-divider"></div>
                         </div>
                     </li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Popular</a>  </li>
-                    <li class="nav-item"> <a class="nav-link" href="#">New</a>  </li>
-                    <li class="nav-item"> <a class="nav-link" href="#">Outlet</a>  </li>
+                    <li class="nav-item"> <a class="nav-link" asp-controller="Products" asp-action="Shoes">Shoes</a>  </li>
+                    <li class="nav-item"> <a class="nav-link" asp-controller="Products" asp-action="Accessories">Accessories</a>  </li>
+                    <li class="nav-item"> <a class="nav-link" asp-controller="Products" asp-action="Outlet">Outlet</a>  </li>
                 </ul>
             </div>
         </nav>

@@ -66,7 +66,6 @@ hr.solid {
 }
 
 .tiny-container {
-    height: 100px;
     max-width: 1080px;
     margin-left: 15%;
     margin-right: 15%;
@@ -75,7 +74,15 @@ hr.solid {
 }
 
     .tiny-container .col-4 {
+        margin-bottom: 0px;
+        margin-top: 0px;
     }
+
+.col-2 {
+    margin-left: 35px;
+    margin-right: 35px;
+    padding: 10px;
+}
 
 .col-4 {
     flex-basis: 25%;

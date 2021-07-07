@@ -1,15 +1,15 @@
 ﻿@model MatikoWebAppProject.Models.Products
 
 @{
-    ViewData["Title"] = "Shirts";
-    ViewBag.title = "Shirts";
+    ViewData["Title"] = "Jeans";
+    ViewBag.title = "Jeans";
 }
 
 <link href="~/css/StyleCategory.css" rel="stylesheet" />
 
 <div class="titles">
     <h2>
-        SHIRTS
+        JEANS
     </h2>
     <p>You’ve found your perfect pair of bottoms, now all you need is a top to complete the look. Introducing our edit of tops for women, which features everything from vests and casual T-shirts to smart shirts and trend-led, cold-shoulder tops. New Look has all your style essentials, whatever your occasion or taste; you can find fresh V-neck tops to enhance your daytime look as well as oversized tops in boyfriend styles for that cosy feel. And Topshop is here to help you add drama, with bold prints and backless tops, while ASOS DESIGN has hundreds of styles to help you express your individuality. Invent your own style with our collection of tops for women.</p>
 </div>
@@ -26,7 +26,7 @@
                 <option value="3">Price Low to High</option>
                 <option value="4">Top Rated</option>
             </select>
-            <script>document.getElementById("sortby").selectedIndex = @(ViewBag.shirtsSort)</script>
+            <script>document.getElementById("sortby").selectedIndex = @(ViewBag.jeansSort)</script>
         </div>
         <div class="col-4">
             <select id="genderby" onchange="ChangedSomething()" class="form-select">
@@ -35,7 +35,7 @@
                 <option value="2">Men</option>
                 <option value="3">Unisex</option>
             </select>
-            <script>document.getElementById("genderby").selectedIndex = @(ViewBag.shirtsGender)</script>
+            <script>document.getElementById("genderby").selectedIndex = @(ViewBag.jeansGender)</script>
         </div>
         <div class="col-4">
             <select id="colorby" onchange="ChangedSomething()" class="form-select" >
@@ -52,17 +52,17 @@
                 <option value="10">Grey</option>
                 <option value="11">Multi</option>
             </select>
-            <script>document.getElementById("colorby").selectedIndex = @(ViewBag.shirtsColor)</script>
+            <script>document.getElementById("colorby").selectedIndex = @(ViewBag.jeansColor)</script>
         </div>
     </div>
 </div>
 
 <hr class="solid">
-<p style="text-align: center; margin-bottom: -40px;">@(ViewBag.shirtsLength) items found</p>
+<p style="text-align: center; margin-bottom: -40px;">@(ViewBag.jeansLength) items found</p>
 
 <div class="small-container">
     <div class="row">
-        @foreach (var item in ViewBag.shirts as ICollection<Products>)
+        @foreach (var item in ViewBag.jeans as ICollection<Products>)
         {
             <div class="col-4">
                 <div class="wrapper" onclick="GoToItem(@(item.Id))">
@@ -100,6 +100,6 @@
         genderval = genders.options[genders.selectedIndex].value;
         sortval = sorts.options[sorts.selectedIndex].value;
 
-        window.location.href = 'Shirts?' + 'sort=' + sortval + '&gender=' + genderval + '&color=' + colorval;
+        window.location.href = 'Jeans?' + 'sort=' + sortval + '&gender=' + genderval + '&color=' + colorval;
     }
 </script>
