@@ -3,7 +3,7 @@
         // Post using facebook api
         function postAStatus() {
             var status = "Check out our new Product at Matiko !";
-            const token = "EAACZAe71CaZA4BAEIrOfsnwM0VIvPoWmjaUTjkXXhvTW52b52dDh5oILAr4c0dzINuqvvdYiFVfP3Rtsoz4LZAw2UxCP888YJ2xJesvneduhCSZApiDVYCgmBD7qs7oMfyvztN2L6QCG52VfCVVeEVICOHAZBK2tE9MZCOw5d264b0osdnUByy5DWT8JmHt69TbyuxF1pAxgZDZD";
+            const token = "EAACZAe71CaZA4BADTMp9gYmURLThnOfIZAvnPwZB82Ed2pBeRS51dQbW2xIUSkfd8vSwoqRKXNXR82HnqRWvHAEpF99RP0ckZAkOAPOZAD78kZA1fWnDQuRQJZBcbaUgZA5KrVQ5Kg7qFKUQZBU9N96yZBubl1mZB5age72eU3auYvtWxxXEE4E36UPAOOtOisOZAEeOjN2yqvl0KuwZB0HwMGrvvV";
             FB.api(
                 '/112553514419642/feed',
                 'POST',

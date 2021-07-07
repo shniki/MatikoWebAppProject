@@ -103,7 +103,7 @@
     </script>
 
     <div class="buttons">
-        <a class="add" asp-controller="Orders" asp-action="Cart" asp-route-products="@(Model.Id)" asp-route-size="" asp-route-isAddition ="1">Add to Cart</a>
+        <a class="add" asp-controller="Orders" asp-action="Cart" asp-route-products="@(Model.Id)" asp-route-size="@ViewBag.sizeselected" asp-route-isAddition ="1">Add to Cart</a>
         <a class="like" asp-controller="WishLists" asp-action="Index" asp-route-prodId="@(Model.Id)" asp-route-isAddition="1" asp-route-size="@ViewBag.sizeselected"><span>♥</span></a>
     </div>
 </div>

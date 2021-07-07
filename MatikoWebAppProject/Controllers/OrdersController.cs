@@ -22,8 +22,13 @@ namespace MatikoWebAppProject.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string userEmail = null)
         {
+            if(userEmail != null)
+            {
+                var orders = from o in _context.Orders where o.UserEmail.CompareTo(userEmail) == 0 select o;
+                return View(await orders.ToListAsync());
+            }
             return View(await _context.Orders.ToListAsync());
         }
 
@@ -86,12 +91,17 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart3 for checkout 
-        public IActionResult Cart3(float total)
+        public IActionResult Cart3(float total, string id)
         {
             var j = from u in _context.Orders
                     where u.UserEmail.CompareTo(idu) == 0
                     select u;
             j.First().FullPrice = total;
+
+
+            string[] vs = new string[2];
+            vs[0] = id;
+            ViewBag.kkk = vs;
 
             var user = from u in _context.Users where u.Email.CompareTo(j.First().UserEmail) == 0 select u;
             user.First().AllOrdersMade.Add(j.First());
@@ -118,9 +128,10 @@ namespace MatikoWebAppProject.Controllers
             _context.SaveChanges();
 
             //return View();
-            return RedirectToAction(nameof(Index), "Home");
+            return View();
             // change to thank you page
         }
+
 
 
 
@@ -147,14 +158,12 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Cart
-        public async Task<IActionResult> Cart(int? products, int isAddition = -1, string size = "", int isFromWishlist = 0)
+        public async Task<IActionResult> Cart(int? products, int isAddition = -1, string size = "", int isFromWishlist = 0, string discount= "")
         {
             if (products.HasValue && isAddition == 1)
             {
                 var user = _context.Users.Include(o => o.AllOrdersMade).ThenInclude(po => po.Products).Where(c => c.Email == HttpContext.User.Claims.ElementAt(1).Value).FirstOrDefault();
                 var Product = _context.Products.Find(products);
-                if (user.AllOrdersMade.Where(o => o.status == Status.Cart).FirstOrDefault() == null)
-                    user.AllOrdersMade.Add(new Orders() { DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), Products = new List<ProductsOrders>(), UserEmail = HttpContext.User.Claims.ElementAt(1).Value, status = Status.Cart, FullPrice = 0 });
                 var ShoppingCart = user.AllOrdersMade.Where(o => o.status == Status.Cart).FirstOrDefault();
                 if (ShoppingCart.Products == null)
                     ShoppingCart.Products = new List<ProductsOrders>();
@@ -209,6 +218,8 @@ namespace MatikoWebAppProject.Controllers
             var q = from u in _context.Orders
                     where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
                     select u.Id;
+
+            ViewBag.pp = q.First().ToString();
 
             var cart3 = from u in _context.Orders
                         where (u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0 && u.status == Status.Cart)

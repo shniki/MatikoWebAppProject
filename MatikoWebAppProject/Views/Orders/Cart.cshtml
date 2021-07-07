@@ -10,8 +10,8 @@
     Layout = "_Layout";
 
     float total = 0;
-
-
+    Boolean isDiscounted = false;
+        
 
 }
 
@@ -137,37 +137,55 @@
             </div>
 
             @* To Here*@
+            <script>
+                function changePrices() {
+                    var discountCode = document.getElementById("dis").nodeValue;
+                    if (discountCode.localeCompare("HEMI") == 0)
+                        @isDiscounted = true;
+                }
+            </script>
 
-            <div class="totals">
-                <div class="totals-item">
-                    <label>Subtotal</label>
-                    <div class="totals-value" id="cart-subtotal">@ViewBag.subtotal</div>
-                </div>
-                <div class="totals-item">
-                    <label>Tax (5%)</label>
-                    <div class="totals-value" id="cart-tax">@(ViewBag.subtotal*0.05)</div>
-                </div>
-                <div class="totals-item">
-                    <label>Shipping</label>
-                    @if (ViewBag.subtotal != 0)
-                    {
-                        <div class="totals-value" id="cart-shipping">15.00</div>
-                    }
-                    else
-                    {
-                        <div class="totals-value" id="cart-shipping">0.00</div>
-                    }
-
-                </div>
-                <div class="totals-item totals-item-total">
-                    <label>Grand Total</label>
-                    @{
-                        total += ViewBag.subtotal * 0.05f;
-                        total += ViewBag.subtotal + 15.00f;
-                    }
-                    <div class="totals-value" id="cart-total">@total</div>
-                </div>
+        <div class="totals">
+            <div class="discount-code">
+                <form>
+                    <label for="discode">Discount Code:</label>
+                    <input id="dis" type="text" name="discount">
+                    <input type="submit" value="Apply" class="btn btn-primary"  onclick="changePrices()"/>
+                </form>
             </div>
+
+
+            <div class="totals-item">
+                <label>Subtotal</label>
+                <div class="totals-value" id="cart-subtotal">@ViewBag.subtotal</div>
+            </div>
+            <div class="totals-item">
+                <label>Tax (5%)</label>
+                <div class="totals-value" id="cart-tax">@(Math.Round(ViewBag.subtotal*0.05, 2))</div>
+            </div>
+            <div class="totals-item">
+                <label>Shipping</label>
+                @if (ViewBag.subtotal != 0)
+                {
+                    <div class="totals-value" id="cart-shipping">15.00</div>
+                }
+                else
+                {
+                    <div class="totals-value" id="cart-shipping">0.00</div>
+                }
+
+            </div>
+            <div class="totals-item totals-item-total">
+                <label>Grand Total</label>
+                @{
+                    total += Math.Round(ViewBag.subtotal * 0.05f, 2);
+                    if (isDiscounted == true)
+                        total = (float)(total * 0.7);
+                    total += ViewBag.subtotal + 15.00f;
+                }
+                <div class="totals-value" id="cart-total">@total</div>
+            </div>
+        </div>
             @*
                 @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
             *@

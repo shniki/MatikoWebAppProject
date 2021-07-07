@@ -43,7 +43,7 @@ namespace MatikoWebAppProject.Controllers
             }
             var q = from c in _context.Categories where c.Id == products.CategoriesId select c;
             ViewBag.productscategoryName = q.First().Name;
-            ViewBag.productscategorySizes= q.First().Sizes;
+            ViewBag.productscategorySizes = q.First().Sizes;
             ViewBag.rate = int.Parse(products.Rate.ToString());
 
             return View(products);
@@ -53,7 +53,7 @@ namespace MatikoWebAppProject.Controllers
         {
             var s = from p in _context.Products where p.CategoriesId == 1 select p;
             ICollection<Products> arr = new Collection<Products>();
-            foreach(var item in s)
+            foreach (var item in s)
                 arr.Add(item);
             ViewBag.shirts = arr;
             return View();
@@ -83,10 +83,10 @@ namespace MatikoWebAppProject.Controllers
         }
 
 
-        public async Task<IActionResult> Search(string name)
+        public async Task<IActionResult> Search(string query)
         {
             var q = from a in _context.Products.Include(a => a.Category)
-                    where (a.Name.Contains(name))
+                    where (a.Name.Contains(query))
                     select a;
             return View("Index", await q.ToListAsync());
         }
@@ -180,15 +180,16 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
         public ActionResult Statistics()
         {
+
             //statistic 1- how many orders every customer had made, there is only one shopping cart
             ICollection < Stat > statistic1 = new Collection<Stat>();
             var result1 = from c in _context.Users.Include(o => o.AllOrdersMade)
-                          where (c.AllOrdersMade.Count) > 0
+                          where (c.AllOrdersMade.Count() > 0)
                           orderby (c.AllOrdersMade.Count) descending
                           select c;
             foreach (var v in result1)
             {
-                statistic1.Add(new Stat(v.FirstName + " "  + v.LastName, v.AllOrdersMade.Count()));
+                statistic1.Add(new Stat(v.FirstName + " "  + v.LastName, v.AllOrdersMade.Where(O => O.status != Status.Cart).Count()));
             }
 
             ViewBag.data = statistic1;
@@ -203,9 +204,9 @@ namespace MatikoWebAppProject.Controllers
             var products = new List<Products>();
             foreach (var p in _context.Products)
                 products.Add(p);
-            foreach (var pro in _context.ProductsOrders)
+            foreach (var pro in _context.ProductsOrders.Where(po => po.Order.status != Status.Cart))
             {
-                result2[(int)products.Find(m => m.Id == pro.ProductId).color]+= pro.Amount;
+                result2[(int)products.Find(m => m.Id == pro.ProductId).color] += pro.Amount;
             }
             for (int i = 0; i < result2.Length; i++)
            {  
