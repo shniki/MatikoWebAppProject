@@ -49,7 +49,7 @@ img {
     margin-bottom: 80px;
 }
 
-button {
+button.add, button.like {
     background: #fbecd8;
     padding: 10px;
     display: inline-block;

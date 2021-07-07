@@ -46,6 +46,15 @@ namespace MatikoWebAppProject.Controllers
             ViewBag.productscategorySizes= q.First().Sizes;
             ViewBag.rate = int.Parse(products.Rate.ToString());
 
+            id = q.First().Id;
+            var r = from c in _context.Reviews where c.ProductId == id select c;
+            ICollection<Reviews> arr = new Collection<Reviews>();
+            foreach (var item in r)
+            {
+                arr.Add(item);
+            }
+            ViewBag.reviews = arr;
+
             return View(products);
         }
 
