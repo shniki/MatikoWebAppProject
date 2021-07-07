@@ -175,28 +175,28 @@ namespace MatikoWebAppProject.Controllers
             {
                 var user = _context.Users.Include(o => o.AllOrdersMade).ThenInclude(po => po.Products).Where(c => c.Email == HttpContext.User.Claims.ElementAt(1).Value).FirstOrDefault();
                 var Product = _context.Products.Find(products);
-                var ShoppingCart = user.AllOrdersMade.Where(o => o.status == Status.Cart).FirstOrDefault();
-                if (ShoppingCart.Products == null)
-                    ShoppingCart.Products = new List<ProductsOrders>();
-                if (ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault() != null)
+                var ShoppingCart = from o in _context.Orders where (o.UserEmail == HttpContext.User.Claims.ElementAt(1).Value && o.status == Status.Cart) select o;
+                if (ShoppingCart.First().Products == null)
+                    ShoppingCart.First().Products = new List<ProductsOrders>();
+                if (ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault() != null)
                 {
 
-                    if (ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault().Amount >= 1)
+                    if (ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault().Amount >= 1)
                     {
-                        ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault().Amount += 1;
-                        _context.ProductsOrders.Update(ShoppingCart.Products.Where(p => p.ProductId == products).FirstOrDefault());
-                        ShoppingCart.FullPrice += Product.Price;
+                        ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault().Amount += 1;
+                        _context.ProductsOrders.Update(ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault());
+                        ShoppingCart.First().FullPrice += Product.Price;
                         _context.SaveChanges();
-                        _context.Orders.Update(ShoppingCart);
+                        _context.Orders.Update(ShoppingCart.First());
                         _context.SaveChanges();
                     }
                 }
                 else
                 {
-                    ShoppingCart.Products.Add(new ProductsOrders() { ProductId = (int)products, Product = _context.Products.Find(products), Order = ShoppingCart, Amount = 1, OrderId = ShoppingCart.Id, Size = size });
+                    ShoppingCart.First().Products.Add(new ProductsOrders() { ProductId = (int)products, Product = _context.Products.Find(products), Order = ShoppingCart.First(), Amount = 1, OrderId = ShoppingCart.First().Id, Size = size });
 
-                    ShoppingCart.FullPrice += Product.Price;
-                    _context.Orders.Update(ShoppingCart);
+                    ShoppingCart.First().FullPrice += Product.Price;
+                    _context.Orders.Update(ShoppingCart.First());
                     _context.SaveChanges();
                 }
 

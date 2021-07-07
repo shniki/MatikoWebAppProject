@@ -8,6 +8,11 @@
     width: 37%;
 }
 
+
+.final-price {
+    color: #04AA6D;
+}
+
 .product-price {
     float: left;
     width: 12%;

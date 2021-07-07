@@ -11,7 +11,7 @@
 
     float total = 0;
     Boolean isDiscounted = false;
-        
+
 
 }
 
@@ -28,8 +28,8 @@
                 <label class="product-details">Product</label>
                 <label class="product-price">Price</label>
                 <label class="product-quantity">Quantity</label>
+                <label class="product-size">Size</label>
                 <label class="product-removal">Remove</label>
-                <label class="product-line-price">Total</label>
 
             </div>
 
@@ -122,6 +122,10 @@
 
                         </div>
 
+                        <div class="product-size">
+                            @ViewBag.popo[i].Size
+                        </div>
+
                         <div class="product-removal">
 
                             <a asp-controller="Orders" asp-action="Cart" asp-route-products=@Model.ElementAt(i).Id asp-route-size="" asp-route-isAddition="0">
@@ -129,7 +133,6 @@
                             </a>
 
                         </div>
-                        <div class="product-line-price">@total1</div>
                     </div>
 
                 }
@@ -137,21 +140,34 @@
             </div>
 
             @* To Here*@
-            <script>
-                function changePrices() {
-                    var discountCode = document.getElementById("dis").nodeValue;
-                    if (discountCode.localeCompare("HEMI") == 0)
-                        @isDiscounted = true;
-                }
-            </script>
+
 
         <div class="totals">
             <div class="discount-code">
-                <form>
-                    <label for="discode">Discount Code:</label>
-                    <input id="dis" type="text" name="discount">
-                    <input type="submit" value="Apply" class="btn btn-primary"  onclick="changePrices()"/>
-                </form>
+                <label for="discode">Discount Code:</label>
+                <input type="text" id="hagis" name="fname"><br>
+                <input type="button" onclick="myFunction()" value="Apply">
+                <p id="demo"></p>
+                <p id="demo2"></p>
+                <a asp-controller="Orders" asp-action="Help" hidden="true">Recaculate</a>
+
+
+                <script>
+                    function myFunction() {
+                        var letter = document.getElementById("hagis").value;
+                        if (letter === "HEMI") {
+                            document.getElementById("demo").innerHTML = "You have 30% off";
+                            document.getElementById("ppp").hidden = false;
+
+                        }
+                        else {
+                            document.getElementById("demo").innerHTML = "Wrong code";
+
+                        }
+
+
+                    }
+                </script>
             </div>
 
 
@@ -177,14 +193,23 @@
             </div>
             <div class="totals-item totals-item-total">
                 <label>Grand Total</label>
-                @{
-                    total += Math.Round(ViewBag.subtotal * 0.05f, 2);
+                @{ total += Math.Round(ViewBag.subtotal * 0.05f, 2);
                     if (isDiscounted == true)
                         total = (float)(total * 0.7);
-                    total += ViewBag.subtotal + 15.00f;
+                    if (total != 0)
+                        total += ViewBag.subtotal + 15.00f;
                 }
+
                 <div class="totals-value" id="cart-total">@total</div>
+
+                <br></br>
+                <div class="final-price" id="ppp" hidden="true">
+                    <label class="final-price"> Final Price: $@(Math.Round(total*0.7, 2))</label>
+                </div>
+
             </div>
+
+
         </div>
             @*
                 @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
