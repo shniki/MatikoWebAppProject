@@ -164,7 +164,6 @@ namespace MatikoWebAppProject.Controllers
         // GET: Whishlist
         public async Task<IActionResult> Index(string size, int isAddition, int prodId = -1)
         {
-
             if (prodId != -1 && isAddition == 1)
             {
                 var wishlist = await _context.WishList
