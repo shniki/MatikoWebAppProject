@@ -24,11 +24,11 @@ namespace MatikoWebAppProject.Controllers
         }
 
         // GET: WishLists
-      /*
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.WishList.ToListAsync());
-        } */
+        /*
+          public async Task<IActionResult> Index()
+          {
+              return View(await _context.WishList.ToListAsync());
+          } */
 
         // GET: WishLists/Details/5
         public async Task<IActionResult> Details(string id)
@@ -150,7 +150,7 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-  
+
 
         private bool WishListExists(string id)
         {
@@ -162,7 +162,7 @@ namespace MatikoWebAppProject.Controllers
         [HttpGet]
 
         // GET: Whishlist
-        public async Task<IActionResult> Index( string size, int isAddition, int prodId = -1)
+        public async Task<IActionResult> Index(string size, int isAddition, int prodId = -1)
         {
 
             if (prodId != -1 && isAddition == 1)
@@ -174,7 +174,6 @@ namespace MatikoWebAppProject.Controllers
                 var prod = from p in _context.Products where (p.Id == prodId) select p;
                 ProductsWishList pw = new ProductsWishList { UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Product = prod.First(), ProductId = prodId, Size = size, Wishlist = wishlist };
                 _context.ProductsWishList.Add(pw);
-                _context.SaveChanges();
             }
             else if (prodId != -1 && isAddition == 0)
             {
@@ -185,18 +184,19 @@ namespace MatikoWebAppProject.Controllers
                 var prod = from p in _context.ProductsWishList where (p.ProductId == prodId && p.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value) select p;
                 _context.ProductsWishList.Remove(prod.First());
             }
+            _context.SaveChanges();
 
             var q = from u in _context.ProductsWishList
-                        where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
-                        select u;
+                    where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
+                    select u;
 
 
 
-        
+
             ProductsWishList[] productswishlist = q.ToArray();
-            
+
             ViewBag.popo = productswishlist;
-        
+
             List<Products> list = new List<Products>();
 
             int[] productsid = new int[q.Count()];
@@ -223,9 +223,7 @@ namespace MatikoWebAppProject.Controllers
 
             //  return View(h);
             //return View(h.ToList());
-
             return View(list);
-
         }
 
     }
