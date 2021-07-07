@@ -666,12 +666,75 @@ namespace MatikoWebAppProject.Controllers
         }
 
 
-        public async Task<IActionResult> Search(string query)
+        public async Task<IActionResult> Search(string query, string sort = "0", string gender = "0", string color = "0", string category = "0")
         {
-            var q = from a in _context.Products.Include(a => a.Category)
+
+            var s = from a in _context.Products.Include(a => a.Category)
                     where (a.Name.Contains(query))
                     select a;
-            return View("Index", await q.ToListAsync());
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+            if (category != "0")
+            {
+                s2 = from p in s where p.CategoriesId.ToString().Equals(category) select p;
+                s = s2;
+            }
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.currQuery = query;
+            ViewBag.search = arr;
+            ViewBag.searchLength = arr.Count;
+            ViewBag.searchSort = sort;
+            ViewBag.searchGender = gender;
+            ViewBag.searchColor = color;
+            ViewBag.searchCategory = category;
+            return View();
         }
 
         // GET: Products/Edit/5

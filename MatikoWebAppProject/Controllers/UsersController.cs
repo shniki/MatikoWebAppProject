@@ -186,7 +186,8 @@ namespace MatikoWebAppProject.Controllers
                     await _context.SaveChangesAsync();
 
                     var u = _context.Users.FirstOrDefault(u => u.Email == user.Email && u.Password == user.Password);
-
+                    _context.Orders.Add(new Orders() { status = Status.Cart, DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), FullPrice = 0, Products = new List<ProductsOrders>(), UserEmail = user.Email });
+                    _context.SaveChanges();
                     Signin(u);
 
                     return RedirectToAction(nameof(Index), "Home");

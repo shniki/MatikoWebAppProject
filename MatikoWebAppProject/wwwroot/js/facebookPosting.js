@@ -3,13 +3,13 @@
         // Post using facebook api
         function postAStatus() {
             var status = "Check out our new Product at Matiko !";
-            const token = "EAACZAe71CaZA4BADTMp9gYmURLThnOfIZAvnPwZB82Ed2pBeRS51dQbW2xIUSkfd8vSwoqRKXNXR82HnqRWvHAEpF99RP0ckZAkOAPOZAD78kZA1fWnDQuRQJZBcbaUgZA5KrVQ5Kg7qFKUQZBU9N96yZBubl1mZB5age72eU3auYvtWxxXEE4E36UPAOOtOisOZAEeOjN2yqvl0KuwZB0HwMGrvvV";
+            const token = "EAACZAe71CaZA4BABcKBB8ZBwrIvEKcL2KzmsTWij0oCznoyfMvP8v2Kkmh9gdjgkUvIMf1ZBErjVw3gGMy40PpzANlEr83zNmXiijVFi5cjtihIcHwybCSxKIYAD9ZAk2qsQ3mxLAmHv8UX13HK1BsmqooZCAiQfrS16rLEta2e2K9yOTO42CoTGBiDYdw2nZAstZBG7TXB5BQZDZD";
             FB.api(
                 '/112553514419642/feed',
                 'POST',
                 {
-                    "message": status,
-                    "access_token": token
+                    message: status,
+                    access_token : token
                 },
                 function (response) {
                     console.log(response);
