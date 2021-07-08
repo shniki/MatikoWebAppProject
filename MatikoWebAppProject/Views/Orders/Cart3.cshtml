@@ -16,15 +16,22 @@
         <div class="currentdate">
             Order Date:
     <p id="date">
-    <script>
-        n = new Date();
-        y = n.getFullYear();
-        m = n.getMonth() + 1;
-        d = n.getDate();
-        document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
-    </script>
-</p>
+        <script>
+            n = new Date();
+            y = n.getFullYear();
+            m = n.getMonth() + 1;
+            d = n.getDate();
+            document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
+        </script>
+    </p>
+
+
 </div>
+
+
+</div>
+<div style="height: 200px;">
+
 </div>
 
 
@@ -32,6 +39,6 @@
 
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
