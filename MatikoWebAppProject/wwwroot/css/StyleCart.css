@@ -8,6 +8,9 @@
     width: 37%;
 }
 
+body{
+    height:100%;
+}
 
 .final-price {
     color: #04AA6D;
@@ -22,6 +25,7 @@
     float: left;
     width: 10%;
 }
+
 
 .product-size {
     float: left;

@@ -68,11 +68,11 @@
         </div>
 
         <div class="mySlides fade">
-            <img class="pic" src="https://images.unsplash.com/photo-1512962159894-164f59a2e8b0?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1653&q=80">
+            <img class="pic" src="https://images.unsplash.com/photo-1560243563-062bfc001d68?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80">
         </div>
 
         <div class="mySlides fade">
-            <img class="pic" src="https://images.unsplash.com/photo-1563740286948-086ac5eaa46f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1651&q=80">
+            <img class="pic" src="https://images.unsplash.com/photo-1445205170230-053b83016050?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=751&q=80">
         </div>
 
         <div class="center">
@@ -125,37 +125,37 @@
 
     <div id="portfolio">
         <div class="project">
-            <img class="project__image" src="https://images.unsplash.com/photo-1519211975560-4ca611f5a72a?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ae34625b8db390fb2b784800d76d225&auto=format&fit=crop&w=700&q=80" />
-            <p>best sellers</p>
+            <img class="project__image" src="https://images.unsplash.com/photo-1547597466-50406ff4f363?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" />
+            <p class="fw-bold">Jeans</p>
             <div class="grid__overlay">
-                <button class="viewbutton">view more</button>
+                <button class="viewbutton" onclick="GoToCategory('Jeans')">view more</button>
             </div>
         </div>
 
         <div class="project">
-            <img class="project__image" src="https://images.unsplash.com/photo-1617059070087-d05ea39977dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=668&q=80" />
-            <p>denim</p>
+            <img class="project__image" src="https://images.unsplash.com/photo-1568026530336-f706373e9d78?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=375&q=80" />
+            <p class="fw-bold">Swimwear</p>
             <div class="grid__overlay">
-                <button class="viewbutton">view more</button>
+                <button class="viewbutton" onclick="GoToCategory('Swimwear')">view more</button>
             </div>
         </div>
 
         <div class="project">
-            <img class="project__image" src="https://images.unsplash.com/photo-1618375325729-03447ed04aa2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80" />
-            <p>tops</p>
+            <img class="project__image" src="https://images.unsplash.com/photo-1560889041-1814025efae4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80" />
+            <p class="fw-bold">Shirts</p>
             <div class="grid__overlay">
-                <button class="viewbutton">view more</button>
+                <button class="viewbutton" onclick="GoToCategory('Shirts')">view more</button>
             </div>
         </div>
 
         <div class="project">
-            <img class="project__image" src="https://images.unsplash.com/photo-1617922001439-4a2e6562f328?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80" />
-            <p>dresses</p>
+            <img class="project__image" src="https://images.unsplash.com/photo-1577744486770-020ab432da65?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=375&q=80" />
+            <p class="fw-bold">Accessories</p>
             <div class="grid__overlay">
-                <button class="viewbutton">view more</button>
+                <button class="viewbutton" onclick="GoToCategory('Accessories')">view more</button>
             </div>
         </div>
-
+       
         <div class="overlay">
             <div class="overlay__inner">
                 <button class="close">close X</button>
@@ -165,3 +165,8 @@
     </div>
 
 </body>
+<script>
+    function GoToCategory(category) {
+        window.location.href = '/Products/'+ category;
+    }
+</script>
