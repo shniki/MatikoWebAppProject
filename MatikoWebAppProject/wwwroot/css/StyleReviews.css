@@ -64,10 +64,12 @@ hr.solid {
             }
 
             .wrapper .container .bottom .details {
+                margin-bottom: 5px;
                 padding: 20px;
                 float: left;
                 width: calc(70% - 40px);
             }
+
 .addrev {
     width: 1080px;
     height: 250px;
