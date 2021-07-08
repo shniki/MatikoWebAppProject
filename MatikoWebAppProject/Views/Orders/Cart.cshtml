@@ -116,11 +116,11 @@
 
         <div class="totals-item">
             <label>Subtotal</label>
-            <div class="totals-value" id="cart-subtotal">@ViewBag.subtotal</div>
+            <div class="totals-value" id="cart-subtotal">$@ViewBag.subtotal</div>
         </div>
         <div class="totals-item">
             <label>Tax (5%)</label>
-            <div class="totals-value" id="cart-tax">@(Math.Round(ViewBag.subtotal*0.05, 2))</div>
+            <div class="totals-value" id="cart-tax">$@(Math.Round(ViewBag.subtotal*0.05, 2))</div>
         </div>
         <div class="totals-item">
             <label>Shipping</label>
@@ -143,7 +143,7 @@
                     total += ViewBag.subtotal + 15.00f;
             }
 
-            <div class="totals-value" id="cart-total">@total</div>
+            <div class="totals-value" id="cart-total">$@total</div>
 
             <br></br>
             <div class="final-price" id="ppp" hidden="true">
@@ -158,11 +158,10 @@
         @Html.ActionLink("Checkout", "Cart3", "Orders", new { foo = new[] { 1, 2 }, size = new[] { "XL", "L" }, total = new[] { 3, 5 } }, null)
     *@
 
-
-    <a asp-controller="Orders" asp-action="Cart3" asp-route-total=@total asp-route-id=@ViewBag.pp type="button" class="btn btn-mine shop-item-button">Checkout</a>
+    @if (ViewBag.subtotal != 0)
+    {<a asp-controller="Orders" asp-action="Cart3" asp-route-total=@total asp-route-id=@ViewBag.pp type="button" class="btn btn-mine shop-item-button">Checkout</a>}
 
 </div>
-        </div>
 
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
