@@ -147,15 +147,26 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //need to change the size to whatever the user put in his input box 
-        public async Task<IActionResult> addToCartAsync(Products prod)
+        
+        /*remember to change in both addToCart and addToWishlist the size, according to user input */
+        public async Task<IActionResult> AddToWishListAsync(Products prod)
         {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(m => m.Email == this.HttpContext.User.Claims.ElementAt(1).Value);
-            var cart = await _context.Orders
-                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value && m.status == Status.Cart);
-            cart.FullPrice += prod.Price;
-            _context.ProductsOrders.Add(new ProductsOrders { Amount = 1, Order = cart, OrderId = cart.Id, Product = prod, ProductId = prod.Id, Size = "S"});
+            var wishlist = await _context.WishList
+                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value);
+            if (wishlist == null)
+                _context.WishList.Add(wishlist = new WishList { UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Counter = 0 });
+            _context.ProductsWishList.Add(new ProductsWishList { UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Product = prod, ProductId = prod.Id, Size = "S" , Wishlist = wishlist});
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> RemoveFromWishListAsync(Products prod)
+        {
+            var wishlist = await _context.WishList
+                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value);
+            if(wishlist != null)
+            {
+                _context.ProductsWishList.Remove(new ProductsWishList { Product = prod, ProductId = prod.Id, Size = "S", UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Wishlist = wishlist });
+            }
             return RedirectToAction(nameof(Index));
         }
 

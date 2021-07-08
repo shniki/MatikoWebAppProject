@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MatikoWebAppProject.Controllers
 {
@@ -32,7 +33,7 @@ namespace MatikoWebAppProject.Controllers
         {
             return View();
         }
-
+        [Authorize]
         // GET: Users
         public async Task<IActionResult> Index()
         {
@@ -202,7 +203,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([Bind("Email,Password")] Users user)
+        public async Task<IActionResult> Register([Bind("Email,FirstName,LastName,Birthday,ZipCode,PhoneNumber,Address,City,Country,Password")] Users user)
         {
             if (ModelState.IsValid)
             {
@@ -237,30 +238,40 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([Bind("Email,Password")] Users users)
+        public IActionResult Login([Bind("Email,Password")] Users users)
         {
-                //var q = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
-                var q = from u in _context.Users
-                        where u.Email == users.Email && u.Password == users.Password
-                        select u;
-                if (q.Count() > 0)
-                {
-                    /*HttpContext.Session.SetString("Email", q.First().Email);
-                    HttpContext.Session.SetString("Name", q.First().FirstName + " " + q.First().LastName);
-                    */
-                    Signin(q.First());
+            //var q = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
+            var q = from u in _context.Users
+                    where u.Email == users.Email && u.Password == users.Password
+                    select u;
+            if (q.Count() > 0)
+            {
+                /*HttpContext.Session.SetString("Email", q.First().Email);
+                HttpContext.Session.SetString("Name", q.First().FirstName + " " + q.First().LastName);
+                */
+                Signin(q.First());
 
-                    return RedirectToAction(nameof(Index), "Home");
-                }
-                else
-                {
-                    ViewData["Error"] = "Username and/or password are incorrect.";
-                }
+                return RedirectToAction(nameof(Index), "Home");
+            }
+            else
+            {
+                ViewData["Error"] = "Username and/or password are incorrect.";
+            }
             return View(users);
         }
 
         private async void Signin(Users account)
         {
+            List<Users> list = _context.Users.ToList();
+            int index = -1;
+            for(int i = 0; i < list.Count; i++)
+            {
+                if (list.ElementAt(i).Email == account.Email)
+                {
+                    index = i;
+                    continue;
+                }
+            }
             var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, account.FirstName + " " + account.LastName),
@@ -271,7 +282,7 @@ namespace MatikoWebAppProject.Controllers
                     new Claim(ClaimTypes.StateOrProvince, account.City),
                     new Claim(ClaimTypes.PostalCode, account.ZipCode.ToString()),
                     new Claim(ClaimTypes.Country, account.Country),
-
+                    new Claim(ClaimTypes.Rsa, index.ToString())
                 };
 
             var claimsIdentity = new ClaimsIdentity(
@@ -287,7 +298,6 @@ namespace MatikoWebAppProject.Controllers
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
         }
-
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

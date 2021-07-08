@@ -45,7 +45,7 @@ namespace MatikoWebAppProject.Models
         public string Country { get; set; }
 
         //orders
-        public ICollection<Orders> AllOrdersMade { get; set; }
+        public ICollection<Orders> AllOrdersMade { get; set; } = new List<Orders>();
 
     }
 }

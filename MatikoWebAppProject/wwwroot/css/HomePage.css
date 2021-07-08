@@ -1,4 +1,4 @@
-﻿@charset "utf-8";
+﻿F@charset "utf-8";
 
 * {
     margin: 0;
@@ -9,6 +9,9 @@
 header {
     background-color: #000;
     height: 7vh;
+}
+body{
+    background-color: white;
 }
 
 ul {
@@ -33,11 +36,14 @@ ul {
             transition: 0.6s ease;
         }
 
-            ul li a:hover {
+            ul li a:hover, #f:hover, #m:hover {
                 background-color: #fff;
                 color: #000;
             }
 
+            .nameTag{
+                color: white;
+            }
 .logo img {
     float: left;
     width: 120px;
@@ -129,14 +135,18 @@ ul {
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 
 footer {
+
     background-color: rgba(0,0,0,0.6);
     overflow-x: hidden;
     padding: 14vmin 18vmin;
-    /*position: absolute;
+    position: fixed;
+    left : 0;
+    text-align: center;
+    color: white;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    line-height: 60px;*/ /* Vertically center the text there */
+    line-height: 20px; /* Vertically center the text there */
 }
     footer.column i {
         color: #fff;
@@ -236,267 +246,3 @@ dropdown-item:hover{
             background-color: #ff4f81;
         }
 }
-
-/* Slideshow container */
-.slideshow-container {
-    width: 100%;
-    height: 500px;
-}
-
-
-.pic {
-    width: 100%;
-    height: 500px;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-
-
-/* Fading animation */
-.fade {
-    -webkit-animation-name: fade;
-    -webkit-animation-duration: 0.2s;
-    animation-name: fade;
-    animation-duration: 0.5s;
-}
-
-.center {
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.button {
-    background-color: black;
-    border: none;
-    color: white;
-    padding: 10px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    transition-duration: 0.4s;
-}
-
-    .button:hover {
-        background-color: white;
-        color: black;
-    }
-
-@-webkit-keyframes fade {
-    from {
-        opacity: .4
-    }
-
-    to {
-        opacity: 1
-    }
-}
-
-@keyframes fade {
-    from {
-        opacity: .4
-    }
-
-    to {
-        opacity: 1
-    }
-}
-
-/* On smaller screens, decrease text size */
-@media only screen and (max-width: 1000px) {
-    .text {
-        font-size: 11px
-    }
-}
-
-.sale-area {
-    background-color: #e9fab0;
-    width: 100%;
-    height: 150px;
-}
-
-.sale-text {
-    height: 50%;
-    margin: auto;
-    width: 50%;
-    padding: 10px;
-}
-
-.ml2 {
-    text-align: center;
-    font-weight: 900;
-    font-size: 4.5em;
-}
-
-    .ml2 .letter {
-        display: inline-block;
-        line-height: 1em;
-    }
-
-.ml16 {
-    text-align: center;
-    padding: 10px 0;
-    font-weight: 800;
-    font-size: 1em;
-    letter-spacing: 0.5em;
-    overflow: hidden;
-}
-
-    .ml16 .letter {
-        display: inline-block;
-        line-height: 1em;
-    }
-
-#portfolio {
-    width: 100%;
-    min-height: 100vh;
-    background: #ffffff;
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(4, minmax(200px, 1fr));
-    grid-template-rows: 1fr 1fr;
-}
-
-.project {
-    position: relative;
-    background: #F2DAD7;
-    overflow: hidden;
-}
-
-    .project img {
-        position: absolute;
-        opacity: 0.9;
-    }
-
-    .project p {
-        position: absolute;
-        text-align: center;
-        width: 100%;
-        padding: 1em 0;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        z-index: 3;
-    }
-
-
-    .project:hover .grid__overlay {
-        transform: translateY(0%);
-    }
-
-.grid__overlay {
-    background: rgba(229, 182, 177, 0.9);
-    height: 100%;
-    grid-column: 1/-1;
-    grid-row: 1/-1;
-    position: relative;
-    display: grid;
-    justify-items: center;
-    align-items: center;
-    transform: translateY(101%);
-    transition: all 0.3s ease-in-out;
-}
-
-    .grid__overlay button {
-        background: none;
-        outline: none;
-        font-weight: 100;
-        letter-spacing: 2px;
-        border: 1px solid #ffffff;
-        color: #ffffff;
-        text-transform: uppercase;
-        padding: 10px;
-    }
-
-        .grid__overlay button:hover {
-            transition: all 0.3s ease-in-out;
-            background: #ffffff;
-            color: #D1A39E;
-            transform: scale(1.05);
-        }
-
-.overlay {
-    position: fixed;
-    background: rgba(71, 69, 69, 0.7);
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: none;
-    z-index: 3;
-}
-
-    .overlay.open {
-        display: grid;
-        align-items: center;
-        justify-items: center;
-    }
-
-.overlay__inner {
-    background: #ffffff;
-    width: 700px;
-    padding: 20px;
-    position: relative;
-    opacity: 1;
-}
-
-.close {
-    position: absolute;
-    top: 3px;
-    right: 10px;
-    background: none;
-    outline: 0;
-    color: #474545;
-    border: 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-    .close:hover {
-        color: #fbecd8;
-    }
-
-.project__image {
-    margin-left: auto;
-}
-
-
-
-/*.nav1 {
-    left: 10px;
-    background-color: #fff;
-    height: 7vh;
-    position: absolute;
-    margin: auto;
-}
-
-    .nav1 ul {
-        padding: 3px;
-        margin: auto;
-        list-style-type: none;
-        margin-top: 60px;
-        padding: 3px;
-    }
-    .nav1 ul li {
-        display: inline-block;
-        margin: auto;
-    }
-        .nav1 ul li a {
-            border-block-end-color: #000;
-            margin: auto;
-            text-decoration: none;
-            color: #000;
-            border: 1px solid transparent;
-            transition: 0.6s ease;
-            font-size: 25px;
-            padding: 15px 30px;
-        }
-
-           .nav1 ul li a:hover {
-                background-color: #000;
-                color: #fff;
-            }*/

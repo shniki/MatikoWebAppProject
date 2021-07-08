@@ -21,7 +21,7 @@
     <div class="bg-img">
         <div class="content">
             <header> Login</header>
-            <form asp-action="Login" method="post" class="login_form"  name="form" onsubmit="return validated()">
+            <form asp-action="Login" asp-route-returnUrl = '@Context.Request.Query["ReturnUrl"]'  method="post" class="login_form"  name="form" onsubmit="return validated()">
                
                     <div class="field">
                         <span>
