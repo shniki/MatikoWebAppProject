@@ -58,11 +58,44 @@ namespace MatikoWebAppProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                var r = from c in _context.Reviews where c.ProductId == reviews.ProductId select c;
+                int num = r.Count();
+
                 _context.Add(reviews);
+
+                double oldSum = (_context.Products.Find(reviews.ProductId).Rate) * num;
+                _context.Products.Find(reviews.ProductId).Rate = (oldSum + reviews.Rate) / (num + 1);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(reviews);
+        }
+
+        public async Task<IActionResult> Submitted(int id, string title, string desc, int rate)
+        {
+            if (HttpContext.User != null && HttpContext.User.Claims != null && HttpContext.User.Claims.Count() > 0)
+            {
+                Reviews rev = new Reviews();
+                rev.ProductId = id;
+                rev.UserEmail = HttpContext.User.Claims.ElementAt(1).Value; 
+                rev.Title = title;
+                rev.Describtion = desc;
+                rev.Rate = rate;
+                _context.Reviews.Add(rev);
+                _context.SaveChanges();
+
+                var r = from c in _context.Reviews where c.ProductId == id select c;
+                int num = r.Count();
+
+                double oldSum = (_context.Products.Find(id).Rate) * (num - 1);
+                _context.Products.Find(id).Rate = (oldSum + rate) / num;
+                _context.SaveChanges();
+
+                return View(rev);
+            }
+            else
+                return RedirectToAction("Login","Users");
         }
 
         // GET: Reviews/Edit/5

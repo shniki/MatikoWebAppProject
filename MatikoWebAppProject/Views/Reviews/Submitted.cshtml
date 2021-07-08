@@ -1,31 +1,16 @@
 ﻿@model MatikoWebAppProject.Models.Reviews
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Submitted";
 }
 
-<h1>Thank you for leaving your review!</h1>
-<body>
-    <div class="reviewid">
-        Review Id: @ViewBag.kkk[0]
-    </div>
-    <div class="currentdate">
-        Order Date:
-        <p id="date">
-            <script>
-                n = new Date();
-                y = n.getFullYear();
-                m = n.getMonth() + 1;
-                d = n.getDate();
-                document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
-            </script>
-        </p>
+<link href="~/css/StyleCategory.css" rel="stylesheet" />
 
-
-    </div>
-</body>
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<div class="titles">
+    <h2>
+        Thank you for your review! 
+    </h2>
+    <a style="color: #4E4E4E;text-decoration: none;" asp-controller="Products" asp-action="Details" asp-route-id="@Model.ProductId">
+        Go Back to product
+    </a>
+</div>
