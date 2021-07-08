@@ -100,8 +100,8 @@ namespace MatikoWebAppProject.Controllers
             order.First().status = Status.Paid;
             order.First().DateOrder = DateTime.Today;
             order.First().EstimatedDateArrival = DateTime.Today.AddDays(14);
+            _context.Users.Find(HttpContext.User.Claims.ElementAt(1).Value).AllOrdersMade.Add(order.First());
             _context.Orders.Add(new Orders() { status = Status.Cart, DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), FullPrice = 0, Products = new List<ProductsOrders>(), UserEmail = HttpContext.User.Claims.ElementAt(1).Value });
-            _context.SaveChanges();  _context.Orders.Add(new Orders() { status = Status.Cart, DateOrder = DateTime.Today, EstimatedDateArrival = DateTime.Today.AddDays(14), FullPrice = 0, Products = new List<ProductsOrders>(), UserEmail = HttpContext.User.Claims.ElementAt(1).Value });
             _context.SaveChanges();
 
             var j = from u in _context.Orders
