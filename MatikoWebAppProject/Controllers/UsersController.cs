@@ -200,7 +200,7 @@ namespace MatikoWebAppProject.Controllers
                 }
                 else
                 {
-                    ViewData["Error"] = "Unable to comply; cannot register this user.";
+                    ViewData["Error"] = "A user with this email is already registered.";
                 }
             }
             return View(user);
