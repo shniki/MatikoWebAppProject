@@ -128,23 +128,23 @@ ul {
 }
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 
-footer {
+/*footer {
     background-color: rgba(0,0,0,0.6);
     overflow-x: hidden;
-    padding: 14vmin 18vmin;
+    padding: 14vmin 18vmin;*/
     /*position: absolute;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
     line-height: 60px;*/ /* Vertically center the text there */
-}
+/*}
     footer.column i {
         color: #fff;
     }
 
 footer.column i+i{
     padding:0 0.5em;
-}
+}*/
 .nav1 {
     background-color: #fbecd8;
     margin: auto;
