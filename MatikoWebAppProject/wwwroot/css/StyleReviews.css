@@ -5,7 +5,9 @@ hr.solid {
     border-top: 3px solid #E3BD9D;
     color: #E3BD9D;
 }
-
+body {
+    min-height: 1000px;
+}
 .wrapper {
     width: 1080px;
     height: 200px;

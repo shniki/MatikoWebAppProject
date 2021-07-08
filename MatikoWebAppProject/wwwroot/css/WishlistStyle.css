@@ -6,6 +6,9 @@
     font-family: 'Century Gothic';
 }
 
+body {
+    min-height: 1000px;
+}
 header {
     background-color: #000;
     height: 7vh;

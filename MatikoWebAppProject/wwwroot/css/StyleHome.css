@@ -13,7 +13,9 @@
     background-size: contain;
 }
 
-
+body {
+    min-height: 1000px;
+}
 
 /* Fading animation */
 .fade {

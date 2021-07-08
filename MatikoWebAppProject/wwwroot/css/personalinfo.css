@@ -10,7 +10,8 @@
 
 body {
     background-color: white;
-    }
+    min-height: 1000px;
+}
 
 .action {
     position: fixed;

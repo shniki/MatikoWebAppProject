@@ -12,6 +12,7 @@ header {
 
 body {
     background-color: white;
+    min-height: 1000px;
 }
 
 ul {
