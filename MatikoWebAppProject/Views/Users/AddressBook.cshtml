@@ -12,7 +12,7 @@
                          ">
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">@Context.User.Claims.ElementAt(0).Value</h6>
+                                <h6 class="mb-0">@ViewBag.currentUserName</h6>
                             </div>
 
                         </div>
@@ -26,25 +26,25 @@
 
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">@Context.User.Claims.ElementAt(4).Value</h6>
+                                <h6 class="mb-0">@ViewBag.currentUserAddress</h6>
                             </div>
 
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">@Context.User.Claims.ElementAt(7).Value</h6>
+                                <h6 class="mb-0">@ViewBag.currentUserCountry</h6>
                             </div>
 
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">@Context.User.Claims.ElementAt(5).Value,@Context.User.Claims.ElementAt(6).Value</h6>
+                                <h6 class="mb-0">@ViewBag.currentUserCity,@ViewBag.currentUserZipCode</h6>
                             </div>
 
                         </div>
                         <div class="row mb-3">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">@Context.User.Claims.ElementAt(2).Value</h6>
+                                <h6 class="mb-0">@ViewBag.currentUserPhoneNumber</h6>
                             </div>
 
                         </div>

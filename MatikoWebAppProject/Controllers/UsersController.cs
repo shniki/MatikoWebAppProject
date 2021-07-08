@@ -102,9 +102,14 @@ namespace MatikoWebAppProject.Controllers
             _context.Entry(users).Property(p => p.Country).IsModified = true;
             _context.Entry(users).Property(p => p.LastName).IsModified = users.LastName != null;
             _context.Entry(users).Property(p => p.Password).IsModified = users.Password != null;
-
-
-
+            ViewBag.currentUserName = users.FirstName + ' ' + users.LastName;
+            ViewBag.currentUserFirstName = users.FirstName;
+            ViewBag.currentUserLastName = users.LastName;
+            ViewBag.currentUserAddress = users.Address;
+            ViewBag.currentUserPhoneNumber = users.PhoneNumber;
+            ViewBag.currentUserZipCode = users.ZipCode;
+            ViewBag.currentUserCity = users.City;
+            ViewBag.currentUserCountry = users.Country;
             _context.SaveChanges();
 
             return RedirectToAction(nameof(Index), "Home");

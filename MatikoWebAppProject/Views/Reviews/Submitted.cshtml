@@ -1,0 +1,31 @@
+﻿@model MatikoWebAppProject.Models.Reviews
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Thank you for leaving your review!</h1>
+<body>
+    <div class="reviewid">
+        Review Id: @ViewBag.kkk[0]
+    </div>
+    <div class="currentdate">
+        Order Date:
+        <p id="date">
+            <script>
+                n = new Date();
+                y = n.getFullYear();
+                m = n.getMonth() + 1;
+                d = n.getDate();
+                document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
+            </script>
+        </p>
+
+
+    </div>
+</body>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
