@@ -1,54 +1,222 @@
 ﻿@model MatikoWebAppProject.Models.Products
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Html.DisplayFor(model => model.Name);
 }
 
-<h1>Details</h1>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/css/StyleItem.css" rel="stylesheet" />
+<link href="~/css/StyleReviews.css" rel="stylesheet" />
 
-<div>
-    <h4>Products</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Price)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.color)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.color)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImageUrl)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageUrl)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Rate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Rate)
-        </dd>
-    </dl>
+<div class="images">
+    <img src=@Html.DisplayFor(model => model.ImageUrl) />
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="product">
+    <p>
+        @Html.DisplayFor(model => model.Gender)
+        //
+        @ViewBag.productscategoryName
+    </p>
+    <h1>
+        @Html.DisplayFor(model => model.Name)
+    </h1>
+
+    <div class=star-rate>
+        @if (ViewBag.rate == 0)
+        {
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 1)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 2)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 3)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 4)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+        }
+        @if (ViewBag.rate == 5)
+        {
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star checked"></span>
+        }
+    </div>
+
+    <h2>
+        $@Html.DisplayFor(model => model.Price)
+    </h2>
+    <p class="pick">COLOR:</p>
+    <a id="dark">@Html.DisplayFor(model => model.color)</a>
+    <p class="pick">SIZE:</p>
+    <div class="sizes">
+        @{
+            string sizes = ViewBag.productscategorySizes;
+            string[] sizesarr = sizes.Split();
+        }
+        <select id="sizesOfProduct" onchange="SizeChanged()" class="form-select" style="width:200px;" aria-label="Default select example">
+            <option value="" selected data-default>Please select</option>
+            @for (int i = 0; i < sizesarr.Length; i++)
+            {
+                <option class="size" value="@(sizesarr[i])">
+                    @sizesarr[i]
+                </option>
+            }
+        </select>
+    </div>
+    <div class="buttons">
+        <button class="add" onclick="AddToCart(@(Model.Id))">Add to Cart</button>
+        <button class="like" onclick="AddToWishList(@(Model.Id))"><span>♥</span></button>
+    </div>
 </div>
+
+<hr class="solid">
+
+<h2 style="text-align: center;">Reviews</h2>
+
+<div class="small-container">
+    @foreach (var item in ViewBag.reviews as ICollection<Reviews>)
+    {
+        <div class="row">
+            <div class="wrapper">
+                <div class="container">
+                    <div class="bottom">
+                        <div class="details">
+                            <h1>@(Html.DisplayFor(modelItem => item.Title))</h1>
+                            <p>@(Html.DisplayFor(modelItem => item.UserEmail))</p>
+                            <div class=star-rate>
+                                @if (item.Rate == 0)
+                                {
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                }
+                                @if (item.Rate == 1)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                }
+                                @if (item.Rate == 2)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                }
+                                @if (item.Rate == 3)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                }
+                                @if (item.Rate == 4)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                }
+                                @if (item.Rate == 5)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                }
+                            </div>
+                            <p>@(Html.DisplayFor(modelItem => item.Describtion))</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="wrapper addrev">
+            <div class="container">
+                <div class="bottom">
+                    <div class="details">
+                        <h1>Add a Review</h1>
+                        <input type="text" class="form-control adding title" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Title">
+                        <div class="rating">
+                            <input type="radio" id="star5" name="rating" value="5" />
+                            <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                            <input type="radio" id="star4" name="rating" value="4" />
+                            <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                            <input type="radio" id="star3" name="rating" value="3" />
+                            <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                            <input type="radio" id="star2" name="rating" value="2" />
+                            <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                            <input type="radio" id="star1" name="rating" value="1" />
+                            <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                        </div>
+                        <textarea class="form-control adding" aria-label="With textarea" placeholder="Input review description..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var sizessss = document.getElementById("sizesOfProduct");
+    var sizeval = "";
+    function SizeChanged() {
+        sizeval = sizessss.options[sizessss.selectedIndex].value;
+    }
+    function AddToCart(id) {
+        if (sizeval == "")
+            alert("You must choose a size");
+        else
+            window.location.href = '/Orders/Cart?' + 'products=' + id + '&size=' + sizeval + '&isAddition=1';
+    }
+    function AddToWishList(id) {
+        if (sizeval == "")
+            alert("You must choose a size");
+        else 
+            window.location.href = '/WishLists/Index?' + 'size=' + sizeval + '&isAddition=1' + '&prodId=' + id ;        
+    }
+</script>
+
+
+

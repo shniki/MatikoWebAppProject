@@ -1,0 +1,112 @@
+﻿html, body {
+}
+
+hr.solid {
+    border-top: 3px solid #E3BD9D;
+    color: #E3BD9D;
+}
+
+.wrapper {
+    width: 1080px;
+    height: 200px;
+    background: white;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0;
+    transform: scale(0.95);
+    transition: box-shadow 0.5s, transform 0.5s;
+}
+
+    .wrapper:hover {
+        transform: scale(1);
+        box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .wrapper .container {
+        width: 100%;
+        height: 100%;
+    }
+
+        .wrapper .container .bottom {
+            width: 200%;
+            height: 20%;
+            margin-left: 30px;
+            margin-right: 30px;
+            transition: transform 0.5s;
+        }
+
+            .wrapper .container .bottom.clicked {
+                transform: translateX(-50%);
+            }
+
+            .wrapper .container .bottom h1 {
+                margin-bottom: 0px;
+                color: #E3CAB8;
+            }
+
+            .wrapper .container .bottom p {
+                margin-top: 0px;
+                color: #4E4E4E;
+            }
+
+            .wrapper .container .bottom .star-rate {
+                margin-top: -5px;
+            }
+            .wrapper .container .bottom .adding {
+                margin-top: 5px;
+                width: 900px;
+            }
+            .wrapper .container .bottom .title {
+                width: 450px;
+                display: inline-block;
+            }
+
+            .wrapper .container .bottom .details {
+                padding: 20px;
+                float: left;
+                width: calc(70% - 40px);
+            }
+.addrev {
+    width: 1080px;
+    height: 250px;
+}
+
+.rating {
+    display: inline-block;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border: none;
+    margin-left: 320px;
+}
+
+    .rating > label {
+        color: #90a0a3;
+        float: right;
+    }
+
+        .rating > label:before {
+            margin: 5px;
+            font-size: 1em;
+            font-family: FontAwesome;
+            content: "\f005";
+            display: inline-block;
+        }
+
+    .rating > input {
+        display: none;
+    }
+
+        .rating > input:checked ~ label,
+        .rating:not(:checked) > label:hover,
+        .rating:not(:checked) > label:hover ~ label {
+            color: #e3bd9d;
+        }
+
+            .rating > input:checked + label:hover,
+            .rating > input:checked ~ label:hover,
+            .rating > label:hover ~ input:checked ~ label,
+            .rating > input:checked ~ label:hover ~ label {
+                color: #e3bd9d;
+            }

@@ -9,7 +9,8 @@ header {
     background-color: #000;
     height: 7vh;
 }
-body{
+
+body {
     background-color: white;
 }
 
@@ -40,9 +41,10 @@ ul {
                 color: #000;
             }
 
-            .nameTag{
-                color: white;
-            }
+.nameTag {
+    color: white;
+}
+
 .logo img {
     float: left;
     width: 120px;
@@ -72,6 +74,7 @@ ul {
     border: none;
     position: absolute;
 }
+
 .icons3 {
     position: absolute;
     top: 7px;
@@ -79,6 +82,7 @@ ul {
     display: inline-block;
     padding: 3px 5px;
 }
+
 .icons2 {
     position: absolute;
     top: 7px;
@@ -137,6 +141,7 @@ ul {
 .main {
     max-width: 1200px;
 }
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 
 
@@ -156,7 +161,7 @@ footer {
         font-size: 14px;
         font-family: 'Roboto', sans-serif;
     }
-    
+
     footer h3 {
         font-family: 'Playfair Display', serif;
         margin-bottom: 40px;
@@ -172,7 +177,7 @@ footer {
             left: 0;
             bottom: -20px;
         }
-   
+
 .btn-footer {
     color: grey;
     text-decoration: none;
@@ -268,9 +273,10 @@ footer.column i+i{
     border-bottom-width: initial;
 }
 
-.insta{
-    padding-left:5px;
+.insta {
+    padding-left: 5px;
 }
+
 .navbar {
     right: 100px;
     padding: 3px;
@@ -280,7 +286,7 @@ footer.column i+i{
 
 .navbar-nav li {
     display: inline-block;
-    position:relative;
+    position: relative;
 }
 
 .dropdown-menu {
@@ -290,32 +296,35 @@ footer.column i+i{
     width: 220px;
     background-color: rgba(0,0,0,0.8);
 }
-.nav_item:hover .submenu{
 
-    display:block;
+.nav_item:hover .submenu {
+    display: block;
 }
+
 dropdown-item {
     border-left: 4px solid transparent;
 }
-dropdown-item:hover{
-    background-color: rgba(0,0,0,0.6);
-    border-left: 4px solid rgba(450,0,60,0.8);
-}
-    .navbar-nav li a {
-        display:block;
-        margin-left: auto;
-        font-size: 16px;
-        padding: 15px 40px 15px !important;
-        color: #000;
-        margin-left: auto;
-        text-decoration: none;
-        transition: 0.6s ease;
-        cursor:pointer;
+
+    dropdown-item:hover {
+        background-color: rgba(0,0,0,0.6);
+        border-left: 4px solid rgba(450,0,60,0.8);
     }
 
-        .navbar-nav li a:hover {
-            background-color: #fbecd8;
-        }
+.navbar-nav li a {
+    display: block;
+    margin-left: auto;
+    font-size: 16px;
+    padding: 15px 40px 15px !important;
+    color: #000;
+    margin-left: auto;
+    text-decoration: none;
+    transition: 0.6s ease;
+    cursor: pointer;
+}
+
+    .navbar-nav li a:hover {
+        background-color: #fbecd8;
+    }
 
 .navbar-light .navbar-nav .nav-link {
     color: #fbecd8;
@@ -342,10 +351,11 @@ dropdown-item:hover{
     .navbar-light {
         background-color: #fff;
     }
-    .labelForUser{
-        color:white;
 
+    .labelForUser {
+        color: white;
     }
+
     .navbar-nav li a {
         text-align: center;
         background-color: aliceblue;

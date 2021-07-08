@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MatikoWebAppProject.Data;
 using MatikoWebAppProject.Models;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 
 namespace MatikoWebAppProject.Controllers
 {
@@ -40,9 +41,618 @@ namespace MatikoWebAppProject.Controllers
             {
                 return NotFound();
             }
+            var q = from c in _context.Categories where c.Id == products.CategoriesId select c;
+            ViewBag.productscategoryName = q.First().Name;
+            ViewBag.productscategorySizes= q.First().Sizes;
+            ViewBag.rate = int.Parse(products.Rate.ToString());
+
+            id = q.First().Id;
+            var r = from c in _context.Reviews where c.ProductId == id select c;
+            ICollection<Reviews> arr = new Collection<Reviews>();
+            foreach (var item in r)
+            {
+                arr.Add(item);
+            }
+            ViewBag.reviews = arr;
 
             return View(products);
         }
+
+
+        public IActionResult Shirts(string sort="0", string gender="0", string color="0")
+        {
+            Color _color=Color.Black;
+            switch (color) {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender=Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+            var s = from p in _context.Products where p.CategoriesId == 1 select p; //all
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.shirts = arr;
+            ViewBag.shirtsLength = arr.Count;
+            ViewBag.shirtsSort = sort;
+            ViewBag.shirtsGender = gender;
+            ViewBag.shirtsColor = color;
+            return View();
+        }
+
+        public IActionResult Jeans(string sort = "0", string gender = "0", string color = "0")
+        {
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+            var s = from p in _context.Products where p.CategoriesId == 2 select p; //all
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.jeans = arr;
+            ViewBag.jeansLength = arr.Count;
+            ViewBag.jeansSort = sort;
+            ViewBag.jeansGender = gender;
+            ViewBag.jeansColor = color;
+            return View();
+        }
+
+        public IActionResult Swimwear(string sort = "0", string gender = "0", string color = "0")
+        {
+
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+            var s = from p in _context.Products where p.CategoriesId == 6 select p; //all
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.swimwear = arr;
+            ViewBag.swimwearLength = arr.Count;
+            ViewBag.swimwearSort = sort;
+            ViewBag.swimwearGender = gender;
+            ViewBag.swimwearColor = color;
+            return View();
+        }
+
+        public IActionResult Shorts(string sort = "0", string gender = "0", string color = "0")
+        {
+
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+            var s = from p in _context.Products where p.CategoriesId == 5 select p; //all
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.shorts = arr;
+            ViewBag.shortsLength = arr.Count;
+            ViewBag.shortsSort = sort;
+            ViewBag.shortsGender = gender;
+            ViewBag.shortsColor = color;
+            return View();
+        }
+
+        public IActionResult Accessories(string sort = "0", string gender = "0", string color = "0")
+        {
+
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+            var s = from p in _context.Products where p.CategoriesId == 4 select p; //all
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.accessories = arr;
+            ViewBag.accessoriesLength = arr.Count;
+            ViewBag.accessoriesSort = sort;
+            ViewBag.accessoriesGender = gender;
+            ViewBag.accessoriesColor = color;
+            return View();
+        }
+
+        public IActionResult Shoes(string sort = "0", string gender = "0", string color = "0")
+        {
+
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+            var s = from p in _context.Products where p.CategoriesId == 3 select p; //all
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.shoes = arr;
+            ViewBag.shoesLength = arr.Count;
+            ViewBag.shoesSort = sort;
+            ViewBag.shoesGender = gender;
+            ViewBag.shoesColor = color;
+            return View();
+        }
+
+        public IActionResult New(string sort = "0", string gender = "0", string color = "0", string category="0")
+        {
+
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+            var s = (from p in _context.Products orderby p.Id descending select p).Take(18);
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+            if (category != "0") 
+            {
+                s2 = from p in s where p.CategoriesId.ToString().Equals(category) select p;
+                s = s2;
+            }
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.news = arr;
+            ViewBag.newsLength = arr.Count;
+            ViewBag.newsSort = sort;
+            ViewBag.newsGender = gender;
+            ViewBag.newsColor = color;
+            ViewBag.newsCategory = category;
+            return View();
+        }
+
+        public IActionResult Outlet(string sort = "0", string gender = "0", string color = "0", string category = "0")
+        {
+
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+           /* var s = from p in _context.Products
+                    where
+(p.Price < 20 & p.CategoriesId == 1)
+| (p.Price < 44 & p.CategoriesId == 2)
+| (p.Price < 52 & p.CategoriesId == 3)
+| (p.Price < 8 & p.CategoriesId == 4)
+| (p.Price < 44 & p.CategoriesId == 5)
+| (p.Price < 28 & p.CategoriesId == 6)
+                    select p;*/
+
+            var items = from pro in _context.Products
+                        group pro by pro.CategoriesId into prod
+                        select new { CategoriesId = prod.Key, Min = prod.Min(p=>p.Price) };
+            var s = from prd in _context.Products
+                     join pro in items on prd.CategoriesId equals pro.CategoriesId
+                     where prd.Price == pro.Min
+                     select prd;
+
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+            if (category != "0")
+            {
+                s2 = from p in s where p.CategoriesId.ToString().Equals(category) select p;
+                s = s2;
+            }
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.outlet = arr;
+            ViewBag.outletLength = arr.Count;
+            ViewBag.outletSort = sort;
+            ViewBag.outletGender = gender;
+            ViewBag.outletColor = color;
+            ViewBag.outletCategory = category;
+            return View();
+        }
+
+        public IActionResult Popular(string sort = "0", string gender = "0", string color = "0", string category = "0")
+        {
+
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+            var items = from pro in _context.ProductsOrders
+                     group pro by pro.ProductId into prod
+                     select new { Id = prod.Key, Purc = prod.Count()};
+            var s = (from prd in _context.Products
+                    join pro in items on prd.Id equals pro.Id
+                    where pro.Purc > 0
+                    orderby pro.Purc
+                    select prd).Take(6);
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+            if (category != "0")
+            {
+                s2 = from p in s where p.CategoriesId.ToString().Equals(category) select p;
+                s = s2;
+            }
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.popular = arr;
+            ViewBag.popularLength = arr.Count;
+            ViewBag.popularSort = sort;
+            ViewBag.popularGender = gender;
+            ViewBag.popularColor = color;
+            ViewBag.popularCategory = category;
+            return View();
+        }
+
 
         // GET: Products/Create
         public IActionResult Create()
@@ -55,24 +665,85 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Category,Gender,ImageUrl,Rate")] Products products)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Gender,ImageUrl,Rate")] Products products)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(products);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            var cat = from c in _context.Categories where c.Id == products.CategoriesId select c;
+            products.Category = cat.First();
+            _context.Products.Add(products);
+            await _context.SaveChangesAsync();
             return View(products);
         }
 
 
-        public async Task<IActionResult> Search(string name)
+        public async Task<IActionResult> Search(string query, string sort = "0", string gender = "0", string color = "0", string category = "0")
         {
-            var q = from a in _context.Products.Include(a => a.Category)
-                    where (a.Name.Contains(name))
+
+            var s = from a in _context.Products.Include(a => a.Category)
+                    where (a.Name.Contains(query))
                     select a;
-            return View("Index", await q.ToListAsync());
+            Color _color = Color.Black;
+            switch (color)
+            {
+                case "4": _color = Color.Black; break;
+                case "5": _color = Color.Blue; break;
+                case "7": _color = Color.Green; break;
+                case "10": _color = Color.Grey; break;
+                case "11": _color = Color.Multi; break;
+                case "8": _color = Color.Orange; break;
+                case "9": _color = Color.Pink; break;
+                case "3": _color = Color.Purple; break;
+                case "1": _color = Color.Red; break;
+                case "6": _color = Color.White; break;
+                case "2": _color = Color.Yellow; break;
+            }
+
+            Gender _gender = Gender.Unisex;
+            switch (gender)
+            {
+                case "1": _gender = Gender.Woman; break;
+                case "2": _gender = Gender.Man; break;
+                case "3": _gender = Gender.Unisex; break;
+            }
+
+
+            var s2 = s;
+
+            if (gender != "0")
+            {
+                s2 = from p in s where p.Gender == _gender select p;
+                s = s2;
+            }
+            if (color != "0")
+            {
+                s2 = from p in s where p.color == _color select p;
+                s = s2;
+            }
+            if (category != "0")
+            {
+                s2 = from p in s where p.CategoriesId.ToString().Equals(category) select p;
+                s = s2;
+            }
+            switch (sort)
+            {
+                case "2": s2 = from p in s orderby p.Price descending select p; s = s2; break;
+                case "3": s2 = from p in s orderby p.Price select p; s = s2; break;
+                case "4": s2 = from p in s orderby p.Rate descending select p; s = s2; break;
+            }
+
+            ICollection<Products> arr = new Collection<Products>();
+            foreach (var item in s)
+            {
+                arr.Add(item);
+            }
+
+            ViewBag.currQuery = query;
+            ViewBag.search = arr;
+            ViewBag.searchLength = arr.Count;
+            ViewBag.searchSort = sort;
+            ViewBag.searchGender = gender;
+            ViewBag.searchColor = color;
+            ViewBag.searchCategory = category;
+            return View();
         }
 
         // GET: Products/Edit/5
@@ -155,55 +826,52 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //[HttpGet]
+        //public ActionResult Statistics()
+        //{
+        //    return View();
+        //}
 
         [HttpGet]
         public ActionResult Statistics()
         {
             //statistic 1- how many orders every customer had made, there is only one shopping cart
-            ICollection<Stat> statistic1 = new Collection<Stat>();
+            ICollection < Stat > statistic1 = new Collection<Stat>();
             var result1 = from c in _context.Users.Include(o => o.AllOrdersMade)
-                          where (c.AllOrdersMade.Count) > 0
+                          where (c.AllOrdersMade.Count() > 0)
                           orderby (c.AllOrdersMade.Count) descending
                           select c;
             foreach (var v in result1)
             {
-                statistic1.Add(new Stat(v.FirstName, v.AllOrdersMade.Count()));
+                statistic1.Add(new Stat(v.FirstName + " " + v.LastName, v.AllOrdersMade.Where(O => O.status != Status.Cart).Count()));
             }
 
             ViewBag.data = statistic1;
             //finish first statistic
-            //statistic 2- which colors the customers like to order
+            //statistic 2- which brand the customers prefer to order
             ICollection<Stat> statistic2 = new Collection<Stat>();
 
-            int Count;
-            var result2 = (from p in _context.Products where (1 < 0) select new ResultPair()).ToList();//create empty result table
-            foreach (var pro in _context.Products.Include(po => po.ProOrders).ThenInclude(o => o.Order))
+            var result2 = new int[12];//create empty result table
+            for (int i = 0; i < 12; i++)
+                result2[i] = 0;
+
+            var products = new List<Products>();
+            foreach (var p in _context.Products)
+                products.Add(p);
+            foreach (var pro in _context.ProductsOrders.Where(po => po.Order.status != Status.Cart))
             {
-                Count = 0;
-                if (pro == null)
-                    continue;
-                foreach (var po in pro.ProOrders)
-                {
-                    if (po == null)
-                        continue;
-                    if (po.Order.status != Status.Cart)
-                    {
-                        if (po.Product.color == pro.color)
-                            ++Count;
-                    }
-                }
-                result2.Add(new ResultPair() { Color = pro.color, count = Count });
+                result2[(int)products.Find(m => m.Id == pro.ProductId).color] += pro.Amount;
             }
-            foreach (var v in result2)
-            {
-                if (v.count > 0)
-                    statistic2.Add(new Stat(v.Color.ToString(), v.count));
-            }
+            for (int i = 0; i < result2.Length; i++)
+           {  
+               if(result2[i] > 0)
+                statistic2.Add(new Stat(((Color)i).ToString(),result2[i]));   
+           }
 
             ViewBag.data2 = statistic2;
+
             return View();
         }
-
         private bool ProductsExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);
@@ -211,7 +879,7 @@ namespace MatikoWebAppProject.Controllers
 
         internal class ResultPair
         {
-            public Color Color { get; set; }
+            public string Color { get; set; }
             public int count { get; set; }
         }
     }

@@ -28,7 +28,7 @@
             
                 <div class="card mt-3">
                     @*need to build pages for orders info for a specific person*@
-                    <li> <a asp-action="Index" asp-controller="Orders"><button type="button" class="btn btn-dark">My Orders</button></a></a></li>
+                    <li> <a asp-action="Index" asp-controller="Orders" asp-route-userEmail="@Context.User.Claims.ElementAt(1).Value"><button type="button" class="btn btn-dark">My Orders</button></a></a></li>
                     <hr>
                     <li> <a asp-action="AddressBook" asp-controller="Users"><button type="button" class="btn btn-dark">Address Book</button></a></a></li>
                 </div>

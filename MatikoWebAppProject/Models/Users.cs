@@ -15,21 +15,25 @@ namespace MatikoWebAppProject.Models
     public class Users
     {
         [Key]
-        [Display(Name = "Email Address")]
+        [Required(ErrorMessage = "You must input your Email Address")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-       
+        [Required(ErrorMessage = "You must input your first name")]
         public string FirstName { get; set; }
 
-
+        [Required(ErrorMessage = "You must input your last name")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "You must input your password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [Required(ErrorMessage = "You must input your phone number")]
         [DataType(DataType.PhoneNumber)]
         public string PhoneNumber { get; set; }
+        
+        [Required(ErrorMessage = "You must input your birthday date")]
         public DateTime Birthday { get; set; }
 
         [Required]
@@ -37,11 +41,16 @@ namespace MatikoWebAppProject.Models
 
         //address
 
+        [Required(ErrorMessage = "You must input user's zip code")]
         public int ZipCode { get; set; }
 
+        [Required(ErrorMessage = "You must input user's address")]
         public string Address { get; set; }
 
+        [Required(ErrorMessage = "You must input user's city")]
         public string City { get; set; }
+
+        [Required(ErrorMessage = "You must input user's country")]
         public string Country { get; set; }
 
         //orders

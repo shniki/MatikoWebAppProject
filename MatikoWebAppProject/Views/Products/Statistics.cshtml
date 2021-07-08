@@ -1,7 +1,7 @@
 ﻿@using MatikoWebAppProject.Models;
 @using MatikoWebAppProject.Controllers;
 @{
-    ViewBag.Title = "Statistics";
+    ViewBag.Title = "statistics";
     Layout = "_Layout";
 }
 
@@ -50,7 +50,7 @@
                 type: 'column'
             },
             title: {
-                text: 'How many orders every customer had made'
+                text: 'How many orders each customer had made'
             },
             yAxis: {
                 allowDecimals: false,
@@ -111,31 +111,31 @@
 
 
     <script>
-            Highcharts.chart('container2', {
-                data: {
-                    table: 'datatable2'
-                },
-                chart: {
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Which colors the customers like to order'
-                },
-                plotOptions: {
-                    series: {
-                        dataLabels: {
-                            enabled: true,
-                            format: '{point.name}: {point.percentage:.1f} %'
-                        }
+        Highcharts.chart('container2', {
+            data: {
+                table: 'datatable2'
+            },
+            chart: {
+                type: 'pie'
+            },
+            title: {
+                text: 'Which colors the customers like to order'
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}: {point.percentage:.1f} %'
                     }
-
-                },
-
-                tooltip: {
-                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
                 }
-            });
+
+            },
+
+            /*tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            }*/
+        });
 
 
 

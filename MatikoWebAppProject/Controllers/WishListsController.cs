@@ -15,6 +15,8 @@ namespace MatikoWebAppProject.Controllers
     public class WishListsController : Controller
     {
         private readonly MatikoWebAppProjectContext _context;
+        public static string idu;
+
 
         public WishListsController(MatikoWebAppProjectContext context)
         {
@@ -22,10 +24,11 @@ namespace MatikoWebAppProject.Controllers
         }
 
         // GET: WishLists
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.WishList.ToListAsync());
-        }
+        /*
+          public async Task<IActionResult> Index()
+          {
+              return View(await _context.WishList.ToListAsync());
+          } */
 
         // GET: WishLists/Details/5
         public async Task<IActionResult> Details(string id)
@@ -147,32 +150,80 @@ namespace MatikoWebAppProject.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
-        /*remember to change in both addToCart and addToWishlist the size, according to user input */
-        public async Task<IActionResult> AddToWishListAsync(Products prod)
-        {
-            var wishlist = await _context.WishList
-                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value);
-            if (wishlist == null)
-                _context.WishList.Add(wishlist = new WishList { UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Counter = 0 });
-            _context.ProductsWishList.Add(new ProductsWishList { UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Product = prod, ProductId = prod.Id, Size = "S" , Wishlist = wishlist});
-            return RedirectToAction(nameof(Index));
-        }
 
-        public async Task<IActionResult> RemoveFromWishListAsync(Products prod)
-        {
-            var wishlist = await _context.WishList
-                .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value);
-            if(wishlist != null)
-            {
-                _context.ProductsWishList.Remove(new ProductsWishList { Product = prod, ProductId = prod.Id, Size = "S", UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Wishlist = wishlist });
-            }
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool WishListExists(string id)
         {
             return _context.WishList.Any(e => e.UserEmail == id);
         }
+
+
+        [Authorize]
+        [HttpGet]
+
+        // GET: Whishlist
+        public async Task<IActionResult> Index(string size, int isAddition, int prodId = -1)
+        {
+            if (prodId != -1 && isAddition == 1)
+            {
+                var wishlist = await _context.WishList
+                    .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value);
+                if (wishlist == null)
+                    _context.WishList.Add(wishlist = new WishList { UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Counter = 0 });
+                var prod = from p in _context.Products where (p.Id == prodId) select p;
+                ProductsWishList pw = new ProductsWishList { UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Product = prod.First(), ProductId = prodId, Size = size, Wishlist = wishlist };
+                _context.ProductsWishList.Add(pw);
+            }
+            else if (prodId != -1 && isAddition == 0)
+            {
+                var wishlist = await _context.WishList
+                    .FirstOrDefaultAsync(m => m.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value);
+                if (wishlist == null)
+                    _context.WishList.Add(wishlist = new WishList { UserEmail = this.HttpContext.User.Claims.ElementAt(1).Value, Counter = 0 });
+                var prod = from p in _context.ProductsWishList where (p.ProductId == prodId && p.UserEmail == this.HttpContext.User.Claims.ElementAt(1).Value) select p;
+                _context.ProductsWishList.Remove(prod.First());
+            }
+            _context.SaveChanges();
+
+            var q = from u in _context.ProductsWishList
+                    where u.UserEmail.CompareTo(this.HttpContext.User.Claims.ElementAt(1).Value) == 0
+                    select u;
+
+
+
+
+            ProductsWishList[] productswishlist = q.ToArray();
+
+            ViewBag.popo = productswishlist;
+
+            List<Products> list = new List<Products>();
+
+            int[] productsid = new int[q.Count()];
+            for (int i = 0; i < productsid.Length; i++)
+                productsid[i] = productswishlist[i].ProductId;
+
+
+
+
+
+
+
+            for (int i = 0; i < q.Count(); i++)
+            {
+                foreach (var line in _context.Products)
+                {
+                    if (productsid[i] == line.Id)
+                        list.Add(line);
+                }
+            }
+
+
+            idu = this.HttpContext.User.Claims.ElementAt(1).Value;
+
+            //  return View(h);
+            //return View(h.ToList());
+            return View(list);
+        }
+
     }
 }
