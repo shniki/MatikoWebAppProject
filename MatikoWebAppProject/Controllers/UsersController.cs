@@ -80,7 +80,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit([Bind("FirstName,Email,PhoneNumber,Address,City,Country,ZipCode")] Users users)
+        public IActionResult Edit([Bind("FirstName,LastName,Email,PhoneNumber,Address,City,Country,ZipCode")] Users users)
         {
             /* if (id != users.Email)
              {
@@ -94,6 +94,7 @@ namespace MatikoWebAppProject.Controllers
 
 
             _context.Entry(users).Property(p => p.FirstName).IsModified = true;
+            _context.Entry(users).Property(p => p.LastName).IsModified = true;
             // _context.Entry(users).Property(p => p.Email).IsModified = true;
             _context.Entry(users).Property(p => p.Address).IsModified = true;
             _context.Entry(users).Property(p => p.PhoneNumber).IsModified = true;
@@ -259,7 +260,9 @@ namespace MatikoWebAppProject.Controllers
                     new Claim(ClaimTypes.StateOrProvince, account.City),
                     new Claim(ClaimTypes.PostalCode, account.ZipCode.ToString()),
                     new Claim(ClaimTypes.Country, account.Country),
-                    new Claim(ClaimTypes.Rsa, index.ToString())
+                    new Claim(ClaimTypes.Rsa, index.ToString()),
+                    new Claim(ClaimTypes.Name, account.FirstName),
+                    new Claim(ClaimTypes.Name, account.LastName),
                 };
 
             var claimsIdentity = new ClaimsIdentity(

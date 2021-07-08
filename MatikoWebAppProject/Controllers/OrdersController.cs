@@ -26,7 +26,7 @@ namespace MatikoWebAppProject.Controllers
         {
             if (userEmail != null)
             {
-                var orders = from o in _context.Orders where o.UserEmail.CompareTo(userEmail) == 0 select o;
+                var orders = from o in _context.Orders where (o.UserEmail.CompareTo(userEmail) == 0 && o.status != Status.Cart) select o;
                 return View(await orders.ToListAsync());
             }
             return View(await _context.Orders.ToListAsync());

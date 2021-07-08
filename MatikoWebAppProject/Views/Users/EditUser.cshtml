@@ -52,10 +52,18 @@
                             <div class="card-body">
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
+                                        <h6 class="mb-0">First Name</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                        <input type="text" id="FullName" asp-for="FirstName" name="firstname" class="form-control" value=@Context.User.Claims.ElementAt(0).Value>
+                                        <input type="text" id="FirstName" asp-for="FirstName" name="firstname" class="form-control" value="@Context.User.Claims.ElementAt(9).Value">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Last Name</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" id="LastName" asp-for="LastName" name="lastname" class="form-control" value="@Context.User.Claims.ElementAt(10).Value">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -75,14 +83,14 @@
                                     </div>
                                 </div>
                                 @*
-                                        new Claim(ClaimTypes.Name, account.FirstName + " " + account.LastName),
-                                    new Claim(ClaimTypes.Email, account.Email),
-                                    new Claim(ClaimTypes.MobilePhone, account.PhoneNumber),
-                                    new Claim(ClaimTypes.Role, account.Type.ToString()),
-                                    new Claim(ClaimTypes.StreetAddress, account.Address),
-                                    new Claim(ClaimTypes.StateOrProvince, account.City),
-                                    new Claim(ClaimTypes.PostalCode, account.ZipCode.ToString()),
-                                    new Claim(ClaimTypes.Country, account.Country),
+            new Claim(ClaimTypes.Name, account.FirstName + " " + account.LastName),
+        new Claim(ClaimTypes.Email, account.Email),
+        new Claim(ClaimTypes.MobilePhone, account.PhoneNumber),
+        new Claim(ClaimTypes.Role, account.Type.ToString()),
+        new Claim(ClaimTypes.StreetAddress, account.Address),
+        new Claim(ClaimTypes.StateOrProvince, account.City),
+        new Claim(ClaimTypes.PostalCode, account.ZipCode.ToString()),
+        new Claim(ClaimTypes.Country, account.Country),
                                 *@
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
