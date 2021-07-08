@@ -12,7 +12,7 @@ header {
 
 body {
     background-color: white;
-    min-height: 1000px;
+    min-height:200vh;
 }
 
 ul {
@@ -148,6 +148,7 @@ ul {
 
 .bg-grey {
     background: #292929;
+    bottom: 0px;
 }
 
 .logo-footer {
@@ -156,6 +157,8 @@ ul {
 
 footer {
     color: grey;
+    bottom: 0;
+    width: 100%;
 }
 
     footer p, a {

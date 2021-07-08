@@ -9,10 +9,10 @@
 <link href="~/css/StyleReviews.css" rel="stylesheet" />
 
 <div class="images">
-    <img src=@Html.DisplayFor(model => model.ImageUrl) />
+    <img class="img1" src=@Html.DisplayFor(model => model.ImageUrl) />
 </div>
 
-<div class="product">
+<div class="product" >
     <p>
         @Html.DisplayFor(model => model.Gender)
         //
@@ -101,6 +101,7 @@
     </div>
 </div>
 
+<div style="margin:300px;"></div>
 <hr class="solid">
 
 <h2 style="text-align: center;">Reviews</h2>
