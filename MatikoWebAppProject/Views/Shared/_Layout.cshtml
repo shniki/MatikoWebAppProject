@@ -11,6 +11,31 @@
     <link rel="icon" type="image/png" href="~/img/tiny-logo.png" />
 
 </head>
+@{
+    if (Context.User != null && Context.User.Claims != null && Context.User.Claims.Count() > 0)
+    {
+        string firstName = "", lastName = "";
+        Boolean first = true;
+        for (int i = 0; i < Context.User.Claims.ElementAt(0).Value.Length; i++)
+        {
+            if (Context.User.Claims.ElementAt(0).Value.ElementAt(i) == ' ')
+                first = false;
+            if (first == true && Context.User.Claims.ElementAt(0).Value.ElementAt(i) != ' ')
+                firstName += Context.User.Claims.ElementAt(0).Value.ElementAt(i);
+            else if (first == false && Context.User.Claims.ElementAt(0).Value.ElementAt(i) != ' ')
+                lastName += Context.User.Claims.ElementAt(0).Value.ElementAt(i);
+
+        }
+        ViewBag.currentUserName = Context.User.Claims.ElementAt(0).Value;
+        ViewBag.currentUserFirstName = firstName;
+        ViewBag.currentUserLastName = lastName;
+        ViewBag.currentUserPhoneNumber = Context.User.Claims.ElementAt(2).Value;
+        ViewBag.currentUserAddress = Context.User.Claims.ElementAt(4).Value;
+        ViewBag.currentUserCity = Context.User.Claims.ElementAt(5).Value;
+        ViewBag.currentUserZipCode = Context.User.Claims.ElementAt(6).Value;
+        ViewBag.currentUserCountry = Context.User.Claims.ElementAt(7).Value;
+    }
+}
 <body>
     <header>
         <div class="main">
@@ -21,14 +46,13 @@
 
                 <li class="search-my">
                     <form asp-controller="Products" asp-action="Search">
-                        <input type="search" class="search1" placeholder="Search for items..." />
+                        <input name="query" type="search" class="search1" placeholder="Search for items..." />
                         <button class="button1" type="submit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" color="white" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                            </svg>
+                            <!---<svg xmlns="http://www.w3.org/2000/svg" width="18" color="white" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg> -->
                         </button>
                     </form>
-
                 </li>
 
                 @if (Context.User != null && Context.User.Claims != null && Context.User.Claims.Count() > 0 && Context.User.Claims.ElementAt(3).Value == UserType.Manager.ToString())
@@ -80,7 +104,7 @@ else if (Context.User != null && Context.User.Claims != null && Context.User.Cla
                     <div class="action">
                         <div class="menu">
                             @if (Context.User != null && Context.User.Claims != null && Context.User.Claims.Count() > 0)
-                            {<h3 class="nameTag">Hello, @Context.User.Claims.ElementAt(0).Value</h3>}
+                            {<h3 class="nameTag">Hello, @ViewBag.currentUserName</h3>}
                             <ul>
                                 @if (Context.User != null && Context.User.Claims != null && Context.User.Claims.Count() > 0)
                                 {
@@ -111,12 +135,6 @@ else if (Context.User != null && Context.User.Claims != null && Context.User.Cla
                     </script>
                 </li>
                 @*Should be the user's name instead of count. Plus,NOY- change the color to white so we can see what written*@
-                <li>
-
-                    @if (Context.User != null && Context.User.Claims != null && Context.User.Claims.Count() > 0)
-                    {
-        <div class="labelForUser" color="#FF7A59"> Hello,@Context.User.Claims.ElementAt(0).Value </div>}
-                </li>
             </ul>
         </div>
         <div class="clearfix"></div>

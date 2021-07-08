@@ -26,7 +26,7 @@ namespace MatikoWebAppProject.Controllers
         {
             if (userEmail != null)
             {
-                var orders = from o in _context.Orders where o.UserEmail.CompareTo(userEmail) == 0 select o;
+                var orders = from o in _context.Orders where (o.UserEmail.CompareTo(userEmail) == 0 && o.status != Status.Cart) select o;
                 return View(await orders.ToListAsync());
             }
             return View(await _context.Orders.ToListAsync());
@@ -154,8 +154,11 @@ namespace MatikoWebAppProject.Controllers
 
 
 
-
-
+        [HttpGet]
+        public async Task<IActionResult> DifferentSize()
+        {
+            return View();
+        }
 
 
 
@@ -176,25 +179,30 @@ namespace MatikoWebAppProject.Controllers
                 var user = _context.Users.Include(o => o.AllOrdersMade).ThenInclude(po => po.Products).Where(c => c.Email == HttpContext.User.Claims.ElementAt(1).Value).FirstOrDefault();
                 var Product = _context.Products.Find(products);
                 var ShoppingCart = from o in _context.Orders where (o.UserEmail == HttpContext.User.Claims.ElementAt(1).Value && o.status == Status.Cart) select o;
-                if (ShoppingCart.First().Products == null)
+                var productsInCart = from po in _context.ProductsOrders where po.OrderId == ShoppingCart.First().Id select po;
+                if (productsInCart == null)
                     ShoppingCart.First().Products = new List<ProductsOrders>();
-                if (ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault() != null)
+                if (productsInCart.Where(p => p.ProductId == products).FirstOrDefault() != null)
                 {
 
-                    if (ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault().Amount >= 1)
+                    if (productsInCart.Where(p => p.ProductId == products && p.Size == size).FirstOrDefault() != null)
                     {
-                        ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault().Amount += 1;
+                        productsInCart.Where(p => p.ProductId == products).FirstOrDefault().Amount += 1;
                         _context.ProductsOrders.Update(ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault());
                         ShoppingCart.First().FullPrice += Product.Price;
                         _context.SaveChanges();
                         _context.Orders.Update(ShoppingCart.First());
                         _context.SaveChanges();
                     }
+                    else
+                    {
+                        return RedirectToAction("DifferentSize", "Orders");
+                    }
                 }
                 else
                 {
                     ShoppingCart.First().Products.Add(new ProductsOrders() { ProductId = (int)products, Product = _context.Products.Find(products), Order = ShoppingCart.First(), Amount = 1, OrderId = ShoppingCart.First().Id, Size = size });
-
+                    _context.ProductsOrders.Add(new ProductsOrders() { ProductId = (int)products, Product = _context.Products.Find(products), Order = ShoppingCart.First(), Amount = 1, OrderId = ShoppingCart.First().Id, Size = size });
                     ShoppingCart.First().FullPrice += Product.Price;
                     _context.Orders.Update(ShoppingCart.First());
                     _context.SaveChanges();
