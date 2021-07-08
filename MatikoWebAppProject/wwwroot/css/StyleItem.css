@@ -32,11 +32,11 @@ h2 {
     top: 5%;
 }
 
-img {
+.img1 {
     width: 30%;
     height: 60%;
     left: 55%;
-    max-height: 500px;
+    //max-height: 500px;
 }
 
 .product {
@@ -46,7 +46,7 @@ img {
     height: 1000px;
     top: 5%;
     left: 50%;
-    margin-bottom: 80px;
+    margin-bottom: 1000px;
 }
 
 button.add, button.like, button.rev {
@@ -139,4 +139,9 @@ button.add, button.like, button.rev {
 
 .errors{
     color: #ff0000;
+}
+
+.solid {
+    margin-top:40px;
+    position: relative;
 }
