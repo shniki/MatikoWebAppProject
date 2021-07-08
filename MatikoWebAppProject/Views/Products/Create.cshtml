@@ -74,16 +74,12 @@
             <span asp-validation-for="Rate" class="text-danger"></span>
         </div>*@
             <div class="form-group">
-                <input id="submitButton" type="submit" onclick="myFunction()" value="Add Me" />
+                <input id="submitButton" type="submit" value="Add Me" />
             </div>
         </form>
     </div>
 </div>
-<script>
-    function myFunction() {
-        alert("Your Product Successfully Added!");
-    }
-</script>
+
 @section Scripts {
     <script src="~/js/facebookPosting.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

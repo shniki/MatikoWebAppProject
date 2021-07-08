@@ -1,31 +1,19 @@
-﻿
+﻿const token = "EAACZAe71CaZA4BACuZBtjmMTWq8kQH9YerMJqQZC5gmWxwhey0TML7zvz4R6XqAGIqBqmkuujAdNwp15RXy6UdAjJ1jDRug9zzSLKZATV7MN2nrulOCTntoEt85HI6bdYxI9EtcSWiFBZCtA35NZAcQvvMh1FqQOb75wPZCFDmzjAlyB7HYJGaBj";
 
         // Post using facebook api
-        function postAStatus() {
-            FB.api(
-                '/112553514419642/feed',
-                'POST',
-                {
-                    "message" : "Check out our new Product at Matiko !",
-                    "access_token" : "EAACZAe71CaZA4BABcKBB8ZBwrIvEKcL2KzmsTWij0oCznoyfMvP8v2Kkmh9gdjgkUvIMf1ZBErjVw3gGMy40PpzANlEr83zNmXiijVFi5cjtihIcHwybCSxKIYAD9ZAk2qsQ3mxLAmHv8UX13HK1BsmqooZCAiQfrS16rLEta2e2K9yOTO42CoTGBiDYdw2nZAstZBG7TXB5BQZDZD"
-                },
-                function (response) {
-                    console.log(response);
-                }
-            );
-        }
+function postAStatus() {
+    alert("Your Product Successfully Added!");
+    /*window.fb.init({
+        appId: 168756735273374,
+        status: true,
+        xfbml: true,
+        version: 'v2.9'
+    });
+    FB.ge
 
-function boostAProduct(status, photoURL) {
-    FB.api(
-        '/enter your page id/photos',
-        'POST',
-        {
-            "message": status,
-            "url": photoURL,
-            "access_token": token
-        },
+
+    FB.api('/112553514419642/feed', 'post', { message: "Check out our new Product at Matiko !" },
         function (response) {
             console.log(response);
-        }
-    );
+    });*/
 }
