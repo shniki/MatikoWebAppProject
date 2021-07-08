@@ -665,7 +665,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Gender,ImageUrl,Rate")] Products products)
+        public async Task<IActionResult> Create([Bind("Id,Name,Price,color,CategoriesId,Gender,ImageUrl")] Products products)
         {
             var cat = from c in _context.Categories where c.Id == products.CategoriesId select c;
             products.Category = cat.First();

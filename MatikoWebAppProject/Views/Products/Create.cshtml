@@ -4,10 +4,12 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<link rel="stylesheet" href="~/css/ProCreate.css" />
 
-<h4>Products</h4>
-<hr />
+<div class="titles">
+    <h2>ADD PRODUCTS</h2>
+</div>
+<hr class="solid">
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create" onsubmit="postAStatus()">
@@ -24,7 +26,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="color" class="control-label"></label>
-                <select asp-for="color" class="form-control">
+                <select asp-for="color">
                     <option value="white">White</option>
                     <option value="grey">Grey</option>
                     <option value="black">Black</option>
@@ -42,19 +44,19 @@
             <div class="form-group">
                 <label asp-for="CategoriesId" class="control-label"></label>
                 @* <select asp-for="Category" class="form-control" asp-items="ViewBag.Category">*@
-            <select asp-for="CategoriesId" class="form-control">
-                <option value=1>Shirts</option>
-                <option value=2>Jeans</option>
-                <option value=3>Shoes</option>
-                <option value=4>Accessories</option>
-                <option value=5>Shorts</option>
-                <option value=6>Swimwear</option>
-            </select>
+                <select asp-for="CategoriesId" c>
+                    <option value=1>Shirts</option>
+                    <option value=2>Jeans</option>
+                    <option value=3>Shoes</option>
+                    <option value=4>Accessories</option>
+                    <option value=5>Shorts</option>
+                    <option value=6>Swimwear</option>
+                </select>
                 <span asp-validation-for="CategoriesId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
-                <select asp-for="Gender" class="form-control">
+                <select asp-for="Gender">
                     <option value="0">Women</option>
                     <option value="1">Men</option>
                     <option value="2">Unisex</option>
@@ -66,22 +68,22 @@
                 <input asp-for="ImageUrl" class="form-control" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+            <label asp-for="Rate" class="control-label"></label>
+            <input asp-for="Rate" class="form-control" />
+            <span asp-validation-for="Rate" class="text-danger"></span>
+        </div>*@
             <div class="form-group">
-                <label asp-for="Rate" class="control-label"></label>
-                <input asp-for="Rate" class="form-control" />
-                <span asp-validation-for="Rate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input id="submitButton" type="submit" value="Create" class="btn btn-primary" />
+                <input id="submitButton" type="submit" onclick="myFunction()" value="Add Me" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+<script>
+    function myFunction() {
+        alert("Your Product Successfully Added!");
+    }
+</script>
 @section Scripts {
     <script src="~/js/facebookPosting.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
