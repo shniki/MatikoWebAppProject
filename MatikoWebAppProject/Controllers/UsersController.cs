@@ -216,7 +216,7 @@ namespace MatikoWebAppProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Login([Bind("Email,Password")] Users users)
+        public IActionResult Login([Bind("Email,Password")] Users users, string returnUrl)
         {
             //var q = _context.Users.FirstOrDefault(u => u.Email == users.Email && u.Password == users.Password);
             var q = from u in _context.Users
@@ -228,6 +228,8 @@ namespace MatikoWebAppProject.Controllers
                 HttpContext.Session.SetString("Name", q.First().FirstName + " " + q.First().LastName);
                 */
                 Signin(q.First());
+                if (!String.IsNullOrEmpty(returnUrl))
+                    return Redirect(returnUrl);
 
                 return RedirectToAction(nameof(Index), "Home");
             }

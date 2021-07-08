@@ -45,7 +45,7 @@
                                 <p class="price">$@(Html.DisplayFor(modelItem => Model.ElementAt(i).Price))</p>
                                 <p class="name"><b>size:</b> @(ViewBag.popo[i].Size)</p>
                                 <p class="name">
-                                    <b>quantity:</b>                             @ViewBag.popo[i].Amount
+                                    <b>quantity:</b>@ViewBag.popo[i].Amount
 
                                     @{
                                         float am = ViewBag.popo[i].Amount;

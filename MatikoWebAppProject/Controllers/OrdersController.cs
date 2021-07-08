@@ -26,7 +26,7 @@ namespace MatikoWebAppProject.Controllers
         {
             if (userEmail != null)
             {
-                var orders = from o in _context.Orders where (o.UserEmail.CompareTo(userEmail) == 0 && o.status != Status.Cart) select o;
+                var orders = from o in _context.Orders where o.UserEmail.CompareTo(userEmail) == 0 select o;
                 return View(await orders.ToListAsync());
             }
             return View(await _context.Orders.ToListAsync());
@@ -121,20 +121,15 @@ namespace MatikoWebAppProject.Controllers
             /*       var q = from u in _context.Orders
                            where u.UserEmail.CompareTo(idu) == 0
                            select u.Id;
-
-
                    var h = from u in _context.ProductsOrders
                            where u.OrderId.CompareTo(q.First()) == 0
                            select u;
-
                    ProductsOrders[] productsOrders = h.ToArray();
-
                    for(int i=0; i<productsOrders.Length;i++)
                    {
                        _context.ProductsOrders.Find(productsOrders[i]).Size = size[i];
                        _context.ProductsOrders.Find(productsOrders[i]).Amount = foo[i];
                    }
-
                    */
             _context.SaveChanges();
 
@@ -154,11 +149,8 @@ namespace MatikoWebAppProject.Controllers
 
 
 
-        [HttpGet]
-        public async Task<IActionResult> DifferentSize()
-        {
-            return View();
-        }
+
+
 
 
 
@@ -178,16 +170,15 @@ namespace MatikoWebAppProject.Controllers
             {
                 var user = _context.Users.Include(o => o.AllOrdersMade).ThenInclude(po => po.Products).Where(c => c.Email == HttpContext.User.Claims.ElementAt(1).Value).FirstOrDefault();
                 var Product = _context.Products.Find(products);
-                var ShoppingCart = from o in _context.Orders where (o.UserEmail == HttpContext.User.Claims.ElementAt(1).Value && o.status == Status.Cart) select o;
-                var productsInCart = from po in _context.ProductsOrders where po.OrderId == ShoppingCart.First().Id select po;
-                if (productsInCart == null)
+                var ShoppingCart = from o in _context.Orders.Include(o => o.Products) where (o.UserEmail == HttpContext.User.Claims.ElementAt(1).Value && o.status == Status.Cart) select o;
+                if (ShoppingCart.First().Products == null)
                     ShoppingCart.First().Products = new List<ProductsOrders>();
-                if (productsInCart.Where(p => p.ProductId == products).FirstOrDefault() != null)
+                if (ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault() != null)
                 {
 
-                    if (productsInCart.Where(p => p.ProductId == products && p.Size == size).FirstOrDefault() != null)
+                    if (ShoppingCart.First().Products.Where(p => p.ProductId == products && p.Size == size).FirstOrDefault() != null && ShoppingCart.First().Products.Where(p => p.ProductId == products && p.Size == size).FirstOrDefault().Amount >= 1)
                     {
-                        productsInCart.Where(p => p.ProductId == products).FirstOrDefault().Amount += 1;
+                        ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault().Amount += 1;
                         _context.ProductsOrders.Update(ShoppingCart.First().Products.Where(p => p.ProductId == products).FirstOrDefault());
                         ShoppingCart.First().FullPrice += Product.Price;
                         _context.SaveChanges();
@@ -196,13 +187,13 @@ namespace MatikoWebAppProject.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("DifferentSize", "Orders");
+                        return View("DifferentSize");
                     }
                 }
                 else
                 {
                     ShoppingCart.First().Products.Add(new ProductsOrders() { ProductId = (int)products, Product = _context.Products.Find(products), Order = ShoppingCart.First(), Amount = 1, OrderId = ShoppingCart.First().Id, Size = size });
-                    _context.ProductsOrders.Add(new ProductsOrders() { ProductId = (int)products, Product = _context.Products.Find(products), Order = ShoppingCart.First(), Amount = 1, OrderId = ShoppingCart.First().Id, Size = size });
+
                     ShoppingCart.First().FullPrice += Product.Price;
                     _context.Orders.Update(ShoppingCart.First());
                     _context.SaveChanges();
@@ -422,7 +413,6 @@ namespace MatikoWebAppProject.Controllers
           {
               return View("Login", "Users");
           }
-
           if (products.HasValue && isAddition == 1)
           {
               var prod = await _context.Products.FirstOrDefaultAsync(m => m.Id == products);
