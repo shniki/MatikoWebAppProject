@@ -42,20 +42,22 @@
             <div class="form-group">
                 <label asp-for="CategoriesId" class="control-label"></label>
                 @* <select asp-for="Category" class="form-control" asp-items="ViewBag.Category">*@
-                <select asp-for="CategoriesId" class="form-control">
-                    <option value=1>Shirts</option>
-                    <option value=2>Jeans</option>
-                    <option value=3>Shoes</option>
-                    <option value=4>Accessories</option>
-                    <option value=5>Shorts</option>
-                </select>
+            <select asp-for="CategoriesId" class="form-control">
+                <option value=1>Shirts</option>
+                <option value=2>Jeans</option>
+                <option value=3>Shoes</option>
+                <option value=4>Accessories</option>
+                <option value=5>Shorts</option>
+                <option value=6>Swimwear</option>
+            </select>
                 <span asp-validation-for="CategoriesId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Gender" class="control-label"></label>
                 <select asp-for="Gender" class="form-control">
-                    <option value="0">Men</option>
-                    <option value="1">Women</option>
+                    <option value="0">Women</option>
+                    <option value="1">Men</option>
+                    <option value="2">Unisex</option>
                 </select>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>

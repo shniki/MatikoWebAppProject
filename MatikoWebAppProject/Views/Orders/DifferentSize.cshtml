@@ -1,0 +1,25 @@
+﻿@{ ViewData["Title"] = "AddToCartFailed";
+    Layout = "_Layout";
+}
+@model IEnumerable<MatikoWebAppProject.Models.Orders>
+
+
+<h1>Add To Cart Failed!</h1>
+<body>
+    <div >
+        Wer'e sorry, But you cannot add the same product in different sizes in the same order!
+    </div>
+    <div>
+        To order this product, please order it in your next order from us, or remove the previous sized product from your cart.
+        Thank you!
+    </div>
+</body>
+
+
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -3,27 +3,29 @@
 }
 @model IEnumerable<MatikoWebAppProject.Models.Orders>
 
+<link href="~/css/StyleCategory.css" rel="stylesheet" />
 
-<h1>Thank you for your order!</h1>
-<body>
-    <div class="orderid">
-        Order Id: @ViewBag.kkk[0]
-    </div>
-    <div class="currentdate">
-        Order Date:
-        <p id="date">
-            <script>
-                n = new Date();
-                y = n.getFullYear();
-                m = n.getMonth() + 1;
-                d = n.getDate();
-                document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
-            </script>
-        </p>
-
-
-    </div>
-</body>
+<div class="titles">
+    <h2>
+        Thank you for your order!
+    </h2>
+    <p>
+        <div class="orderid">
+            Order Id: @ViewBag.kkk[0]
+        </div>
+        <div class="currentdate">
+            Order Date:
+    <p id="date">
+    <script>
+        n = new Date();
+        y = n.getFullYear();
+        m = n.getMonth() + 1;
+        d = n.getDate();
+        document.getElementById("date").innerHTML = m + "/" + d + "/" + y;
+    </script>
+</p>
+</div>
+</div>
 
 
 

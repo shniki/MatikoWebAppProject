@@ -14,10 +14,16 @@
                 <div class="card-body">
                     <div class="row mb-3">
                         <div class="col-sm-3">
-                            <input type="text" id="FullName" asp-for="FirstName" name="firstname" class="form-control" value=@Context.User.Claims.ElementAt(0).Value>
+                            <input type="text" id="FirstName" asp-for="FirstName" name="firstname" class="form-control" value=@ViewBag.currentUserFirstName>
                         </div>
 
                     </div>
+                    div class="row mb-3">
+                    <div class="col-sm-3">
+                        <input type="text" id="LastName" asp-for="LastName" name="lastname" class="form-control" value=@ViewBag.currentUserLastName>
+                    </div>
+
+                </div>
 
                     <div class="row mb-3">
                         <div class="col-sm-3">
@@ -28,25 +34,25 @@
 
                     <div class="row mb-3">
                         <div class="col-sm-3">
-                            <input type="text" id="Address" asp-for="Address" name="address" class="form-control" value=@Context.User.Claims.ElementAt(4).Value>
+                            <input type="text" id="Address" asp-for="Address" name="address" class="form-control" value=@ViewBag.currentAddress>
                         </div>
 
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-3">
-                            <input type="text" id="Country" asp-for="Country" name="country" class="form-control" value=@Context.User.Claims.ElementAt(7).Value>
+                            <input type="text" id="Country" asp-for="Country" name="country" class="form-control" value=@ViewBag.currentUserCountry>
                         </div>
 
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-3">
-                            <input type="text" id="City" asp-for="City" name="city" class="form-control" value=@Context.User.Claims.ElementAt(5).Value>
+                            <input type="text" id="City" asp-for="City" name="city" class="form-control" value=@ViewBag.currentUserCity>
                         </div>
 
                     </div>
                     <div class="row mb-3">
                         <div class="col-sm-3">
-                            <input type="text" id="Phone" asp-for="PhoneNumber" name="phonenumber" class="form-control" value=@Context.User.Claims.ElementAt(2).Value>
+                            <input type="text" id="Phone" asp-for="PhoneNumber" name="phonenumber" class="form-control" value=@ViewBag.currentUserPhoneNumber>
                         </div>
 
                     </div>

@@ -32,11 +32,11 @@ h2 {
     top: 5%;
 }
 
-img {
-    width: 40%;
-    height: 40%;
-    left: 45%;
-    max-height: 450px;
+.img1 {
+    width: 30%;
+    height: 60%;
+    left: 55%;
+    //max-height: 500px;
 }
 
 .product {
@@ -46,10 +46,10 @@ img {
     height: 1000px;
     top: 5%;
     left: 50%;
-    margin-bottom: 80px;
+    margin-bottom: 1000px;
 }
 
-button.add, button.like {
+button.add, button.like, button.rev {
     background: #fbecd8;
     padding: 10px;
     display: inline-block;
@@ -78,6 +78,10 @@ button.add, button.like {
 
 .edit {
     width: 89%;
+}
+
+.rev {
+    width: 900px;
 }
 
 .sizes {
@@ -131,4 +135,13 @@ button.add, button.like {
 
 .fa-star {
     padding-left: 2px;
+}
+
+.errors{
+    color: #ff0000;
+}
+
+.solid {
+    margin-top:40px;
+    position: relative;
 }

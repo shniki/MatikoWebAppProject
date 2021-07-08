@@ -1,290 +1,329 @@
-﻿.product-image {
-    float: left;
-    width: 20%;
+﻿.titles {
+    margin-top: 20px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.product-details {
-    float: left;
-    width: 37%;
+h2 {
+    letter-spacing: 6px;
+    font-size: 2.6em;
+    color: #E3BD9D;
 }
 
-body{
-    height:100%;
-}
-
-.final-price {
-    color: #04AA6D;
-}
-
-.product-price {
-    float: left;
-    width: 12%;
-}
-
-.product-quantity {
-    float: left;
-    width: 10%;
-}
-
-
-.product-size {
-    float: left;
-    width: 10%;
-}
-
-.product-removal {
-    float: left;
-    width: 9%;
-}
-
-.product-line-price {
-    float: left;
-    width: 12%;
-    text-align: right;
-}
-
-/* This is used as the traditional .clearfix class */
-.group:before, .shopping-cart:before,
-.column-labels:before,
-.product:before,
-.totals-item:before,
-.group:after,
-.shopping-cart:after,
-.column-labels:after,
-.product:after,
-.totals-item:after {
-    content: "";
-    display: table;
-}
-
-.group:after, .shopping-cart:after,
-.column-labels:after,
-.product:after,
-.totals-item:after {
-    clear: both;
-}
-
-.group, .shopping-cart,
-.column-labels,
-.product,
-.totals-item {
-    zoom: 1;
-}
-
-    /* Apply clearfix in a few places */
-    /* Apply dollar signs */
-    .product .product-price:before,
-    .product .product-line-price:before,
-    .totals-value:before {
-        content: "$";
-    }
-
-/* Body/Header stuff */
-body {
-    /*padding: 0px 30px 30px 20px;*/
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 100;
-}
-
-h1 {
-    font-weight: 100;
+p {
+    font-size: 1em;
+    color: #4E4E4E;
+    letter-spacing: 1px;
+    text-align: center;
 }
 
 label {
-    color: #aaa;
+    color: #E3BD9D;
+    letter-spacing: 1px;
 }
 
-.shopping-cart {
-    margin-top: -45px;
+hr.solid {
+    border-top: 3px solid #E3BD9D;
+    color: #E3BD9D;
 }
 
-/* Column headers */
-.column-labels label {
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #eee;
+.filters {
+    position: fixed;
+    padding-left: 1%;
+    text-align: left;
+    height: 500px;
+    width: 15%;
+    border: 1px solid #E3BD9D;
 }
 
-.column-labels .product-image,
-.column-labels .product-details,
-.column-labels .product-removal {
-    text-indent: -9999px;
+.form-select {
+    width: 200px;
+    right: 0px;
 }
 
-/* Product entries */
-.product {
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eee;
+.gen {
+    margin-top: -5px;
+    margin-bottom: 3px;
 }
 
-    .product .product-image {
-        text-align: center;
+.multi {
+    background: -webkit-linear-gradient(#ff5050, #ffcc66, #ffff00, #99ff66, #66b3ff, #cc99ff, #ff99ff, #f2f2f2);
+    -webkit-text-fill-color: transparent;
+}
+
+.coloradd {
+    -webkit-text-stroke-color: black;
+}
+
+
+
+/*----try2-----*/
+
+.small-container {
+    max-width: 1080px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.tiny-container {
+    max-width: 1080px;
+    margin-left: 15%;
+    margin-right: 15%;
+    align-items: center;
+    justify-content: center;
+}
+
+    .tiny-container .col-4 {
+        margin-bottom: 0px;
+        margin-top: 0px;
     }
 
-        .product .product-image img {
-            width: 100px;
+.col-2 {
+    margin-left: 35px;
+    margin-right: 35px;
+    padding: 10px;
+}
+
+.col-4 {
+    flex-basis: 25%;
+    padding: 10px;
+    min-width: 200px;
+    margin-bottom: 50px;
+    margin: 30px;
+}
+
+    .col-4 img {
+        width: 100%;
+        height: 400px;
+        margin-bottom: 15px;
+    }
+
+.name {
+    letter-spacing: 3px;
+    font-size: 1em;
+    margin-bottom: -1px;
+}
+
+.price {
+    letter-spacing: 3px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+
+/*product*/
+.wrapper {
+    cursor: pointer;
+    width: 300px;
+    height: 600px;
+    background: white;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0;
+    transform: scale(0.95);
+    transition: box-shadow 0.5s, transform 0.5s;
+}
+
+    .wrapper:hover {
+        transform: scale(1);
+        box-shadow: 5px 20px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .wrapper .container {
+        width: 100%;
+        height: 100%;
+    }
+
+        .wrapper .container .top {
+            height: 50%;
+            width: 100%;
         }
 
-    .product .product-details .product-title {
-        margin-right: 20px;
-        font-family: "HelveticaNeue-Medium", "Helvetica Neue Medium";
-    }
-
-    .product .product-details .product-description {
-        margin: 5px 20px 5px 0;
-        line-height: 1.4em;
-    }
-
-    .product .product-quantity input {
-        width: 40px;
-    }
-
-    .product .product-size input {
-        width: 40px;
-    }
-
-    .product .remove-product {
-        border: 0;
-        padding: 4px 8px;
-        background-color: #c66;
-        color: #fff;
-        font-family: "HelveticaNeue-Medium", "Helvetica Neue Medium";
-        font-size: 12px;
-        border-radius: 3px;
-    }
-
-        .product .remove-product:hover {
-            background-color: #a44;
+        .wrapper .container .bottom {
+            width: 200%;
+            height: 20%;
+            transition: transform 0.5s;
         }
 
-/* Totals section */
-.totals .totals-item {
-    float: right;
-    clear: both;
-    width: 100%;
-    margin-bottom: 10px;
+            .wrapper .container .bottom.clicked {
+                transform: translateX(-50%);
+            }
+
+            .wrapper .container .bottom h1 {
+                margin: 0;
+                padding: 0;
+            }
+
+            .wrapper .container .bottom p {
+                margin: 0;
+                padding: 0;
+            }
+
+            .wrapper .container .bottom .left {
+                height: 100%;
+                width: 50%;
+                background: #f4f4f4;
+                position: relative;
+                float: left;
+            }
+
+                .wrapper .container .bottom .left .details {
+                    padding: 20px;
+                    float: left;
+                    width: calc(70% - 40px);
+                }
+
+                .wrapper .container .bottom .left:hover {
+                    background: #FBECD8;
+                }
+
+                    .wrapper .container .bottom .left:hover i {
+                        transform: translateY(5px);
+                        color: #00394B;
+                    }
+
+        .wrapper .container .right {
+            width: 50%;
+            background: #FBECD8;
+            color: white;
+            float: right;
+            height: 200%;
+            overflow: hidden;
+        }
+
+            .wrapper .container .right .details {
+                padding: 20px;
+                float: right;
+                width: calc(70% - 40px);
+            }
+
+            .wrapper .container .right .done {
+                width: calc(30% - 2px);
+                float: left;
+                transition: transform 0.5s;
+                border-right: solid thin rgba(255, 255, 255, 0.3);
+                height: 50%;
+            }
+
+                .wrapper .container .right .done i {
+                    font-size: 30px;
+                    padding: 30px;
+                    color: white;
+                }
+
+            .wrapper .container .right .remove {
+                width: calc(30% - 1px);
+                clear: both;
+                border-right: solid thin rgba(255, 255, 255, 0.3);
+                height: 50%;
+                background: #BC3B59;
+                transition: transform 0.5s, background 0.5s;
+            }
+
+                .wrapper .container .right .remove:hover {
+                    background: #9B2847;
+                }
+
+                    .wrapper .container .right .remove:hover i {
+                        transform: translateY(5px);
+                    }
+
+                .wrapper .container .right .remove i {
+                    transition: transform 0.5s;
+                    font-size: 30px;
+                    padding: 30px;
+                    color: white;
+                }
+
+            .wrapper .container .right:hover .remove, .wrapper .container .right:hover .done {
+                transform: translateY(-100%);
+            }
+
+.inside {
+    z-index: 9;
+    background: #92879B;
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    top: -70px;
+    right: -70px;
+    border-radius: 0px 0px 200px 200px;
+    transition: all 0.5s, border-radius 2s, top 1s;
+    overflow: hidden;
 }
 
-    .totals .totals-item label {
-        float: left;
-        clear: both;
-        width: 79%;
-        text-align: right;
+    .inside .icon {
+        position: absolute;
+        right: 85px;
+        top: 85px;
+        color: white;
+        opacity: 1;
     }
 
-    .totals .totals-item .totals-value {
-        float: right;
-        width: 21%;
-        text-align: right;
+    .inside:hover {
+        width: 100%;
+        right: 0;
+        top: 0;
+        border-radius: 0;
+        height: 80%;
     }
 
-.totals .totals-item-total {
-    font-family: "HelveticaNeue-Medium", "Helvetica Neue Medium";
+        .inside:hover .icon {
+            opacity: 0;
+            right: 15px;
+            top: 15px;
+        }
+
+        .inside:hover .contents {
+            opacity: 1;
+            transform: scale(1);
+            transform: translateY(0);
+        }
+
+    .inside .contents {
+        padding: 5%;
+        opacity: 0;
+        transform: scale(0.5);
+        transform: translateY(-200%);
+        transition: opacity 0.2s, transform 0.8s;
+    }
+
+        .inside .contents .name, .inside .contents .price {
+            color: white;
+        }
+
+        .inside .contents p {
+            font-size: 13px;
+        }
+
+.wrapper .inside {
+    z-index: 1000;
+    background: #E3BD9D;
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    top: -70px;
+    right: -70px;
+    border-radius: 0px 0px 200px 200px;
 }
 
-.checkout {
-    float: right;
-    border: 0;
-    margin-top: 20px;
-    padding: 6px 25px;
-    background-color: #6b6;
-    color: #fff;
-    font-size: 25px;
-    border-radius: 3px;
-}
-
-    .checkout:hover {
-        background-color: #494;
+    .wrapper .inside .icon {
+        position: absolute;
+        right: 85px;
+        top: 85px;
+        color: white;
+        opacity: 1;
     }
 
-/* Make adjustments for tablet */
-@media screen and (max-width: 650px) {
-    .shopping-cart {
-        margin: 0;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-
-    .column-labels {
-        display: none;
-    }
-
-    .product-image {
-        float: right;
-        width: auto;
-    }
-
-        .product-image img {
-            margin: 0 0 10px 10px;
-        }
-
-    .product-details {
-        float: none;
-        margin-bottom: 10px;
-        width: auto;
-    }
-
-    .product-price {
-        clear: both;
-        width: 70px;
-    }
-
-    .product-quantity {
-        width: 100px;
-    }
-
-        .product-quantity input {
-            margin-left: 20px;
-        }
-
-        .product-quantity:before {
-            content: "x";
-        }
-
-    .product-size {
-        width: 100px;
-    }
-
-        .product-size input {
-            margin-left: 20px;
-        }
-
-        .product-size:before {
-            content: "x";
-        }
-
-    .product-removal {
-        width: auto;
-    }
-
-    .product-line-price {
-        float: right;
-        width: 70px;
-    }
-}
-/* Make more adjustments for phone */
-@media screen and (max-width: 350px) {
-    .product-removal {
-        float: right;
-    }
-
-    .product-line-price {
-        float: right;
-        clear: left;
-        width: auto;
-        margin-top: 10px;
-    }
-
-    .product .product-line-price:before {
-        content: "Item Total: $";
-    }
-
-    .totals .totals-item label {
-        width: 60%;
-    }
-
-    .totals .totals-item .totals-value {
-        width: 40%;
-    }
+.btn-mine {
+    background-color: #E3BD9D;
+    color: white;
+    margin-top: 10px;
+    width: 200px;
+    text-align: center;
+    margin-left: 50px;
+    margin-right: 50px;
 }

@@ -1,0 +1,16 @@
+﻿@model MatikoWebAppProject.Models.Reviews
+
+@{
+    ViewData["Title"] = "Submitted";
+}
+
+<link href="~/css/StyleCategory.css" rel="stylesheet" />
+
+<div class="titles">
+    <h2>
+        Thank you for your review! 
+    </h2>
+    <a style="color: #4E4E4E;text-decoration: none;" asp-controller="Products" asp-action="Details" asp-route-id="@Model.ProductId">
+        Go Back to product
+    </a>
+</div>

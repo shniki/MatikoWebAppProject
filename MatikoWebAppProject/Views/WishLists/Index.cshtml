@@ -9,42 +9,56 @@
 
 
 }
-<link rel="stylesheet" href="~/css/StyleCart.css" type="text/css" />
 
-<h1>WishList</h1>
-<body>
-    <section class="container content-section">
+<link href="~/css/StyleCart.css" rel="stylesheet" />
+
+<div class="titles">
+    <h2>
+        WISHLIST
+    </h2>
+</div>
+
+<hr class="solid">
+
+<p style="text-align: center; margin-bottom: -40px;">@(Model.Count()) items are in your Wishlist</p>
+
+@if (Model.Count() == 0)
+{<div style="height: 200px"></div>}
+<div class="small-container">
+    <div class="row">
         @for (int i = 0; i < Model.Count(); i++)//int i = 0 ....
         {
-            /* <div class="shop-item">
-                 <span class="shop-item-title">@Html.DisplayFor(modelItem => Model.ElementAt(i).Name)</span>
-                 <img class="shop-item-image" src=@Model.ElementAt(i).ImageUrl>
-                 <div class="shop-item-details">
-                     <span class="shop-item-price"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Price)</span>
-                     <button asp-action="addToCartAsync" asp-controller="WishLists" class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
-                 </div>
-             </div>*/
-
-            <div class="product">
-                <div class="product-image">
-                    <img src=@Model.ElementAt(i).ImageUrl> @*item is Model[i]*@
-                </div>
-                <div class="product-details">
-                    <div class="product-title"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Name)</div>
-
-                    <div class="product-price"> @Html.DisplayFor(modelItem => Model.ElementAt(i).Price)</div>
-                    <div>
-                        <label>Size: </label>
-                        @ViewBag.popo[i].Size
-
+            <div class="col-4">
+                <div class="wrapper">
+                    <div class="top">
+                        <img src="@(Model.ElementAt(i).ImageUrl)" />
                     </div>
-                    <a asp-action="Cart" asp-controller="Orders" asp-route-products=@Model.ElementAt(i).Id asp-route-size="@ViewBag.popo[i].Size" asp-route-isAddition="1" asp-route-isFromWishlist="1" class="btn btn-primary shop-item-button" type="button">ADD TO CART</a>
-                    <a asp-action="Index" asp-controller="WishLists" asp-route-prodId=@Model.ElementAt(i).Id asp-route-isAddition="0" class="btn btn-primary shop-item-button" type="button">REMOVE FROM WISHLIST</a>
-
+                    <div class="bottom">
+                        <div class="left">
+                            <div class="details" onclick="GoToItem(@(Model.ElementAt(i).Id))">
+                                <p class="name">@(Html.DisplayFor(modelItem => Model.ElementAt(i).Name))</p>
+                                <p class="price">$@(Html.DisplayFor(modelItem => Model.ElementAt(i).Price))</p>
+                                <p class="name"><b>size:</b> @(ViewBag.popo[i].Size)</p>
+                                <a asp-action="Cart" asp-controller="Orders" asp-route-products=@Model.ElementAt(i).Id asp-route-size="@ViewBag.popo[i].Size" asp-route-isAddition="1" asp-route-isFromWishlist="1" class="btn btn-mine shop-item-button" type="button">Move to Cart</a>
+                            </div>
+                            <a class="inside" asp-action="Index" asp-controller="WishLists" asp-route-prodId=@Model.ElementAt(i).Id asp-route-isAddition="0">
+                                <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                </svg>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         }
+    </div>
+</div>
 
-    </section>
-</body>
+<script>
+    function GoToItem(itemid) {
+        window.location.href = '/Products/Details/' + itemid;
+    }
+</script>

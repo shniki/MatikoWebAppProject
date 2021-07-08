@@ -9,10 +9,10 @@
 <link href="~/css/StyleReviews.css" rel="stylesheet" />
 
 <div class="images">
-    <img src=@Html.DisplayFor(model => model.ImageUrl) />
+    <img class="img1" src=@Html.DisplayFor(model => model.ImageUrl) />
 </div>
 
-<div class="product">
+<div class="product" >
     <p>
         @Html.DisplayFor(model => model.Gender)
         //
@@ -79,6 +79,7 @@
     <p class="pick">COLOR:</p>
     <a id="dark">@Html.DisplayFor(model => model.color)</a>
     <p class="pick">SIZE:</p>
+    <p id="errorline1" class="pick errors" style="display:none;">You must choose a size</p>
     <div class="sizes">
         @{
             string sizes = ViewBag.productscategorySizes;
@@ -100,6 +101,7 @@
     </div>
 </div>
 
+<div style="margin:300px;"></div>
 <hr class="solid">
 
 <h2 style="text-align: center;">Reviews</h2>
@@ -177,20 +179,22 @@
                 <div class="bottom">
                     <div class="details">
                         <h1>Add a Review</h1>
-                        <input type="text" class="form-control adding title" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Title">
+                        <p id="errorline2" class="pick errors" style="color:#ff0000;display:none;">Some information is missing...</p>
+                        <input id="title1" onchange="Missing()" type="text" class="form-control adding title" aria-label="Default" aria-describedby="inputGroup-sizing-default" placeholder="Title">
                         <div class="rating">
-                            <input type="radio" id="star5" name="rating" value="5" />
+                            <input type="radio" id="star5" name="rating" value="5" onchange="ChangeStar('5')" />
                             <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                            <input type="radio" id="star4" name="rating" value="4" />
+                            <input type="radio" id="star4" name="rating" value="4" onchange="ChangeStar('4')" />
                             <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                            <input type="radio" id="star3" name="rating" value="3" />
+                            <input type="radio" id="star3" name="rating" value="3" onchange="ChangeStar('3')" />
                             <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                            <input type="radio" id="star2" name="rating" value="2" />
+                            <input type="radio" id="star2" name="rating" value="2" onchange="ChangeStar('2')" />
                             <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                            <input type="radio" id="star1" name="rating" value="1" />
+                            <input type="radio" id="star1" name="rating" value="1" onchange="ChangeStar('1')" />
                             <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
                         </div>
-                        <textarea class="form-control adding" aria-label="With textarea" placeholder="Input review description..."></textarea>
+                        <textarea id="desc1" onchange="Missing()" class="form-control adding" aria-label="With textarea" placeholder="Input review description..."></textarea>
+                        <button class="rev" onclick="AddReview()">Submit</button>
                     </div>
                 </div>
             </div>
@@ -201,22 +205,51 @@
 <script>
     var sizessss = document.getElementById("sizesOfProduct");
     var sizeval = "";
+    var error1 = document.getElementById("errorline1");
     function SizeChanged() {
         sizeval = sizessss.options[sizessss.selectedIndex].value;
+        if (sizeval != "")
+            error1.style.display = "none";
     }
     function AddToCart(id) {
         if (sizeval == "")
-            alert("You must choose a size");
-        else
+            error1.style.display = "inline";
+        else 
             window.location.href = '/Orders/Cart?' + 'products=' + id + '&size=' + sizeval + '&isAddition=1';
     }
     function AddToWishList(id) {
         if (sizeval == "")
-            alert("You must choose a size");
+            error1.style.display = "inline";
         else 
             window.location.href = '/WishLists/Index?' + 'size=' + sizeval + '&isAddition=1' + '&prodId=' + id ;        
     }
+    </script>
+    
+<script>
+    var title2 = document.getElementById("title1");
+    var desc2 = document.getElementById("desc1");
+    var error2 = document.getElementById("errorline2");
+    var star3 = '0';
+
+    function ChangeStar(rate) {
+        star3 = rate;
+        if (title2.value != "" && desc2.value != "")
+            error2.style.display = "none";
+    }
+
+    function Missing() {
+        if (star3 != '0' && title2.value != "" && desc2.value != "")
+            error2.style.display = "none";
+    }
+
+    function AddReview() {
+         title3 = title2.value;
+         desc3 = desc2.value;
+        if (title3 == "" || desc3 == "" || star3 == '0')
+            error2.style.display = "block";
+        else {
+            window.location.href = '/Reviews/Submitted?' + 'id=' + @(Model.Id) + '&title=' + title3 + '&desc=' + desc3 + '&rate=' + star3;
+        }
+    }
 </script>
-
-
 

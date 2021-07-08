@@ -44,9 +44,8 @@ namespace MatikoWebAppProject.Controllers
             var q = from c in _context.Categories where c.Id == products.CategoriesId select c;
             ViewBag.productscategoryName = q.First().Name;
             ViewBag.productscategorySizes= q.First().Sizes;
-            ViewBag.rate = int.Parse(products.Rate.ToString());
+            ViewBag.rate = ((int)products.Rate);
 
-            id = q.First().Id;
             var r = from c in _context.Reviews where c.ProductId == id select c;
             ICollection<Reviews> arr = new Collection<Reviews>();
             foreach (var item in r)
@@ -54,6 +53,7 @@ namespace MatikoWebAppProject.Controllers
                 arr.Add(item);
             }
             ViewBag.reviews = arr;
+            ViewBag.numReviews = arr.Count();
 
             return View(products);
         }
