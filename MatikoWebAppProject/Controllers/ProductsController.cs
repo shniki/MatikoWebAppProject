@@ -612,7 +612,7 @@ namespace MatikoWebAppProject.Controllers
             var s = (from prd in _context.Products
                     join pro in items on prd.Id equals pro.Id
                     where pro.Purc > 0
-                    orderby pro.Purc
+                    orderby pro.Purc descending
                     select prd).Take(6);
             var s2 = s;
 
@@ -869,6 +869,40 @@ namespace MatikoWebAppProject.Controllers
            }
 
             ViewBag.data2 = statistic2;
+
+            var items = from pro in _context.ProductsOrders
+                        group pro by pro.ProductId into prod
+                        select new { Id = prod.Key, Purc = prod.Count() };
+            var s = (from prd in _context.Products
+                     join pro in items on prd.Id equals pro.Id
+                     where pro.Purc > 0
+                     orderby pro.Purc descending
+                     select new { Name=prd.Name, Count=pro.Purc }).Take(10);
+
+            ICollection<Stat> statistic3 = new Collection<Stat>();
+
+            foreach( var item in s)
+            {
+                statistic3.Add(new Stat(item.Name, item.Count));
+            }
+
+            ViewBag.data3 = statistic3;
+
+            var items2 = from pro in _context.Products
+                        group pro by pro.CategoriesId into prod
+                        select new { CategoriesId = prod.Key, Count = prod.Count() };
+            var s2 = from cat in _context.Categories
+                    join pro in items2 on cat.Id equals pro.CategoriesId
+                    select new { Name=cat.Name, Count=pro.Count };
+
+            ICollection<Stat> statistic4 = new Collection<Stat>();
+
+            foreach (var item in s2)
+            {
+                statistic4.Add(new Stat(item.Name, item.Count));
+            }
+
+            ViewBag.data4 = statistic4;
 
             return View();
         }
